@@ -1,84 +1,56 @@
-# OpsBrain2 - Industrial Knowledge Brain
+# OpsBrain2: Industrial Knowledge Brain
 
-RAG-powered Q&A system with **conflict detection** and **lessons learned surfacing** for industrial plant operations.
+An AI-powered knowledge system that doesn't just answer questions—it actively detects contradictions and stale procedures across maintenance documents.
 
-## Key Features
+## Architecture
 
-1. **RAG Q&A**: Answer questions from industrial documents (manuals, SOPs, maintenance logs, incident reports)
-2. **Conflict Detection**: Automatically detect when documents disagree or have gone stale
-3. **Lessons Learned**: Proactively surface relevant past incidents
+```mermaid
+graph LR
+    A[Raw PDFs/Excel] -->|Person 1| B(Ingestion Engine)
+    B --> C[(ChromaDB Vector Store)]
+    B --> D[Chunks Manifest]
+    D -->|Person 2| E(Extractor & Normalizer)
+    E --> F[(Knowledge Graph / SQLite)]
+    F -->|Neo4j-Ready Export| G[(Neo4j)]
+    
+    C -->|Person 3| H[RAG Engine]
+    F --> H
+    
+    H -->|Person 4| I[FastAPI Backend]
+    I --> J[React + Vite UI]
+```
 
-## Quick Start
+*Note: The system is designed to be Neo4j-ready for massive scale, utilizing SQLite for the hackathon MVP.*
+
+## Setup & Run
+
+We've bundled everything into a single command. 
+From a clean checkout:
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Set API keys (or use .env file)
-export GROQ_API_KEY=your-groq-key      # Free tier LLM
-export VOYAGE_API_KEY=your-voyage-key  # Embeddings
-
-# Run validation tests
-python -m rag_engine.test_engine
+chmod +x run_all.sh
+./run_all.sh
 ```
+*(Requires Python 3.11 and Node.js)*
 
-## Usage
+## Live Demo Script
 
-```python
-from rag_engine import answer_query, get_all_known_conflicts
+Our main differentiator is the **Conflict & Decay Detection**. Follow this exact script to demo the power of the platform:
 
-# Ask a question
-result = answer_query("What is the relief pressure for PSV-101?")
-print(result.answer)
-print(f"Confidence: {result.confidence}")
+### 1. Baseline RAG
+**Ask:** *"What protective gear is needed when inspecting equipment?"*
+- **Expected:** The system returns standard safety protocols with citations and a confidence badge. This proves our baseline document retrieval works.
 
-# Check for conflicts
-if result.conflicts:
-    for conflict in result.conflicts:
-        print(f"CONFLICT: {conflict.explanation}")
+### 2. The Differentiator: Planted Contradictions
+**Ask:** *"What is the maximum operating pressure for Pump-P101?"*
+- **Expected:** The system will answer the question based on the manual, BUT the **Flagged Conflicts** side panel will instantly light up in red.
+- **Why?** It detected a direct contradiction between the SOP (`doc_manual_p101`) stating 150 PSI and a recent maintenance log (`doc_walkdown_p101`) recording 180 PSI.
+- **Follow up:** Show that the system also flagged a past incident ("Overpressurization event due to mismatched gauges") related to this exact equipment tag.
 
-# Get all known conflicts (for dashboard)
-all_conflicts = get_all_known_conflicts()
-```
-
-## Project Structure
-
-```
-OpsBrain2/
-├── shared/
-│   └── schemas.py          # Frozen contract - data types
-├── rag_engine/             # Q&A, conflicts, lessons learned (Person 3)
-│   ├── engine.py           # Main entry point
-│   ├── retriever.py        # ChromaDB retrieval
-│   ├── qa.py               # LLM-powered Q&A
-│   ├── conflicts.py        # Conflict detection
-│   ├── lessons.py          # Lessons learned surfacing
-│   └── fixtures.py         # Dev fixtures
-├── knowledge_graph/        # Graph queries (Person 2)
-│   └── query.py            # Claim/incident queries
-├── data/
-│   ├── CONTRADICTIONS.md   # Test cases
-│   └── chunks_manifest.json
-└── requirements.txt
-```
-
-## Conflict Types
-
-| Type | Description | Example |
-|------|-------------|---------|
-| `direct_contradiction` | Two docs claim different values | Manual says 150 psi, SOP says 145 psi |
-| `decay` | Procedure outdated vs actual practice | SOP says quarterly, practice is monthly |
-
-## API Reference
-
-### `answer_query(question: str) -> QueryResult`
-
-Main Q&A function. Returns answer with citations, conflicts, and lessons learned.
-
-### `get_all_known_conflicts() -> List[Conflict]`
-
-Get all detected conflicts for dashboard display.
+### 3. Procedural Decay
+**Ask:** *"When should Filter-F300 be replaced?"*
+- **Expected:** The system provides the policy rule (every 6 months), but the Conflicts Panel highlights an orange Decay warning.
+- **Why?** The policy dictates a 6-month interval, but the Knowledge Graph cross-referenced the last logged maintenance date and flagged that the interval is out of date.
 
 ---
-
-*Built for ET AI Hackathon 2.0 - Industrial Knowledge Brain*
+Built for the Hackathon by a 4-person parallel development team.
