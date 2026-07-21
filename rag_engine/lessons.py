@@ -36,8 +36,14 @@ def _get_incidents_similar_to(
     """
     try:
         from knowledge_graph.query import get_incidents_similar_to
-        return get_incidents_similar_to(query, equipment_tags)
-    except ImportError:
+        # Person 2's signature: get_incidents_similar_to(text: str, top_k: int = 3)
+        # Include equipment tags in the search text for better matching
+        search_text = query
+        if equipment_tags:
+            search_text = f"{query} {' '.join(equipment_tags)}"
+        return get_incidents_similar_to(search_text, top_k=5)
+    except (ImportError, Exception) as e:
+        logger.debug(f"Using fixtures for incidents: {e}")
         return fixtures.get_incidents_similar_to(query, equipment_tags)
 
 

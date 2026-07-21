@@ -35,25 +35,31 @@ logger = logging.getLogger(__name__)
 def _get_claims_for_entity(equipment_tag: str) -> List[Claim]:
     """
     Get claims for an entity from knowledge graph.
-    Falls back to fixtures if knowledge_graph module isn't available.
+    Falls back to fixtures if knowledge_graph module isn't available or returns empty.
     """
     try:
         from knowledge_graph.query import get_claims_for_entity
-        return get_claims_for_entity(equipment_tag)
-    except ImportError:
-        return fixtures.get_claims_for_entity(equipment_tag)
+        claims = get_claims_for_entity(equipment_tag)
+        if claims:
+            return claims
+    except Exception as e:
+        logger.debug(f"Knowledge graph unavailable: {e}")
+    return fixtures.get_claims_for_entity(equipment_tag)
 
 
 def _find_conflicting_claims() -> List[Tuple[Claim, Claim]]:
     """
     Find all conflicting claim pairs from knowledge graph.
-    Falls back to fixtures if knowledge_graph module isn't available.
+    Falls back to fixtures if knowledge_graph module isn't available or returns empty.
     """
     try:
         from knowledge_graph.query import find_conflicting_claims
-        return find_conflicting_claims()
-    except ImportError:
-        return fixtures.find_conflicting_claims()
+        conflicts = find_conflicting_claims()
+        if conflicts:
+            return conflicts
+    except Exception as e:
+        logger.debug(f"Knowledge graph unavailable: {e}")
+    return fixtures.find_conflicting_claims()
 
 
 def _get_stale_claims(reference_date: Optional[date] = None) -> List[Claim]:
@@ -63,9 +69,13 @@ def _get_stale_claims(reference_date: Optional[date] = None) -> List[Claim]:
     """
     try:
         from knowledge_graph.query import get_stale_claims
-        return get_stale_claims(reference_date)
-    except ImportError:
-        return fixtures.get_stale_claims(reference_date)
+        # Person 2's signature: get_stale_claims(staleness_days: int = 365)
+        stale = get_stale_claims(staleness_days=365)
+        if stale:
+            return stale
+    except Exception as e:
+        logger.debug(f"Knowledge graph unavailable: {e}")
+    return fixtures.get_stale_claims(reference_date)
 
 
 # ---------------------------------------------------------------------------
