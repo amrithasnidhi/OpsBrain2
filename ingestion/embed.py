@@ -11,6 +11,11 @@ import logging
 import os
 import time
 from typing import Optional
+from pathlib import Path
+
+# Auto-load .env file
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 log = logging.getLogger(__name__)
 
