@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { QueryResult, Conflict } from '../types/schemas';
+import type { QueryResult, Conflict } from '../types/schemas';
 import { LessonsLearned } from './LessonsLearned';
 import { Send, FileText, ChevronDown, ChevronUp, Bot, User, AlertTriangle } from 'lucide-react';
 

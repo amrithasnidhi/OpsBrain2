@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Conflict } from '../types/schemas';
+import type { Conflict } from '../types/schemas';
 import { AlertTriangle, Clock } from 'lucide-react';
 
 interface Props {

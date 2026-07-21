@@ -1,5 +1,5 @@
 import React from 'react';
-import { Incident } from '../types/schemas';
+import type { Incident } from '../types/schemas';
 import { ShieldAlert } from 'lucide-react';
 
 interface Props {

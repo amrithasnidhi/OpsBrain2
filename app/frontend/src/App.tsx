@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChatPanel } from './components/ChatPanel';
 import { ConflictsPanel } from './components/ConflictsPanel';
-import { Conflict } from './types/schemas';
+import type { Conflict } from './types/schemas';
 
 function App() {
   const [activeConflicts, setActiveConflicts] = useState<Conflict[]>([]);

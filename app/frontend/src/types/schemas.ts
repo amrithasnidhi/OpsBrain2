@@ -35,3 +35,6 @@ export interface QueryResult {
   conflicts: Conflict[];
   lessons_learned: Incident[];
 }
+
+// Type exports for runtime
+export type { Citation, Incident, Conflict, QueryResult };
