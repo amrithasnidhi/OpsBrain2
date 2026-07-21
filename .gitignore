@@ -8,3 +8,9 @@ venv/
 dist/
 build/
 .pytest_cache/
+
+# Claude Code local settings
+.claude/
+
+# ChromaDB database files
+data/chromadb/
