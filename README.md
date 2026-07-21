@@ -1,1 +1,1 @@
-# OpsBrain
+# OpsBrain2 Knowledge Graph
