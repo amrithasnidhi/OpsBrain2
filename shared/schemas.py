@@ -51,6 +51,53 @@ class Conflict(BaseModel):
     explanation: str
     severity: Literal["low", "medium", "high"]
     risk_type: Literal["direct_contradiction", "decay"]
+    # --- Extended fields (Person A fills these in) ---
+    risk_score: Optional[float] = None
+    business_impact: Optional[str] = None
+    resolution: Optional[Literal["temporal_supersession", "unresolved"]] = None
+    authoritative_source: Optional[Citation] = None
+    superseded_source: Optional[Citation] = None
+
+
+# === NEW MODELS FOR ROUND 2 ===
+
+class ConfidenceBreakdown(BaseModel):
+    score: float
+    reasons: List[str]
+    warnings: List[str] = []
+
+
+class RootCauseChain(BaseModel):
+    incident: Optional[Incident] = None
+    related_claims: List[Claim] = []
+    related_conflicts: List[Conflict] = []
+    similar_incidents: List[Incident] = []
+    likely_root_cause: str
+    recommended_checks: List[str] = []
+
+
+class ComplianceGap(BaseModel):
+    standard: str
+    requirement: str
+    equipment_tag: str
+    status: Literal["compliant", "gap", "unknown"]
+    details: str
+
+
+class StalenessRow(BaseModel):
+    equipment_tag: str
+    required_interval: str
+    last_inspection_date: Optional[date] = None
+    days_overdue: int
+    status: Literal["ok", "warning", "overdue"]
+
+
+class KnowledgeCaptureRequest(BaseModel):
+    expert_name: str
+    equipment_tag: str
+    knowledge_type: Literal["undocumented_procedure", "tribal_knowledge", "failure_pattern"]
+    free_text: str
+
 
 class QueryResult(BaseModel):
     answer: str
@@ -58,3 +105,7 @@ class QueryResult(BaseModel):
     citations: List[Citation]
     conflicts: List[Conflict]
     lessons_learned: List[Incident]
+    # --- Extended fields ---
+    confidence_breakdown: Optional[ConfidenceBreakdown] = None  # Person C fills this in
+    root_cause_chain: Optional[RootCauseChain] = None           # Person B fills this in
+    retrieval_mode: Optional[Literal["dense", "hybrid"]] = None # Person B fills this in

@@ -1,18 +1,13 @@
-import os
-import sys
-from fastapi import FastAPI, HTTPException
+"""
+OpsBrain2 API - Thin shell entry point.
+Each person adds exactly two lines below to register their router.
+"""
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-
-# Add root directory to sys.path to allow importing rag_engine and knowledge_graph
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-
-from rag_engine.engine import answer_query, get_all_known_conflicts
-from knowledge_graph.graph import build_graph
 
 app = FastAPI(title="OpsBrain2 API")
 
-# Allow Vite dev server
+# CORS middleware - allow Vite dev server
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -21,38 +16,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class QueryRequest(BaseModel):
-    question: str
+# === ROUTER REGISTRATIONS ===
+# Each person adds exactly two lines: import + include_router
 
-@app.post("/api/query")
-def query_rag(request: QueryRequest):
-    try:
-        # returns QueryResult
-        result = answer_query(request.question)
-        return result.model_dump(mode="json")
-    except Exception as e:
-        # Graceful error handling for missing API keys or other issues
-        raise HTTPException(status_code=500, detail=str(e))
+from app.backend.routers.core import router as core_router
+app.include_router(core_router)
 
-@app.get("/api/conflicts")
-def get_conflicts():
-    try:
-        # returns list[Conflict]
-        conflicts = get_all_known_conflicts()
-        return [c.model_dump(mode="json") for c in conflicts]
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+# --- Person A (Risk/Compliance) adds here ---
+# from app.backend.routers.risk import router as risk_router
+# app.include_router(risk_router)
 
-@app.get("/api/health")
-def health_check():
-    return {"status": "ok"}
+# --- Person B (Ingestion/Reasoning) adds here ---
+# from app.backend.routers.reasoning import router as reasoning_router
+# app.include_router(reasoning_router)
 
-@app.get("/api/graph")
-def get_graph():
-    try:
-        G = build_graph()
-        nodes = [{"id": n, "label": d.get("name", n), "group": d.get("type", "unknown")} for n, d in G.nodes(data=True)]
-        edges = [{"source": u, "target": v, "label": d.get("type", "")} for u, v, d in G.edges(data=True)]
-        return {"nodes": nodes, "edges": edges}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+# --- Person C (Dashboards/UX) adds here ---
+# from app.backend.routers.dashboards import router as dashboards_router
+# app.include_router(dashboards_router)
