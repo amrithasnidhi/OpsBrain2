@@ -134,6 +134,7 @@ def answer_query(
         f"lessons={len(result.lessons_learned)}"
     )
 
+    result.confidence_breakdown = generate_answer.__globals__['build_breakdown'](chunks, len(result.citations), len(result.answer), question)
     return result
 
 

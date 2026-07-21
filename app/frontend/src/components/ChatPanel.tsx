@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { QueryResult, Conflict } from '../types/schemas';
 import { LessonsLearned } from './LessonsLearned';
-import { Send, FileText, ChevronDown, ChevronUp, Bot, User, AlertTriangle } from 'lucide-react';
+import { ConfidenceBreakdownPanel } from './ConfidenceBreakdownPanel';
+import { Send, FileText, Bot, User, AlertTriangle } from 'lucide-react';
 
 interface Props {
   onConflictsDetected: (conflicts: Conflict[]) => void;
@@ -105,11 +106,16 @@ export const ChatPanel: React.FC<Props> = ({ onConflictsDetected }) => {
                   </div>
                   
                   {msg.result && (
-                    <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        {renderConfidenceBadge(msg.result.confidence)}
-                        <span className="text-xs text-slate-500">{msg.result.citations.length} Citations</span>
+                    <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {renderConfidenceBadge(msg.result.confidence)}
+                          <span className="text-xs text-slate-500">{msg.result.citations.length} Citations</span>
+                        </div>
                       </div>
+                      {msg.result.confidence_breakdown && (
+                        <ConfidenceBreakdownPanel breakdown={msg.result.confidence_breakdown} />
+                      )}
                     </div>
                   )}
 

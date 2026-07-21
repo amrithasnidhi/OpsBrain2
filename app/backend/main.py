@@ -31,5 +31,5 @@ app.include_router(core_router)
 # app.include_router(reasoning_router)
 
 # --- Person C (Dashboards/UX) adds here ---
-# from app.backend.routers.dashboards import router as dashboards_router
-# app.include_router(dashboards_router)
+from app.backend.routers.dashboards import router as dashboards_router
+app.include_router(dashboards_router)

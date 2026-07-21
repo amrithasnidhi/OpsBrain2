@@ -4,6 +4,9 @@
  */
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import ChatView from "./routes/ChatView";
+import StalenessDashboard from "./routes/StalenessDashboard";
+import FieldView from "./routes/FieldView";
+import GraphView from "./routes/GraphView";
 
 interface NavItem {
   path: string;
@@ -17,7 +20,9 @@ const NAV_ITEMS: NavItem[] = [
   // --- Person B (Ingestion/Reasoning) adds here ---
   // { path: "/reasoning", label: "Root Cause" },
   // --- Person C (Dashboards/UX) adds here ---
-  // { path: "/staleness", label: "Staleness" },
+  { path: "/staleness", label: "Maintenance Health" },
+  { path: "/field", label: "Field View" },
+  { path: "/graph", label: "Knowledge Graph" },
 ];
 
 export default function App() {
@@ -54,7 +59,9 @@ export default function App() {
             {/* --- Person B adds Route here --- */}
             {/* <Route path="/reasoning" element={<ReasoningView />} /> */}
             {/* --- Person C adds Route here --- */}
-            {/* <Route path="/staleness" element={<StalenessView />} /> */}
+            <Route path="/staleness" element={<StalenessDashboard />} />
+            <Route path="/field" element={<FieldView />} />
+            <Route path="/graph" element={<GraphView />} />
           </Routes>
         </div>
       </div>

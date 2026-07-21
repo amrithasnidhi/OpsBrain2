@@ -146,6 +146,63 @@ def compute_confidence_score(
     return max(0.1, min(0.95, total))
 
 
+def build_breakdown(chunks: List[Chunk], citations_used: int, answer_length: int, question: str) -> 'ConfidenceBreakdown':
+    from shared.schemas import ConfidenceBreakdown
+    from rag_engine.conflicts import get_all_known_conflicts
+    from rag_engine.retriever import extract_equipment_tags, get_all_equipment_tags_from_chunks
+
+    score = compute_confidence_score(chunks, citations_used, answer_length)
+    reasons = []
+    warnings = []
+
+    if not chunks:
+        warnings.append("No context documents found")
+        return ConfidenceBreakdown(score=score, reasons=reasons, warnings=warnings)
+
+    # Multi-source agreement reason
+    doc_ids = set(c.metadata.doc_id for c in chunks)
+    equipment_coverage = {}
+    for chunk in chunks:
+        for tag in chunk.metadata.equipment_tags:
+            if tag not in equipment_coverage:
+                equipment_coverage[tag] = set()
+            equipment_coverage[tag].add(chunk.metadata.doc_id)
+            
+    if equipment_coverage:
+        max_coverage = max(len(docs) for docs in equipment_coverage.values())
+        if max_coverage > 1:
+            reasons.append(f"{max_coverage} independent chunks agree on this value")
+            
+    if len(doc_ids) == 1:
+        warnings.append("Only 1 chunk found")
+
+    # Document freshness logic (approximate)
+    import datetime
+    today = datetime.date.today()
+    doc_dates = [c.metadata.doc_date for c in chunks if c.metadata.doc_date]
+    if doc_dates:
+        avg_age_days = sum((today - d).days for d in doc_dates) / len(doc_dates)
+        avg_age_months = int(avg_age_days / 30)
+        if avg_age_months > 36:
+            warnings.append(f"Source document is {avg_age_months // 12} years old")
+        else:
+            reasons.append(f"Source documents are recent (avg. {avg_age_months} months old)")
+            
+    # Conflicts for entity
+    equipment_tags = extract_equipment_tags(question)
+    chunk_tags = get_all_equipment_tags_from_chunks(chunks)
+    equipment_tags = list(set(equipment_tags + chunk_tags))
+    
+    if equipment_tags:
+        all_conflicts = get_all_known_conflicts()
+        entity_conflicts = [c for c in all_conflicts if c.entity in equipment_tags]
+        if entity_conflicts:
+            warnings.append(f"{len(entity_conflicts)} conflicting claim(s) exist for {', '.join(equipment_tags)}")
+
+    return ConfidenceBreakdown(score=score, reasons=reasons, warnings=warnings)
+
+
+
 # ---------------------------------------------------------------------------
 # Citation Extraction
 # ---------------------------------------------------------------------------
