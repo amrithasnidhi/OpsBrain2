@@ -4,14 +4,14 @@
     "doc_id": "compressor_c1_manual",
     "text": "CENTRIFUGAL COMPRESSOR \u2014 OPERATION &\nMAINTENANCE MANUAL\nEquipment Tag: Compressor-C1 | Model: CX-400 Series | Rev. 4 (2022)\nIndustraTech Industries Ltd. | Document No: ITI-OM-CX400-001 | CONFIDENTIAL\nSECTION 1 \u2014 EQUIPMENT OVERVIEW\nThis manual governs operation, preventive maintenance, and safe shutdown of the Compressor-C1\ncentrifugal compressor unit installed in Process Area B, Bay 3 of the facility. It supersedes all previous\nrevisions. All personnel performing maintenance must read and acknowledge this document before\ncommencing work on Compressor-C1. Equipment Tag: Compressor-C1 | Type: Single-stage centrifugal compressor | Model: CX-400 Series |\nSerial No: CC-2019-00147 | Manufacturer: IndustraTech Industries Ltd. | Installation Date: 2019-03-15 |\nDesign Life: 20 years\nSECTION 2 \u2014 TECHNICAL SPECIFICATIONS\nThe following parameters define the design limits and normal operating envelope for Compressor-C1. Do NOT operate outside these limits without written authorisation from the Plant Engineering\nDepartment.",
     "metadata": {
-      "ingested_at": "2026-07-21T10:33:38.328997+00:00",
-      "equipment_tags": "Compressor-C1",
+      "doc_id": "compressor_c1_manual",
+      "doc_type": "manual",
       "source_file": "data\\raw\\compressor_c1_manual.pdf",
       "page_or_row": "1",
-      "doc_type": "manual",
-      "doc_id": "compressor_c1_manual",
+      "equipment_tags": "Compressor-C1",
       "section_title": "",
-      "doc_date": ""
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:50:47.304858+00:00"
     }
   },
   {
@@ -19,14 +19,14 @@
     "doc_id": "compressor_c1_manual",
     "text": "Do NOT operate outside these limits without written authorisation from the Plant Engineering\nDepartment. Rated Speed: 3,550 RPM\nSuction Pressure (normal): 10 \u2013 25 psi\nDischarge Pressure (normal): 120 \u2013 145 psi\nMaximum Operating Pressure: 150 psi\nDesign Pressure: 165 psi\nNormal Operating Temperature: 180 \u00b0F to 220 \u00b0F\nMaximum Outlet Temperature: 280 \u00b0F\nMotor Power Rating: 250 kW\nShaft Seal Type: Mechanical (Type III API 682)\nImpeller Diameter: 14 inches | Material: 316 Stainless Steel\nBearing Type: Hydrodynamic oil-film bearings, ISO VG 46 lubricant\n[WARNING] The Maximum Operating Pressure for Compressor-C1 is 150 psi. This value is\ndetermined by the OEM based on the structural limits of the impeller, volute casing, and shaft\nseals. Sustained operation above 150 psi risks catastrophic seal failure and potential process gas\nrelease. This limit may NOT be revised without a formal Management of Change (MOC) review\nand OEM written concurrence.",
     "metadata": {
-      "section_title": "",
-      "equipment_tags": "Compressor-C1",
-      "doc_date": "",
-      "page_or_row": "1",
-      "doc_type": "manual",
       "doc_id": "compressor_c1_manual",
-      "ingested_at": "2026-07-21T10:33:38.328997+00:00",
-      "source_file": "data\\raw\\compressor_c1_manual.pdf"
+      "doc_type": "manual",
+      "source_file": "data\\raw\\compressor_c1_manual.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:50:47.304858+00:00"
     }
   },
   {
@@ -34,14 +34,14 @@
     "doc_id": "compressor_c1_manual",
     "text": "SECTION 3 \u2014 PREVENTIVE MAINTENANCE SCHEDULE\n3.1 Daily Operator Checks\n\u2022 Verify suction and discharge pressures within normal operating range. \u2022 Check bearing oil level and bearing temperature indicators (normal: < 200 \u00b0F). \u2022 Listen for abnormal noise or vibration (baseline: < 3.5 mm/s RMS). \u2022 Record all readings in the Daily Operations Log (Form OPS-DL-001). 3.2 Semi-Annual Inspection (6-Month Interval \u2014 Certified Technician Required)\n\u2022 Disassemble and inspect impeller for erosion, fouling, and cavitation pitting. \u2022 Replace mechanical shaft seal if wear exceeds 0.5 mm on any sealing face. \u2022 Flush and replace bearing lubrication oil (ISO VG 46); inspect oil for metallic particles. \u2022 Inspect and clean suction filter elements; replace if differential pressure > 2 psi. \u2022 Verify shaft alignment to within 0.002 in TIR using laser alignment tool. \u2022 Complete PM checklist Form EQ-PM-009 and submit to Maintenance Supervisor. 3.3 Annual Overhaul\n\u2022 Full disassembly and dimensional inspection of all rotating parts. \u2022 Non-destructive testing (NDT) of impeller and pressure casing. \u2022 Replace all seals, gaskets, wear rings, and O-rings regardless of condition.",
     "metadata": {
+      "doc_id": "compressor_c1_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\compressor_c1_manual.pdf",
+      "page_or_row": "2",
       "equipment_tags": "",
       "section_title": "",
-      "doc_type": "manual",
       "doc_date": "",
-      "doc_id": "compressor_c1_manual",
-      "page_or_row": "2",
-      "ingested_at": "2026-07-21T10:33:38.328997+00:00",
-      "source_file": "data\\raw\\compressor_c1_manual.pdf"
+      "ingested_at": "2026-07-21T12:50:47.304858+00:00"
     }
   },
   {
@@ -49,14 +49,14 @@
     "doc_id": "compressor_c1_manual",
     "text": "\u2022 Replace all seals, gaskets, wear rings, and O-rings regardless of condition. \u2022 Alignment certification required from a certified vibration analyst. \u2022 Pressure hydrostatic test to 1.5 \u00d7 design pressure (247.5 psi) after reassembly. SECTION 4 \u2014 OPERATING PROCEDURES\n4.1 Normal Start Sequence\n1. Confirm lube oil system is pressurised to minimum 18 psi supply pressure. 2. Open suction isolation valve V-101 slowly over 30 seconds to full open. 3. Start drive motor per Electrical SOP SOP-ELEC-003. 4. Monitor startup current \u2014 must return to nameplate amps within 15 seconds. 5. Verify discharge pressure builds to 120\u2013145 psi within 60 seconds of start. 6. Log startup time and initial readings in the Daily Operations Log. 4.2 Normal Shutdown\n1. Gradually reduce process load over 5 minutes minimum. 2. Close discharge isolation valve V-102. 3. De-energise motor at MCC Panel B-12. 4. Allow unit to coast to rest \u2014 do NOT apply mechanical braking.",
     "metadata": {
-      "doc_date": "",
-      "source_file": "data\\raw\\compressor_c1_manual.pdf",
-      "equipment_tags": "",
-      "doc_type": "manual",
       "doc_id": "compressor_c1_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\compressor_c1_manual.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "",
       "section_title": "",
-      "ingested_at": "2026-07-21T10:33:38.328997+00:00",
-      "page_or_row": "2"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:50:47.304858+00:00"
     }
   },
   {
@@ -64,14 +64,14 @@
     "doc_id": "compressor_c1_manual",
     "text": "5. Close suction isolation valve V-101 after unit reaches complete stop.\n6. Log shutdown time and reason in the operations log.\n4.3 Emergency Shutdown (ESD)\n[WARNING] If discharge pressure exceeds 150 psi, bearing temperature exceeds 250 \u00b0F,\nexcessive vibration is detected, or abnormal noise occurs: press ESD pushbutton ESD-C1\nimmediately. Notify control room and shift supervisor. Do NOT attempt restart without written\nEngineering clearance.",
     "metadata": {
+      "doc_id": "compressor_c1_manual",
+      "doc_type": "manual",
       "source_file": "data\\raw\\compressor_c1_manual.pdf",
       "page_or_row": "3",
-      "doc_id": "compressor_c1_manual",
       "equipment_tags": "",
-      "doc_date": "",
-      "ingested_at": "2026-07-21T10:33:38.328997+00:00",
       "section_title": "",
-      "doc_type": "manual"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:50:47.304858+00:00"
     }
   },
   {
@@ -79,14 +79,14 @@
     "doc_id": "incident_report_001",
     "text": "INCIDENT REPORT\nReport No: IR-2025-0042\nDate of Incident: 2025-09-05\nEquipment Tag: Compressor-C1\nIncident Type: Pressure / Vibration \u2014 ESD Activation\nSeverity: HIGH\nReported By: Mike Johnson\nLocation: Process Area B, Bay 3\n\nDESCRIPTION OF INCIDENT:\nAt approximately 14:23 on 2025-09-05, the Emergency Shutdown System (ESD-C1) for Compressor-C1\nactivated automatically due to high vibration (8.2 mm/s RMS, trip set-point 6.0 mm/s RMS). The\nunit tripped cleanly and coasted to rest within 4 minutes. No process gas release occurred.\n\nThe discharge pressure at the time of the trip was 143 psi \u2014 within the normal operating range\nof 120\u2013145 psi, and below the Maximum Operating Pressure of 150 psi specified in the OEM manual.\n\nROOT CAUSE:\nInvestigation found that the impeller nut had backed off due to inadequate torque retention. The\nloose nut caused progressive impeller imbalance over several operating cycles, resulting in\nincreasing vibration until the trip threshold was reached.",
     "metadata": {
-      "section_title": "",
       "doc_id": "incident_report_001",
-      "doc_date": "",
       "doc_type": "incident_report",
       "source_file": "data\\raw\\incident_report_001.txt",
+      "page_or_row": "1",
       "equipment_tags": "Compressor-C1",
-      "ingested_at": "2026-07-21T10:34:07.960688+00:00",
-      "page_or_row": "1"
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:51:21.797659+00:00"
     }
   },
   {
@@ -94,14 +94,14 @@
     "doc_id": "incident_report_001",
     "text": "CORRECTIVE ACTIONS TAKEN:\n1. Impeller removed, inspected (no damage found), and reinstalled.\n2. Impeller nut torqued to 280 Nm with Loctite 243 threadlocker applied.\n3. Restart approved by Plant Engineering after alignment verification.\n4. Engineering review of impeller nut torque specifications \u2014 findings added to PM checklist EQ-PM-009.\n\nLESSONS LEARNED:\nImpeller nut torque retention must be verified at every semi-annual inspection using a calibrated\ntorque wrench. The use of a thread-locking compound (Loctite 243 or approved equivalent) is now\nmandatory during reassembly. Field tightening by feel is insufficient for high-speed rotating\ncomponents on Compressor-C1.\n\nSTATUS: CLOSED \u2014 2025-09-12",
     "metadata": {
-      "equipment_tags": "Compressor-C1",
-      "ingested_at": "2026-07-21T10:34:07.960688+00:00",
-      "doc_date": "",
-      "section_title": "",
+      "doc_id": "incident_report_001",
       "doc_type": "incident_report",
       "source_file": "data\\raw\\incident_report_001.txt",
-      "doc_id": "incident_report_001",
-      "page_or_row": "1"
+      "page_or_row": "1",
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:51:21.797659+00:00"
     }
   },
   {
@@ -109,14 +109,14 @@
     "doc_id": "incident_report_002",
     "text": "INCIDENT REPORT\nReport No: IR-2025-0018\nDate of Incident: 2025-01-28\nEquipment Tag: Pump-P3\nIncident Type: High Bearing Temperature \u2014 Alarm\nSeverity: MEDIUM\nReported By: Sarah Lee\nLocation: Plant Area C, Cooling Water Circuit\n\nDESCRIPTION OF INCIDENT:\nAt 09:47 on 2025-01-28, the bearing temperature alarm for Pump-P3 (TT-P3-001) activated at the\nDCS. The alarm set-point is 210 \u00b0F; the temperature at the time of alarm was 218 \u00b0F. The pump\nwas not tripped automatically (auto-trip set at 230 \u00b0F). The shift operator immediately notified\nthe Maintenance department and isolated the non-critical load to reduce the pump duty.\n\nAn emergency work order (WO-2025-0002) was raised. Maintenance technician Sarah Lee attended\nwithin 20 minutes of the alarm.\n\nROOT CAUSE:\nInspection of the drive-end bearing found that the grease had degraded and partially escaped\nthe bearing housing through a worn lip seal. The bearing was operating in a near-dry condition,\nleading to elevated temperature due to increased friction.",
     "metadata": {
-      "equipment_tags": "Pump-P3",
-      "ingested_at": "2026-07-21T10:34:29.958997+00:00",
-      "source_file": "data\\raw\\incident_report_002.txt",
-      "section_title": "",
       "doc_id": "incident_report_002",
+      "doc_type": "incident_report",
+      "source_file": "data\\raw\\incident_report_002.txt",
       "page_or_row": "1",
+      "equipment_tags": "Pump-P3",
+      "section_title": "",
       "doc_date": "",
-      "doc_type": "incident_report"
+      "ingested_at": "2026-07-21T12:51:43.203451+00:00"
     }
   },
   {
@@ -124,254 +124,14 @@
     "doc_id": "incident_report_002",
     "text": "CORRECTIVE ACTIONS TAKEN:\n1. Pump-P3 shut down per normal shutdown procedure (no ESD required).\n2. Drive-end and non-drive-end bearings repacked with fresh Mobil Polyrex EM grease.\n3. Worn lip seals on both bearing housings replaced.\n4. Bearing housing end caps inspected and resealed.\n5. Pump restarted; bearing temperature returned to 158 \u00b0F within 30 minutes.\n\nLESSONS LEARNED:\nThe bearing regreasing interval for Pump-P3 shall be increased from quarterly to monthly during\nsummer months (June\u2013September) when ambient temperatures in Plant Area C exceed 35 \u00b0C. The\nbearing lip seal condition must be specifically checked at each quarterly maintenance visit.\n\nSTATUS: CLOSED \u2014 2025-02-05",
     "metadata": {
-      "doc_type": "incident_report",
-      "section_title": "",
       "doc_id": "incident_report_002",
-      "doc_date": "",
-      "equipment_tags": "Pump-P3",
+      "doc_type": "incident_report",
       "source_file": "data\\raw\\incident_report_002.txt",
       "page_or_row": "1",
-      "ingested_at": "2026-07-21T10:34:29.958997+00:00"
-    }
-  },
-  {
-    "chunk_id": "65e8e9697481e9719739",
-    "doc_id": "sop_emergency_response",
-    "text": "STANDARD OPERATING PROCEDURE \u2014\nEMERGENCY RESPONSE\nDocument No: SOP-ERP-002 | Rev. 3 | Effective: 2024-03-01\nOperations Department | Approved: Operations Manager | Review Due: 2026-03-01 | Aligned with OSHA 29 CFR 1910.38\n1. PURPOSE AND SCOPE\nThis SOP defines emergency response actions for unplanned equipment shutdowns, process upsets,\nand safety-critical events in Plant Areas A, B, and C. It provides first-response guidance to operators\nand technicians before specialist teams arrive. This document must be accessible at all operator\nworkstations and field control panels. All operations staff must be trained and competency-assessed on\nthis procedure annually. 2. GENERAL EMERGENCY RESPONSE PRINCIPLES\nOn detection of any emergency condition: STOP \u2014 THINK \u2014 ACT. Do not rush. A hasty response to\nan equipment emergency creates additional hazards. Assess the situation, ensure your own safety first,\nthen initiate the appropriate response from this SOP. \u2022 Personal safety is the first priority. Do not approach energised or hot equipment without PPE. \u2022 Activate the local ESD system and notify the control room before any other action. \u2022 Establish an exclusion zone of minimum 5 metres around any tripped rotating equipment.",
-    "metadata": {
-      "ingested_at": "2026-07-21T10:36:17.795723+00:00",
-      "source_file": "data\\raw\\sop_emergency_response.pdf",
-      "page_or_row": "1",
-      "equipment_tags": "",
-      "doc_id": "sop_emergency_response",
-      "doc_type": "sop",
-      "doc_date": "",
-      "section_title": ""
-    }
-  },
-  {
-    "chunk_id": "4529b2bb70a18b9f2f87",
-    "doc_id": "sop_emergency_response",
-    "text": "\u2022 Establish an exclusion zone of minimum 5 metres around any tripped rotating equipment. \u2022 Do not attempt to restart tripped equipment without shift supervisor authorisation. \u2022 Document all emergency events in the Shift Log within 30 minutes of occurrence.",
-    "metadata": {
-      "page_or_row": "1",
-      "section_title": "",
-      "doc_date": "",
-      "source_file": "data\\raw\\sop_emergency_response.pdf",
-      "doc_type": "sop",
-      "ingested_at": "2026-07-21T10:36:17.795723+00:00",
-      "equipment_tags": "",
-      "doc_id": "sop_emergency_response"
-    }
-  },
-  {
-    "chunk_id": "dc1ce7ba0654376864a0",
-    "doc_id": "sop_emergency_response",
-    "text": "3. EQUIPMENT-SPECIFIC EMERGENCY PROCEDURES\n3.1 Pump-P3 \u2014 Emergency Trip Response\nPump-P3 is equipped with automatic trip protection on high bearing temperature (230 \u00b0F), high\nvibration (7.5 mm/s), and low suction pressure (< 5 psi). When Pump-P3 trips, the following response\nprocedure applies:\n1. Confirm trip annunciation at DCS and local panel (Panel C-08 red trip lamp). 2. Notify control room operator and shift supervisor immediately. 3. Identify and record the trip cause from DCS alarm history (Form OPS-EV-002). 4. Establish exclusion zone; place CAUTION barrier around Pump-P3. For Pump-P3 post-trip access: a 5-minute cooldown period is sufficient for routine post-trip inspection\nchecks by a qualified technician wearing appropriate PPE (heat-resistant gloves, face shield, and\nsafety footwear). After 5 minutes, the technician may approach to check the bearing temperature\ngauge, inspect for visible seal leakage, and visually assess the pump for mechanical damage. [NOTE] The 5-minute cooldown applies to EXTERNAL VISUAL INSPECTION ONLY.",
-    "metadata": {
-      "page_or_row": "2",
-      "section_title": "",
-      "source_file": "data\\raw\\sop_emergency_response.pdf",
-      "doc_id": "sop_emergency_response",
-      "doc_date": "",
       "equipment_tags": "Pump-P3",
-      "ingested_at": "2026-07-21T10:36:17.795723+00:00",
-      "doc_type": "sop"
-    }
-  },
-  {
-    "chunk_id": "41993c4bbcd8f96294d6",
-    "doc_id": "sop_emergency_response",
-    "text": "[NOTE] The 5-minute cooldown applies to EXTERNAL VISUAL INSPECTION ONLY. Any\nmaintenance work requiring removal of bolted connections, drain plugs, or access covers requires\na full lock-out/tag-out (LOTO) per SAFE-LOTO-007 and must be planned as a scheduled\nmaintenance activity, not an emergency response. 5. Complete post-trip inspection report (Form EQ-PT-P3-001). 6. Consult Pump-P3 OEM manual for detailed root-cause guidance if bearing trip. 7. Restart only with Shift Supervisor written authorisation after clearing root cause. 3.2 Compressor-C1 \u2014 Emergency Trip Response\nCompressor-C1 trips automatically on high discharge pressure (> 150 psi), high bearing temperature (>\n250 \u00b0F), or high vibration (> 6.0 mm/s RMS). Following a trip, maintain a 10-metre exclusion zone. Do\nnot approach until the unit has come to a complete stop (typically 3\u20135 minutes coast-down). Notify\nEngineering before any restart attempt. 3.3 Valve-V12 \u2014 Actuator Failure Response\nIf Valve-V12 fails to respond to open/close commands: switch to manual override on the actuator\nhandwheel (clockwise = close). Do not force the handwheel if resistance exceeds 150 N\u00b7m \u2014 escalate\nto Mechanical Maintenance.",
-    "metadata": {
-      "doc_type": "sop",
-      "doc_date": "",
-      "doc_id": "sop_emergency_response",
-      "ingested_at": "2026-07-21T10:36:17.795723+00:00",
-      "source_file": "data\\raw\\sop_emergency_response.pdf",
-      "equipment_tags": "Pump-P3,Compressor-C1,Valve-V12",
-      "page_or_row": "2",
-      "section_title": ""
-    }
-  },
-  {
-    "chunk_id": "69aace004150afc26411",
-    "doc_id": "sop_emergency_response",
-    "text": "Do not force the handwheel if resistance exceeds 150 N\u00b7m \u2014 escalate\nto Mechanical Maintenance. Log the failure in the Valve Inspection Register. 4. ESCALATION AND NOTIFICATION MATRIX\nAll emergency events must be escalated per the following matrix. Time targets are from the moment\nthe event is confirmed, not from when it is first detected. \u2022 Within 5 min: Control room and Shift Supervisor notified. \u2022 Within 15 min: Maintenance Supervisor notified if equipment repair required. \u2022 Within 30 min: Plant Manager notified for any ESD activation. \u2022 Within 1 hour: HSE Manager notified for any injury, fire, or release event.",
-    "metadata": {
-      "page_or_row": "2",
-      "doc_id": "sop_emergency_response",
-      "ingested_at": "2026-07-21T10:36:17.795723+00:00",
-      "doc_type": "sop",
-      "source_file": "data\\raw\\sop_emergency_response.pdf",
-      "doc_date": "",
       "section_title": "",
-      "equipment_tags": ""
-    }
-  },
-  {
-    "chunk_id": "e24898d167c9813b04e9",
-    "doc_id": "sop_emergency_response",
-    "text": "\u2022 Within 24 hours: Incident Report Form INC-001 submitted to HSE Department.",
-    "metadata": {
-      "ingested_at": "2026-07-21T10:36:17.795723+00:00",
-      "page_or_row": "3",
       "doc_date": "",
-      "doc_type": "sop",
-      "doc_id": "sop_emergency_response",
-      "equipment_tags": "",
-      "section_title": "",
-      "source_file": "data\\raw\\sop_emergency_response.pdf"
-    }
-  },
-  {
-    "chunk_id": "be0b2dcd534cdca457d6",
-    "doc_id": "sop_process_safety",
-    "text": "STANDARD OPERATING PROCEDURE \u2014 PROCESS\nSAFETY MANAGEMENT\nDocument No: SOP-PSM-004 | Rev. 5 | Effective: 2023-01-15\nPlant Safety Department | Approved: Plant Manager | Review Due: 2025-01-15 | Based on OSHA 29 CFR 1910.119\n1. PURPOSE AND SCOPE\nThis Standard Operating Procedure (SOP) establishes the process safety management requirements\nfor all rotating and pressure-containing equipment in Plant Areas A, B, and C. It implements the\nrequirements of OSHA 29 CFR 1910.119 (Process Safety Management of Highly Hazardous\nChemicals) and the facility's internal Process Safety Management (PSM) programme. This SOP covers: pressure relief device settings, compressor operating limits, pump and valve\npressure testing, and management of change procedures for process equipment. All operations and\nmaintenance personnel must be trained on this SOP annually. Training records must be retained for a\nminimum of 3 years. 2. GENERAL PRESSURE MANAGEMENT REQUIREMENTS\nAll pressure-containing equipment must be operated within the pressure limits specified in the\napplicable Mechanical Integrity programme and equipment datasheets. Pressure relief devices (PRDs)\nmust be sized and set in accordance with API 520 and API 521.",
-    "metadata": {
-      "doc_date": "",
-      "source_file": "data\\raw\\sop_process_safety.pdf",
-      "equipment_tags": "",
-      "doc_type": "sop",
-      "page_or_row": "1",
-      "doc_id": "sop_process_safety",
-      "section_title": "",
-      "ingested_at": "2026-07-21T10:36:39.287797+00:00"
-    }
-  },
-  {
-    "chunk_id": "609c785bc9156f8a896b",
-    "doc_id": "sop_process_safety",
-    "text": "Pressure relief devices (PRDs)\nmust be sized and set in accordance with API 520 and API 521. PRD settings must be reviewed and\nverified during each planned shutdown or at a maximum interval of 36 months. The following general principles apply to all pressure systems:\n\u2022 No PRD shall be set above the Maximum Allowable Working Pressure (MAWP) of the protected\nvessel or piping. \u2022 PRD set points shall be documented in the Equipment Pressure Relief Register (Form\nEQ-PRR-001). \u2022 Any deviation from registered PRD settings requires an approved MOC (Management of Change)\nbefore implementation. \u2022 PRD testing and certification shall be performed by a certified pressure testing contractor annually.",
-    "metadata": {
-      "section_title": "",
-      "doc_id": "sop_process_safety",
-      "doc_date": "",
-      "source_file": "data\\raw\\sop_process_safety.pdf",
-      "equipment_tags": "",
-      "doc_type": "sop",
-      "ingested_at": "2026-07-21T10:36:39.287797+00:00",
-      "page_or_row": "1"
-    }
-  },
-  {
-    "chunk_id": "e1760cb77e1bde008e42",
-    "doc_id": "sop_process_safety",
-    "text": "3. EQUIPMENT-SPECIFIC PRESSURE SETTINGS\n3.1 General Compressor Relief Requirements\nAll compressors in Process Areas A, B, and C must be protected by a dedicated pressure safety valve\n(PSV) mounted on the high-pressure discharge line. PSV settings must comply with Process\nEngineering specification PE-2021-047 and must be verified during each annual turnaround. 3.2 Compressor-C1 Relief Valve Settings\nCompressor-C1 is protected by PSV-C1-001 (3-inch \u00d7 4-inch full-nozzle PSV, Crosby Series HCI,\nspring code R-14). In accordance with Process Engineering specification PE-2021-047 and the facility's\nprocess hazard analysis (PHA) conducted in 2021, the PSV set point for Compressor-C1 is established\nas follows:\nCompressor-C1 pressure relief valve shall be set to 180 psi maximum allowable working pressure\n(MAWP) as per Process Engineering specification PE-2021-047. This set point accounts for the\ndownstream piping MAWP rating of 200 psi (ANSI Class 150 carbon steel) and provides a 10% margin\nabove the normal maximum discharge pressure of 163 psi observed during high-load operations. [WARNING] The PSV set point of 180 psi for Compressor-C1 was established based on a 2021\nprocess hazard analysis.",
-    "metadata": {
-      "ingested_at": "2026-07-21T10:36:39.287797+00:00",
-      "doc_date": "",
-      "equipment_tags": "Compressor-C1",
-      "doc_type": "sop",
-      "page_or_row": "2",
-      "doc_id": "sop_process_safety",
-      "source_file": "data\\raw\\sop_process_safety.pdf",
-      "section_title": ""
-    }
-  },
-  {
-    "chunk_id": "3dc7a1bb29b048d425c0",
-    "doc_id": "sop_process_safety",
-    "text": "[WARNING] The PSV set point of 180 psi for Compressor-C1 was established based on a 2021\nprocess hazard analysis. Any proposal to change this set point requires a full MOC review with\nPHA sign-off, not just equipment-level approval. Contact the Process Safety Engineer before\nadjusting PSV-C1-001. 3.3 Pump Relief Settings\nPump-P3 discharge line is protected by PSV-P3-001 set at 220 psi. All other pump PSVs in Plant Area\nC are set at 210 psi unless otherwise specified in the Equipment Pressure Relief Register. 4. MANAGEMENT OF CHANGE PROCEDURE\nAny change to process safety parameters \u2014 including PRD set points, operating pressure limits,\nequipment isolation schemes, or safety interlock settings \u2014 must follow the facility's Management of\nChange (MOC) procedure (SOP-MOC-001) before implementation. MOC review must include: process\nhazard analysis update, P&ID; mark-up, operations and maintenance notification, and training\ncompletion verification. Unauthorised changes to PSV settings or operating pressure limits are a SERIOUS SAFETY\nVIOLATION and will result in immediate investigation under the facility's discipline and incident\nreporting procedures. 5.",
-    "metadata": {
-      "doc_date": "",
-      "ingested_at": "2026-07-21T10:36:39.287797+00:00",
-      "doc_type": "sop",
-      "section_title": "",
-      "page_or_row": "2",
-      "source_file": "data\\raw\\sop_process_safety.pdf",
-      "equipment_tags": "Compressor-C1,Pump-P3",
-      "doc_id": "sop_process_safety"
-    }
-  },
-  {
-    "chunk_id": "a280d82dddee310902fc",
-    "doc_id": "sop_process_safety",
-    "text": "5. RECORD KEEPING\n\u2022 Equipment Pressure Relief Register (EQ-PRR-001): maintained by Mechanical Integrity team. \u2022 PSV test certificates: retained for a minimum of the life of the equipment plus 5 years. \u2022 MOC records: retained for a minimum of 10 years. \u2022 Operator training records: retained for a minimum of 3 years.",
-    "metadata": {
-      "page_or_row": "2",
-      "doc_id": "sop_process_safety",
-      "section_title": "",
-      "equipment_tags": "",
-      "doc_date": "",
-      "doc_type": "sop",
-      "ingested_at": "2026-07-21T10:36:39.287797+00:00",
-      "source_file": "data\\raw\\sop_process_safety.pdf"
-    }
-  },
-  {
-    "chunk_id": "bf9067fb84d027cac4c5",
-    "doc_id": "valve_v12_maintenance_manual",
-    "text": "GATE VALVE MAINTENANCE MANUAL \u2014\nVALVE-V12\nEquipment Tag: Valve-V12 | Type: Motor-Operated Gate Valve | Rev. 2 (2021)\nPipeFlow Engineering Corp | Document No: PFE-MNT-GV-012 | CONTROLLED COPY\nSECTION 1 \u2014 EQUIPMENT IDENTIFICATION\nThis document provides maintenance, inspection, and operational guidance for Valve-V12, a DN150\nmotor-operated gate valve installed on the high-pressure process gas supply line in Process Area B. Valve-V12 is a safety-critical isolation device. Deviation from this maintenance schedule must be\napproved by the Plant Safety Engineer in writing.",
-    "metadata": {
-      "page_or_row": "1",
-      "doc_id": "valve_v12_maintenance_manual",
-      "ingested_at": "2026-07-21T10:37:00.833873+00:00",
-      "equipment_tags": "Valve-V12",
-      "doc_date": "",
-      "section_title": "",
-      "doc_type": "manual",
-      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf"
-    }
-  },
-  {
-    "chunk_id": "a45c4c532745c2931d1c",
-    "doc_id": "valve_v12_maintenance_manual",
-    "text": "Deviation from this maintenance schedule must be\napproved by the Plant Safety Engineer in writing. Equipment Tag: Valve-V12 | Type: Motor-Operated Gate Valve | Size: DN150 (6 inch) | Pressure\nRating: ANSI Class 300 (740 psi CWP) | Body Material: Carbon Steel ASTM A216 WCB | Actuation:\nElectric motor actuator, 480V 3-phase | Installed: 2018-06-20 | Serial No: PFE-GV-2018-0512\nSECTION 2 \u2014 TECHNICAL SPECIFICATIONS\nMaximum Allowable Working Pressure (MAWP): 740 psi at 100 \u00b0F\nDesign Temperature Range: \u201320 \u00b0F to +450 \u00b0F\nSeat Leakage Class: ANSI/FCI 70-2 Class IV (0.01% of rated capacity)\nStem Diameter: 50 mm | Stem Material: AISI 316 Stainless Steel\nActuator Torque Output: 900 N\u00b7m | Actuator Duty: S2-15 min\nOpen/Close Travel Time: 45 seconds at rated torque\nPacking Type: Graphite chevron rings (5-ring set), PN-GR-150\nSECTION 3 \u2014 INSPECTION SCHEDULE\n[WARNING] Valve-V12 is a SAFETY-CRITICAL isolation valve on a high-pressure process line. The inspection interval MUST NOT be extended without a formal risk assessment signed by the\nPlant Safety Engineer and the Operations Manager. 3.1 Required Inspection Frequency\nValve-V12 shall be inspected every 3 months (90 days).",
-    "metadata": {
-      "doc_type": "manual",
-      "ingested_at": "2026-07-21T10:37:00.833873+00:00",
-      "equipment_tags": "Valve-V12",
-      "section_title": "",
-      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
-      "doc_id": "valve_v12_maintenance_manual",
-      "page_or_row": "1",
-      "doc_date": ""
-    }
-  },
-  {
-    "chunk_id": "7a50b70b3f11760d3c6b",
-    "doc_id": "valve_v12_maintenance_manual",
-    "text": "3.1 Required Inspection Frequency\nValve-V12 shall be inspected every 3 months (90 days). This interval is mandated by the OEM based\non the valve's service conditions (high-pressure cycling, elevated temperature, potential for packing\ndegradation). Failure to comply with this schedule voids the OEM warranty and constitutes a\ndocumented safety deviation that must be reported to the HSE Department. 3.2 Quarterly Inspection Checklist (every 90 days)\n\u2022 Perform open/close cycle test \u2014 verify full travel within 45 \u00b1 5 seconds.",
-    "metadata": {
-      "ingested_at": "2026-07-21T10:37:00.833873+00:00",
-      "doc_date": "",
-      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
-      "section_title": "",
-      "doc_id": "valve_v12_maintenance_manual",
-      "equipment_tags": "Valve-V12",
-      "doc_type": "manual",
-      "page_or_row": "1"
-    }
-  },
-  {
-    "chunk_id": "5a5294a421852a8e063b",
-    "doc_id": "valve_v12_maintenance_manual",
-    "text": "\u2022 Inspect stem packing for weeping or visible leakage; replace if any leakage detected. \u2022 Torque packing gland nuts to 35 N\u00b7m \u00b1 5 N\u00b7m (do not over-torque). \u2022 Lubricate stem threads with approved thread compound (Molykote P-37 or equivalent). \u2022 Verify actuator limit switches \u2014 confirm open and closed position indication. \u2022 Check actuator motor insulation resistance (minimum 1 M\u2126 at 500V DC). \u2022 Inspect body for external corrosion, coating damage, and mechanical damage. \u2022 Record all findings in Work Order and Valve Inspection Report Form EQ-VI-012. 3.3 Annual Inspection (in addition to quarterly)\n\u2022 Full disassembly and internal inspection of gate, seat rings, and body cavity. \u2022 Replace packing set and seat rings regardless of apparent condition. \u2022 Actuator gearbox oil change (Shell Omala S2 G 220 or equivalent). \u2022 Hydrostatic shell test at 1,110 psi (1.5 \u00d7 MAWP) for 10 minutes. SECTION 4 \u2014 MAINTENANCE PROCEDURES\n4.1 Packing Replacement Procedure\n1. Isolate valve from process \u2014 confirm upstream and downstream blind flanges are installed. 2. De-energise actuator at local disconnect; lock out and tag out (LOTO Procedure SAFE-LOTO-007). 3. Remove packing gland follower and extract worn packing rings. 4.",
-    "metadata": {
-      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
-      "equipment_tags": "",
-      "doc_id": "valve_v12_maintenance_manual",
-      "page_or_row": "2",
-      "doc_type": "manual",
-      "doc_date": "",
-      "section_title": "",
-      "ingested_at": "2026-07-21T10:37:00.833873+00:00"
-    }
-  },
-  {
-    "chunk_id": "c9ca147078798358fbd6",
-    "doc_id": "valve_v12_maintenance_manual",
-    "text": "4. Clean stem and stuffing box bore with lint-free cloth; inspect for scoring. 5. Install new graphite rings (PN-GR-150) \u2014 stagger cuts by 90\u00b0 minimum. 6. Replace gland follower and torque gland nuts to 25 N\u00b7m (initial). 7. Re-pressurise and perform packing leak test; tighten to 35 N\u00b7m if weeping persists. 8. Restore power and perform full open/close cycle test. Document in work order.",
-    "metadata": {
-      "ingested_at": "2026-07-21T10:37:00.833873+00:00",
-      "doc_date": "",
-      "page_or_row": "2",
-      "doc_type": "manual",
-      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
-      "section_title": "",
-      "doc_id": "valve_v12_maintenance_manual",
-      "equipment_tags": ""
+      "ingested_at": "2026-07-21T12:51:43.203451+00:00"
     }
   },
   {
@@ -379,14 +139,14 @@
     "doc_id": "incident_report_003",
     "text": "INCIDENT REPORT\nReport No: IR-2025-0071\nDate of Incident: 2025-11-20\nEquipment Tag: Valve-V12\nIncident Type: Minor Packing Leak \u2014 Near Miss\nSeverity: LOW\nReported By: Tom Williams\nLocation: Process Area B, High-Pressure Gas Supply Line\n\nDESCRIPTION OF INCIDENT:\nOn 2025-11-20, during a routine area walk-down, the operator noticed a faint smell of process\ngas near Valve-V12. Visual inspection revealed a slight weep from the stem packing gland \u2014\napproximately 2\u20133 drops per minute of condensate carrying dissolved gas.\n\nThe leak was classified as a minor near-miss (no ignition source nearby; gas concentration\nmeasured at < 5% LEL using a handheld CGI). The valve was not isolated as the leak was within\nacceptable operational limits.\n\nNOTE ON INSPECTION STATUS:\nAt the time of this incident, the last formal quarterly inspection of Valve-V12 was recorded as\nWO-2025-0031 on 2025-11-05 (15 days prior). The packing replacement performed in WO-2025-0031\nwas confirmed complete; however, the gland may not have been torqued sufficiently to allow for\ninitial packing consolidation.",
     "metadata": {
-      "page_or_row": "1",
       "doc_id": "incident_report_003",
-      "source_file": "data\\raw\\incident_report_003.txt",
-      "ingested_at": "2026-07-21T10:34:51.341760+00:00",
-      "doc_date": "",
       "doc_type": "incident_report",
+      "source_file": "data\\raw\\incident_report_003.txt",
+      "page_or_row": "1",
+      "equipment_tags": "Valve-V12",
       "section_title": "",
-      "equipment_tags": "Valve-V12"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:04.710101+00:00"
     }
   },
   {
@@ -394,14 +154,14 @@
     "doc_id": "incident_report_003",
     "text": "ROOT CAUSE:\nPacking consolidation weep \u2014 normal behaviour within the first 30 days of new packing installation.\nHowever, given that Valve-V12 is on a high-pressure safety-critical line, any gas weep must be\nreported and assessed.\n\nCORRECTIVE ACTIONS TAKEN:\n1. Packing gland re-torqued by Tom Williams (in-service adjustment, within approved procedure).\n2. Leak test with soapy water solution \u2014 no bubbles observed after re-torquing.\n3. CGI reading confirmed 0% LEL after 30 minutes.\n4. Incident logged per HSE near-miss reporting procedure.\n\nLESSONS LEARNED:\nNew packing installations on high-pressure gas valves should include a scheduled 7-day follow-up\ncheck to verify packing consolidation and re-torque if necessary. This follow-up check is not\ncurrently included in the standard PM checklist \u2014 recommend updating Form EQ-VI-012.\n\nSTATUS: CLOSED \u2014 2025-11-22",
     "metadata": {
+      "doc_id": "incident_report_003",
       "doc_type": "incident_report",
-      "doc_date": "",
+      "source_file": "data\\raw\\incident_report_003.txt",
       "page_or_row": "1",
-      "ingested_at": "2026-07-21T10:34:51.341760+00:00",
       "equipment_tags": "Valve-V12",
       "section_title": "",
-      "doc_id": "incident_report_003",
-      "source_file": "data\\raw\\incident_report_003.txt"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:04.710101+00:00"
     }
   },
   {
@@ -409,14 +169,14 @@
     "doc_id": "incident_report_004",
     "text": "INCIDENT REPORT\nReport No: IR-2025-0063\nDate of Incident: 2025-10-10\nEquipment Tag: Turbine-T1\nIncident Type: High Vibration \u2014 Emergency Work Order\nSeverity: MEDIUM\nReported By: Tom Williams\nLocation: Power Generation Building, Turbine Hall\n\nDESCRIPTION OF INCIDENT:\nAt 11:15 on 2025-10-10, vibration monitoring for Turbine-T1 (VT-T1-001) showed a reading of\n5.8 mm/s RMS \u2014 above the investigation threshold of 4.5 mm/s and approaching the trip threshold\nof 7.5 mm/s. The control room operator raised an emergency work order (WO-2025-0015) and notified\nthe Mechanical Maintenance supervisor.\n\nThe turbine was not tripped immediately as the vibration was trending slowly upward. The shift\nsupervisor made the decision to continue operation at reduced load while maintenance attended.\n\nROOT CAUSE:\nLaser alignment check performed by Tom Williams found the turbine shaft misaligned by 0.008 in\nTIR on the coupling (acceptable limit: 0.003 in TIR). The misalignment had likely developed\ngradually due to thermal growth of the foundation grout, which showed signs of cracking at two\nof the four hold-down bolt locations.",
     "metadata": {
-      "section_title": "",
-      "ingested_at": "2026-07-21T10:35:12.743652+00:00",
-      "doc_type": "incident_report",
-      "equipment_tags": "Turbine-T1",
-      "page_or_row": "1",
       "doc_id": "incident_report_004",
+      "doc_type": "incident_report",
       "source_file": "data\\raw\\incident_report_004.txt",
-      "doc_date": ""
+      "page_or_row": "1",
+      "equipment_tags": "Turbine-T1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:28.788400+00:00"
     }
   },
   {
@@ -424,14 +184,14 @@
     "doc_id": "incident_report_004",
     "text": "CORRECTIVE ACTIONS TAKEN:\n1. Turbine load reduced to 60% while maintenance was performed (controlled operation under\n   close monitoring \u2014 vibration remained below trip threshold during this period).\n2. Shaft realigned using laser alignment tool; final reading 0.001 in TIR.\n3. Balance weights adjusted on the coupling hub.\n4. Vibration reduced to 2.8 mm/s RMS immediately following realignment.\n5. Foundation grout cracking reported to Civil Engineering for scheduled repair (CR-2025-0047).\n\nLESSONS LEARNED:\nFoundation grout condition for Turbine-T1 must be visually inspected during each annual overhaul.\nThe 6-monthly baseline vibration trending must be reviewed to catch misalignment development\nearlier. Turbine-T1 vibration data to be included in the monthly plant reliability meeting agenda.\n\nSTATUS: CLOSED \u2014 2025-10-18",
     "metadata": {
-      "doc_date": "",
-      "page_or_row": "1",
-      "source_file": "data\\raw\\incident_report_004.txt",
+      "doc_id": "incident_report_004",
       "doc_type": "incident_report",
-      "ingested_at": "2026-07-21T10:35:12.743652+00:00",
-      "section_title": "",
+      "source_file": "data\\raw\\incident_report_004.txt",
+      "page_or_row": "1",
       "equipment_tags": "Turbine-T1",
-      "doc_id": "incident_report_004"
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:28.788400+00:00"
     }
   },
   {
@@ -440,13 +200,13 @@
     "text": "work_order_id: WO-2025-0001 | equipment_tag: Compressor-C1 | date: 2025-01-15 | technician: Mike Johnson | finding: Routine semi-annual inspection; all parameters within spec | action_taken: Replaced suction filter element; impeller clearance measured at 0.015 in (within tolerance)",
     "metadata": {
       "doc_id": "maintenance_log",
-      "source_file": "data\\raw\\maintenance_log.xlsx",
       "doc_type": "maintenance_log",
-      "doc_date": "",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "equipment_tags": "Compressor-C1",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
       "page_or_row": "2",
-      "section_title": ""
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -454,14 +214,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0002 | equipment_tag: Pump-P3 | date: 2025-01-28 | technician: Sarah Lee | finding: High bearing temperature alarm: TT-P3-001 reading 218 deg F (alarm at 210 deg F) | action_taken: Repacked bearings with Mobil Polyrex EM; bearing temp returned to 165 deg F after restart",
     "metadata": {
-      "doc_type": "maintenance_log",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "section_title": "",
-      "page_or_row": "3",
       "doc_id": "maintenance_log",
+      "doc_type": "maintenance_log",
       "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "3",
       "equipment_tags": "Pump-P3",
-      "doc_date": ""
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -469,14 +229,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0003 | equipment_tag: Valve-V12 | date: 2025-02-10 | technician: Tom Williams | finding: Quarterly 90-day inspection; slight packing weep observed on stem | action_taken: Re-torqued packing gland to 35 Nm; verified full open/close cycle in 43 sec; weep stopped",
     "metadata": {
-      "page_or_row": "4",
-      "doc_date": "",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "doc_type": "maintenance_log",
-      "equipment_tags": "Valve-V12",
       "doc_id": "maintenance_log",
+      "doc_type": "maintenance_log",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "4",
+      "equipment_tags": "Valve-V12",
       "section_title": "",
-      "source_file": "data\\raw\\maintenance_log.xlsx"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -484,14 +244,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0004 | equipment_tag: Turbine-T1 | date: 2025-02-25 | technician: Mike Johnson | finding: Routine vibration check: reading 3.2 mm/s RMS (threshold 4.5 mm/s) | action_taken: Vibration within acceptable range; increased monitoring frequency to bi-weekly",
     "metadata": {
-      "doc_date": "",
-      "doc_type": "maintenance_log",
       "doc_id": "maintenance_log",
+      "doc_type": "maintenance_log",
       "source_file": "data\\raw\\maintenance_log.xlsx",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "equipment_tags": "Turbine-T1",
       "page_or_row": "5",
-      "section_title": ""
+      "equipment_tags": "Turbine-T1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -501,12 +261,12 @@
     "metadata": {
       "doc_id": "maintenance_log",
       "doc_type": "maintenance_log",
-      "equipment_tags": "Pump-P3",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "doc_date": "",
-      "section_title": "",
       "source_file": "data\\raw\\maintenance_log.xlsx",
-      "page_or_row": "6"
+      "page_or_row": "6",
+      "equipment_tags": "Pump-P3",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -514,14 +274,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0006 | equipment_tag: Compressor-C1 | date: 2025-04-10 | technician: Tom Williams | finding: Discharge pressure trending high: recorded 147 psi during peak load (normal max: 145 psi) | action_taken: Verified PSV-C1-001 set point; adjusted suction throttle to reduce load; pressure returned to 138 psi",
     "metadata": {
-      "equipment_tags": "Compressor-C1",
+      "doc_id": "maintenance_log",
       "doc_type": "maintenance_log",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "7",
+      "equipment_tags": "Compressor-C1",
       "section_title": "",
       "doc_date": "",
-      "doc_id": "maintenance_log",
-      "page_or_row": "7",
-      "source_file": "data\\raw\\maintenance_log.xlsx"
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -529,14 +289,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0007 | equipment_tag: Valve-V12 | date: 2025-05-12 | technician: Mike Johnson | finding: Quarterly 90-day inspection (3 months from WO-2025-0003) | action_taken: Lubricated stem with Molykote P-37; verified actuator limit switches; no anomalies found",
     "metadata": {
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "page_or_row": "8",
-      "source_file": "data\\raw\\maintenance_log.xlsx",
-      "doc_date": "",
       "doc_id": "maintenance_log",
-      "equipment_tags": "Valve-V12",
       "doc_type": "maintenance_log",
-      "section_title": ""
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "8",
+      "equipment_tags": "Valve-V12",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -544,14 +304,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0008 | equipment_tag: Turbine-T1 | date: 2025-05-28 | technician: Sarah Lee | finding: Annual overhaul due | action_taken: Full blade inspection completed; replaced drive-end bearing (part no TRB-440); alignment certified at 0.001 in TIR",
     "metadata": {
-      "section_title": "",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
       "doc_id": "maintenance_log",
       "doc_type": "maintenance_log",
-      "doc_date": "",
-      "equipment_tags": "Turbine-T1",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
       "page_or_row": "9",
-      "source_file": "data\\raw\\maintenance_log.xlsx"
+      "equipment_tags": "Turbine-T1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -559,14 +319,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0009 | equipment_tag: Pump-P3 | date: 2025-06-15 | technician: Tom Williams | finding: Elevated vibration reading 3.8 mm/s during monthly check | action_taken: Removed and cleaned impeller; fouling buildup removed; vibration returned to 2.1 mm/s",
     "metadata": {
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "doc_type": "maintenance_log",
       "doc_id": "maintenance_log",
+      "doc_type": "maintenance_log",
       "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "10",
+      "equipment_tags": "Pump-P3",
       "section_title": "",
       "doc_date": "",
-      "equipment_tags": "Pump-P3",
-      "page_or_row": "10"
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -574,14 +334,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0010 | equipment_tag: Compressor-C1 | date: 2025-07-01 | technician: Mike Johnson | finding: Semi-annual 6-month inspection | action_taken: Impeller inspected \u2014 no erosion; shaft seal wear 0.2 mm (within 0.5 mm limit); oil flushed and replaced",
     "metadata": {
-      "section_title": "",
-      "equipment_tags": "Compressor-C1",
       "doc_id": "maintenance_log",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "doc_date": "",
-      "page_or_row": "11",
+      "doc_type": "maintenance_log",
       "source_file": "data\\raw\\maintenance_log.xlsx",
-      "doc_type": "maintenance_log"
+      "page_or_row": "11",
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -589,14 +349,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0011 | equipment_tag: Turbine-T1 | date: 2025-07-20 | technician: Sarah Lee | finding: Routine check; oil sample taken for analysis | action_taken: Oil sample submitted to lab (Ref: OIL-2025-0044); results awaited",
     "metadata": {
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "equipment_tags": "Turbine-T1",
-      "page_or_row": "12",
-      "source_file": "data\\raw\\maintenance_log.xlsx",
-      "doc_type": "maintenance_log",
-      "section_title": "",
       "doc_id": "maintenance_log",
-      "doc_date": ""
+      "doc_type": "maintenance_log",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "12",
+      "equipment_tags": "Turbine-T1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -604,14 +364,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0012 | equipment_tag: Valve-V12 | date: 2025-08-14 | technician: Tom Williams | finding: Quarterly 90-day inspection (3 months from WO-2025-0007) | action_taken: Replaced 5-ring packing set (PN-GR-150); actuator gearbox oil checked \u2014 acceptable level; full cycle test passed",
     "metadata": {
-      "equipment_tags": "Valve-V12",
-      "page_or_row": "13",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "doc_type": "maintenance_log",
-      "doc_date": "",
-      "section_title": "",
       "doc_id": "maintenance_log",
-      "source_file": "data\\raw\\maintenance_log.xlsx"
+      "doc_type": "maintenance_log",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "13",
+      "equipment_tags": "Valve-V12",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -619,14 +379,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0013 | equipment_tag: Compressor-C1 | date: 2025-09-05 | technician: Mike Johnson | finding: UNPLANNED: High vibration alarm triggered ESD-C1; vibration peaked at 8.2 mm/s RMS | action_taken: Root cause: impeller nut backing off. Impeller removed, nut re-torqued to 280 Nm with Loctite 243; restart approved by Engineering",
     "metadata": {
-      "doc_type": "maintenance_log",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
       "doc_id": "maintenance_log",
-      "equipment_tags": "Compressor-C1",
-      "page_or_row": "14",
+      "doc_type": "maintenance_log",
       "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "14",
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
       "doc_date": "",
-      "section_title": ""
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -634,14 +394,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0014 | equipment_tag: Pump-P3 | date: 2025-09-22 | technician: Sarah Lee | finding: Monthly routine check | action_taken: All parameters normal: bearing 162 deg F, vibration 2.3 mm/s, seal dry \u2014 no action required",
     "metadata": {
-      "equipment_tags": "Pump-P3",
-      "page_or_row": "15",
-      "section_title": "",
-      "doc_type": "maintenance_log",
-      "doc_date": "",
-      "source_file": "data\\raw\\maintenance_log.xlsx",
       "doc_id": "maintenance_log",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00"
+      "doc_type": "maintenance_log",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "15",
+      "equipment_tags": "Pump-P3",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -649,14 +409,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0015 | equipment_tag: Turbine-T1 | date: 2025-10-10 | technician: Tom Williams | finding: UNPLANNED: Vibration exceeded threshold at 5.8 mm/s RMS \u2014 emergency work order raised | action_taken: Emergency realignment performed; balance weights adjusted; vibration reduced to 2.8 mm/s; cleared for operation",
     "metadata": {
-      "doc_type": "maintenance_log",
       "doc_id": "maintenance_log",
+      "doc_type": "maintenance_log",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "16",
+      "equipment_tags": "Turbine-T1",
       "section_title": "",
       "doc_date": "",
-      "equipment_tags": "Turbine-T1",
-      "page_or_row": "16",
-      "source_file": "data\\raw\\maintenance_log.xlsx",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00"
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -664,14 +424,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0016 | equipment_tag: Compressor-C1 | date: 2025-10-30 | technician: Mike Johnson | finding: Post-ESD inspection following WO-2025-0013 restart | action_taken: All parameters stable after restart; vibration 2.9 mm/s; discharge pressure 132 psi; cleared for normal operation",
     "metadata": {
-      "doc_type": "maintenance_log",
-      "equipment_tags": "Compressor-C1",
-      "doc_date": "",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "source_file": "data\\raw\\maintenance_log.xlsx",
-      "section_title": "",
       "doc_id": "maintenance_log",
-      "page_or_row": "17"
+      "doc_type": "maintenance_log",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "17",
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -679,14 +439,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2025-0031 | equipment_tag: Valve-V12 | date: 2025-11-05 | technician: Mike Johnson | finding: Quarterly 90-day inspection (3 months from WO-2025-0012) | action_taken: Replaced packing gland (preventive); lubricated stem assembly; full cycle test 44 sec \u2014 within spec",
     "metadata": {
+      "doc_id": "maintenance_log",
       "doc_type": "maintenance_log",
-      "doc_date": "",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "equipment_tags": "Valve-V12",
       "source_file": "data\\raw\\maintenance_log.xlsx",
-      "section_title": "",
       "page_or_row": "18",
-      "doc_id": "maintenance_log"
+      "equipment_tags": "Valve-V12",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -694,14 +454,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2026-0001 | equipment_tag: Compressor-C1 | date: 2026-01-10 | technician: Tom Williams | finding: Annual overhaul; full disassembly | action_taken: Impeller replaced (wear beyond tolerance); all seals and gaskets renewed; hydrostatic test passed at 247 psi for 30 min",
     "metadata": {
-      "section_title": "",
+      "doc_id": "maintenance_log",
+      "doc_type": "maintenance_log",
       "source_file": "data\\raw\\maintenance_log.xlsx",
       "page_or_row": "19",
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
       "doc_date": "",
-      "doc_type": "maintenance_log",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "doc_id": "maintenance_log",
-      "equipment_tags": "Compressor-C1"
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -709,14 +469,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2026-0002 | equipment_tag: Turbine-T1 | date: 2026-02-15 | technician: Mike Johnson | finding: Routine check; oil change due | action_taken: Oil changed (ISO VG 46); bearing temp 170 deg F; vibration 2.5 mm/s \u2014 normal condition",
     "metadata": {
-      "page_or_row": "20",
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "source_file": "data\\raw\\maintenance_log.xlsx",
-      "doc_date": "",
+      "doc_id": "maintenance_log",
       "doc_type": "maintenance_log",
+      "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "20",
       "equipment_tags": "Turbine-T1",
       "section_title": "",
-      "doc_id": "maintenance_log"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -724,14 +484,14 @@
     "doc_id": "maintenance_log",
     "text": "work_order_id: WO-2026-0003 | equipment_tag: Pump-P3 | date: 2026-06-20 | technician: Sarah Lee | finding: Monthly routine check | action_taken: Normal condition; bearing 155 deg F; vibration 2.2 mm/s; seal dry \u2014 no action required",
     "metadata": {
-      "ingested_at": "2026-07-21T10:35:34.786003+00:00",
-      "page_or_row": "21",
+      "doc_id": "maintenance_log",
+      "doc_type": "maintenance_log",
       "source_file": "data\\raw\\maintenance_log.xlsx",
+      "page_or_row": "21",
+      "equipment_tags": "Pump-P3",
       "section_title": "",
       "doc_date": "",
-      "doc_type": "maintenance_log",
-      "doc_id": "maintenance_log",
-      "equipment_tags": "Pump-P3"
+      "ingested_at": "2026-07-21T12:52:50.969950+00:00"
     }
   },
   {
@@ -740,13 +500,13 @@
     "text": "CENTRIFUGAL PUMP \u2014 OEM OPERATION &\nMAINTENANCE MANUAL\nEquipment Tag: Pump-P3 | Model: FlowMaster FP-200 | Rev. 3 (2023)\nFlowDynamics Systems Inc. | Document No: FDS-OM-FP200-P3 | CONTROLLED COPY\nSECTION 1 \u2014 EQUIPMENT OVERVIEW\nThis manual provides complete operating and maintenance instructions for Pump-P3, a horizontal\nend-suction centrifugal pump serving the cooling water circulation circuit in Plant Area C. Pump-P3\nhandles process cooling water at elevated temperatures and must be maintained in accordance with\nthis document to ensure safe and reliable operation. Equipment Tag: Pump-P3 | Type: Horizontal end-suction centrifugal pump | Model: FlowMaster FP-200\n| Serial No: FDS-2020-P3-0089 | Manufacturer: FlowDynamics Systems Inc.",
     "metadata": {
       "doc_id": "pump_p3_oem_manual",
-      "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
-      "doc_date": "",
-      "section_title": "",
       "doc_type": "manual",
-      "ingested_at": "2026-07-21T10:35:56.374193+00:00",
+      "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
       "page_or_row": "1",
-      "equipment_tags": "Pump-P3"
+      "equipment_tags": "Pump-P3",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:12.523472+00:00"
     }
   },
   {
@@ -754,14 +514,14 @@
     "doc_id": "pump_p3_oem_manual",
     "text": "Equipment Tag: Pump-P3 | Type: Horizontal end-suction centrifugal pump | Model: FlowMaster FP-200\n| Serial No: FDS-2020-P3-0089 | Manufacturer: FlowDynamics Systems Inc. | Commissioned:\n2020-09-01\nSECTION 2 \u2014 TECHNICAL SPECIFICATIONS\nRated Flow: 450 GPM at BEP\nRated Head: 120 ft (52 psi)\nMaximum Operating Pressure (casing): 200 psi\nDesign Temperature: 250 \u00b0F maximum\nMotor: 30 kW, 1,780 RPM, TEFC 480V 3-phase\nImpeller Type: Closed, 316 SS | Diameter: 11.5 inches\nSeal Type: Single mechanical seal (Flowserve Type 1 equivalent)\nBearing Lubrication: Grease-packed anti-friction bearings (Mobil Polyrex EM)\nNPSHr at rated flow: 12 ft\nCoupling: Flexible disc type, spacer design for back-pull-out\nSECTION 3 \u2014 PREVENTIVE MAINTENANCE\n3.1 Monthly Checks\n\u2022 Check bearing temperature (normal: < 180 \u00b0F; alarm: 210 \u00b0F; trip: 230 \u00b0F). \u2022 Inspect mechanical seal for leakage (allowable: < 5 drops/minute). \u2022 Check vibration (normal: < 2.5 mm/s; investigate: > 4.5 mm/s RMS). \u2022 Grease bearings: 15 grams Mobil Polyrex EM per bearing (once per 3 months). 3.2 Annual Overhaul",
     "metadata": {
-      "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
-      "section_title": "",
-      "doc_type": "manual",
-      "ingested_at": "2026-07-21T10:35:56.374193+00:00",
-      "equipment_tags": "Pump-P3",
-      "doc_date": "",
       "doc_id": "pump_p3_oem_manual",
-      "page_or_row": "1"
+      "doc_type": "manual",
+      "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "Pump-P3",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:12.523472+00:00"
     }
   },
   {
@@ -769,14 +529,14 @@
     "doc_id": "pump_p3_oem_manual",
     "text": "\u2022 Replace mechanical seal assembly regardless of condition.\n\u2022 Inspect and measure impeller wear ring clearances; replace if > 0.030 in.\n\u2022 Replace bearing housing seals and repack bearings.\n\u2022 Perform hydraulic performance test and compare to original curve.",
     "metadata": {
-      "ingested_at": "2026-07-21T10:35:56.374193+00:00",
+      "doc_id": "pump_p3_oem_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
       "page_or_row": "2",
       "equipment_tags": "",
+      "section_title": "",
       "doc_date": "",
-      "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
-      "doc_type": "manual",
-      "doc_id": "pump_p3_oem_manual",
-      "section_title": ""
+      "ingested_at": "2026-07-21T12:53:12.523472+00:00"
     }
   },
   {
@@ -784,14 +544,14 @@
     "doc_id": "pump_p3_oem_manual",
     "text": "SECTION 4 \u2014 EMERGENCY PROCEDURES\n4.1 Emergency Shutdown Triggers\n\u2022 Bearing temperature exceeds 230 \u00b0F (auto-trip via TT-P3-001). \u2022 Vibration exceeds 7.5 mm/s RMS (auto-trip via VT-P3-001). \u2022 Mechanical seal failure (visible fluid loss > 50 ml/min). \u2022 Suction pressure drops below 5 psi (cavitation risk \u2014 manual ESD). \u2022 Any abnormal noise, smoke, or burning smell. 4.2 Emergency Shutdown Procedure and Post-Trip Access\n[WARNING] CRITICAL SAFETY REQUIREMENT \u2014 Following emergency shutdown of\nPump-P3, a mandatory cooling period of 15 minutes minimum must elapse before any\nmaintenance personnel access the pump casing, mechanical seal area, or bearing housing. This\nis required because Pump-P3 handles process water at up to 250 \u00b0F; residual heat in the casing\nand trapped pressurised fluid create burn and pressure-release hazards for up to 15 minutes after\nshutdown. This 15-minute cooling period is NON-NEGOTIABLE and may not be reduced by any\nfield supervisor without written authorisation from the Plant Safety Manager. Failure to comply is a\nSERIOUS SAFETY VIOLATION. 1. Press red ESD pushbutton P3-ESD-001 (or de-energise at MCC Panel C-08). 2. Close suction isolation valve P3-V-001 immediately after trip. 3.",
     "metadata": {
-      "ingested_at": "2026-07-21T10:35:56.374193+00:00",
-      "doc_date": "",
-      "page_or_row": "3",
       "doc_id": "pump_p3_oem_manual",
-      "equipment_tags": "Pump-P3",
       "doc_type": "manual",
+      "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
+      "page_or_row": "3",
+      "equipment_tags": "Pump-P3",
       "section_title": "",
-      "source_file": "data\\raw\\pump_p3_oem_manual.pdf"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:12.523472+00:00"
     }
   },
   {
@@ -799,14 +559,254 @@
     "doc_id": "pump_p3_oem_manual",
     "text": "3. Close discharge check valve P3-V-002 if not auto-actuated. 4. Post a physical barrier and DANGER tag on the pump for the 15-minute cooling period. 5. After 15 minutes: verify casing temperature < 120 \u00b0F using infrared thermometer. 6. Depressurise casing via vent/drain before removing any bolted connections. 7. Document ESD event, time, cause, and post-trip inspection in Work Order System.",
     "metadata": {
-      "ingested_at": "2026-07-21T10:35:56.374193+00:00",
-      "equipment_tags": "",
-      "page_or_row": "3",
+      "doc_id": "pump_p3_oem_manual",
       "doc_type": "manual",
-      "doc_date": "",
       "source_file": "data\\raw\\pump_p3_oem_manual.pdf",
+      "page_or_row": "3",
+      "equipment_tags": "",
       "section_title": "",
-      "doc_id": "pump_p3_oem_manual"
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:12.523472+00:00"
+    }
+  },
+  {
+    "chunk_id": "65e8e9697481e9719739",
+    "doc_id": "sop_emergency_response",
+    "text": "STANDARD OPERATING PROCEDURE \u2014\nEMERGENCY RESPONSE\nDocument No: SOP-ERP-002 | Rev. 3 | Effective: 2024-03-01\nOperations Department | Approved: Operations Manager | Review Due: 2026-03-01 | Aligned with OSHA 29 CFR 1910.38\n1. PURPOSE AND SCOPE\nThis SOP defines emergency response actions for unplanned equipment shutdowns, process upsets,\nand safety-critical events in Plant Areas A, B, and C. It provides first-response guidance to operators\nand technicians before specialist teams arrive. This document must be accessible at all operator\nworkstations and field control panels. All operations staff must be trained and competency-assessed on\nthis procedure annually. 2. GENERAL EMERGENCY RESPONSE PRINCIPLES\nOn detection of any emergency condition: STOP \u2014 THINK \u2014 ACT. Do not rush. A hasty response to\nan equipment emergency creates additional hazards. Assess the situation, ensure your own safety first,\nthen initiate the appropriate response from this SOP. \u2022 Personal safety is the first priority. Do not approach energised or hot equipment without PPE. \u2022 Activate the local ESD system and notify the control room before any other action. \u2022 Establish an exclusion zone of minimum 5 metres around any tripped rotating equipment.",
+    "metadata": {
+      "doc_id": "sop_emergency_response",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_emergency_response.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:37.831017+00:00"
+    }
+  },
+  {
+    "chunk_id": "4529b2bb70a18b9f2f87",
+    "doc_id": "sop_emergency_response",
+    "text": "\u2022 Establish an exclusion zone of minimum 5 metres around any tripped rotating equipment. \u2022 Do not attempt to restart tripped equipment without shift supervisor authorisation. \u2022 Document all emergency events in the Shift Log within 30 minutes of occurrence.",
+    "metadata": {
+      "doc_id": "sop_emergency_response",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_emergency_response.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:37.831017+00:00"
+    }
+  },
+  {
+    "chunk_id": "dc1ce7ba0654376864a0",
+    "doc_id": "sop_emergency_response",
+    "text": "3. EQUIPMENT-SPECIFIC EMERGENCY PROCEDURES\n3.1 Pump-P3 \u2014 Emergency Trip Response\nPump-P3 is equipped with automatic trip protection on high bearing temperature (230 \u00b0F), high\nvibration (7.5 mm/s), and low suction pressure (< 5 psi). When Pump-P3 trips, the following response\nprocedure applies:\n1. Confirm trip annunciation at DCS and local panel (Panel C-08 red trip lamp). 2. Notify control room operator and shift supervisor immediately. 3. Identify and record the trip cause from DCS alarm history (Form OPS-EV-002). 4. Establish exclusion zone; place CAUTION barrier around Pump-P3. For Pump-P3 post-trip access: a 5-minute cooldown period is sufficient for routine post-trip inspection\nchecks by a qualified technician wearing appropriate PPE (heat-resistant gloves, face shield, and\nsafety footwear). After 5 minutes, the technician may approach to check the bearing temperature\ngauge, inspect for visible seal leakage, and visually assess the pump for mechanical damage. [NOTE] The 5-minute cooldown applies to EXTERNAL VISUAL INSPECTION ONLY.",
+    "metadata": {
+      "doc_id": "sop_emergency_response",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_emergency_response.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "Pump-P3",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:37.831017+00:00"
+    }
+  },
+  {
+    "chunk_id": "41993c4bbcd8f96294d6",
+    "doc_id": "sop_emergency_response",
+    "text": "[NOTE] The 5-minute cooldown applies to EXTERNAL VISUAL INSPECTION ONLY. Any\nmaintenance work requiring removal of bolted connections, drain plugs, or access covers requires\na full lock-out/tag-out (LOTO) per SAFE-LOTO-007 and must be planned as a scheduled\nmaintenance activity, not an emergency response. 5. Complete post-trip inspection report (Form EQ-PT-P3-001). 6. Consult Pump-P3 OEM manual for detailed root-cause guidance if bearing trip. 7. Restart only with Shift Supervisor written authorisation after clearing root cause. 3.2 Compressor-C1 \u2014 Emergency Trip Response\nCompressor-C1 trips automatically on high discharge pressure (> 150 psi), high bearing temperature (>\n250 \u00b0F), or high vibration (> 6.0 mm/s RMS). Following a trip, maintain a 10-metre exclusion zone. Do\nnot approach until the unit has come to a complete stop (typically 3\u20135 minutes coast-down). Notify\nEngineering before any restart attempt. 3.3 Valve-V12 \u2014 Actuator Failure Response\nIf Valve-V12 fails to respond to open/close commands: switch to manual override on the actuator\nhandwheel (clockwise = close). Do not force the handwheel if resistance exceeds 150 N\u00b7m \u2014 escalate\nto Mechanical Maintenance.",
+    "metadata": {
+      "doc_id": "sop_emergency_response",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_emergency_response.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "Pump-P3,Compressor-C1,Valve-V12",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:37.831017+00:00"
+    }
+  },
+  {
+    "chunk_id": "69aace004150afc26411",
+    "doc_id": "sop_emergency_response",
+    "text": "Do not force the handwheel if resistance exceeds 150 N\u00b7m \u2014 escalate\nto Mechanical Maintenance. Log the failure in the Valve Inspection Register. 4. ESCALATION AND NOTIFICATION MATRIX\nAll emergency events must be escalated per the following matrix. Time targets are from the moment\nthe event is confirmed, not from when it is first detected. \u2022 Within 5 min: Control room and Shift Supervisor notified. \u2022 Within 15 min: Maintenance Supervisor notified if equipment repair required. \u2022 Within 30 min: Plant Manager notified for any ESD activation. \u2022 Within 1 hour: HSE Manager notified for any injury, fire, or release event.",
+    "metadata": {
+      "doc_id": "sop_emergency_response",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_emergency_response.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:37.831017+00:00"
+    }
+  },
+  {
+    "chunk_id": "e24898d167c9813b04e9",
+    "doc_id": "sop_emergency_response",
+    "text": "\u2022 Within 24 hours: Incident Report Form INC-001 submitted to HSE Department.",
+    "metadata": {
+      "doc_id": "sop_emergency_response",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_emergency_response.pdf",
+      "page_or_row": "3",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:37.831017+00:00"
+    }
+  },
+  {
+    "chunk_id": "be0b2dcd534cdca457d6",
+    "doc_id": "sop_process_safety",
+    "text": "STANDARD OPERATING PROCEDURE \u2014 PROCESS\nSAFETY MANAGEMENT\nDocument No: SOP-PSM-004 | Rev. 5 | Effective: 2023-01-15\nPlant Safety Department | Approved: Plant Manager | Review Due: 2025-01-15 | Based on OSHA 29 CFR 1910.119\n1. PURPOSE AND SCOPE\nThis Standard Operating Procedure (SOP) establishes the process safety management requirements\nfor all rotating and pressure-containing equipment in Plant Areas A, B, and C. It implements the\nrequirements of OSHA 29 CFR 1910.119 (Process Safety Management of Highly Hazardous\nChemicals) and the facility's internal Process Safety Management (PSM) programme. This SOP covers: pressure relief device settings, compressor operating limits, pump and valve\npressure testing, and management of change procedures for process equipment. All operations and\nmaintenance personnel must be trained on this SOP annually. Training records must be retained for a\nminimum of 3 years. 2. GENERAL PRESSURE MANAGEMENT REQUIREMENTS\nAll pressure-containing equipment must be operated within the pressure limits specified in the\napplicable Mechanical Integrity programme and equipment datasheets. Pressure relief devices (PRDs)\nmust be sized and set in accordance with API 520 and API 521.",
+    "metadata": {
+      "doc_id": "sop_process_safety",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_process_safety.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:59.236328+00:00"
+    }
+  },
+  {
+    "chunk_id": "609c785bc9156f8a896b",
+    "doc_id": "sop_process_safety",
+    "text": "Pressure relief devices (PRDs)\nmust be sized and set in accordance with API 520 and API 521. PRD settings must be reviewed and\nverified during each planned shutdown or at a maximum interval of 36 months. The following general principles apply to all pressure systems:\n\u2022 No PRD shall be set above the Maximum Allowable Working Pressure (MAWP) of the protected\nvessel or piping. \u2022 PRD set points shall be documented in the Equipment Pressure Relief Register (Form\nEQ-PRR-001). \u2022 Any deviation from registered PRD settings requires an approved MOC (Management of Change)\nbefore implementation. \u2022 PRD testing and certification shall be performed by a certified pressure testing contractor annually.",
+    "metadata": {
+      "doc_id": "sop_process_safety",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_process_safety.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:59.236328+00:00"
+    }
+  },
+  {
+    "chunk_id": "e1760cb77e1bde008e42",
+    "doc_id": "sop_process_safety",
+    "text": "3. EQUIPMENT-SPECIFIC PRESSURE SETTINGS\n3.1 General Compressor Relief Requirements\nAll compressors in Process Areas A, B, and C must be protected by a dedicated pressure safety valve\n(PSV) mounted on the high-pressure discharge line. PSV settings must comply with Process\nEngineering specification PE-2021-047 and must be verified during each annual turnaround. 3.2 Compressor-C1 Relief Valve Settings\nCompressor-C1 is protected by PSV-C1-001 (3-inch \u00d7 4-inch full-nozzle PSV, Crosby Series HCI,\nspring code R-14). In accordance with Process Engineering specification PE-2021-047 and the facility's\nprocess hazard analysis (PHA) conducted in 2021, the PSV set point for Compressor-C1 is established\nas follows:\nCompressor-C1 pressure relief valve shall be set to 180 psi maximum allowable working pressure\n(MAWP) as per Process Engineering specification PE-2021-047. This set point accounts for the\ndownstream piping MAWP rating of 200 psi (ANSI Class 150 carbon steel) and provides a 10% margin\nabove the normal maximum discharge pressure of 163 psi observed during high-load operations. [WARNING] The PSV set point of 180 psi for Compressor-C1 was established based on a 2021\nprocess hazard analysis.",
+    "metadata": {
+      "doc_id": "sop_process_safety",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_process_safety.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "Compressor-C1",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:59.236328+00:00"
+    }
+  },
+  {
+    "chunk_id": "3dc7a1bb29b048d425c0",
+    "doc_id": "sop_process_safety",
+    "text": "[WARNING] The PSV set point of 180 psi for Compressor-C1 was established based on a 2021\nprocess hazard analysis. Any proposal to change this set point requires a full MOC review with\nPHA sign-off, not just equipment-level approval. Contact the Process Safety Engineer before\nadjusting PSV-C1-001. 3.3 Pump Relief Settings\nPump-P3 discharge line is protected by PSV-P3-001 set at 220 psi. All other pump PSVs in Plant Area\nC are set at 210 psi unless otherwise specified in the Equipment Pressure Relief Register. 4. MANAGEMENT OF CHANGE PROCEDURE\nAny change to process safety parameters \u2014 including PRD set points, operating pressure limits,\nequipment isolation schemes, or safety interlock settings \u2014 must follow the facility's Management of\nChange (MOC) procedure (SOP-MOC-001) before implementation. MOC review must include: process\nhazard analysis update, P&ID; mark-up, operations and maintenance notification, and training\ncompletion verification. Unauthorised changes to PSV settings or operating pressure limits are a SERIOUS SAFETY\nVIOLATION and will result in immediate investigation under the facility's discipline and incident\nreporting procedures. 5.",
+    "metadata": {
+      "doc_id": "sop_process_safety",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_process_safety.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "Compressor-C1,Pump-P3",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:59.236328+00:00"
+    }
+  },
+  {
+    "chunk_id": "a280d82dddee310902fc",
+    "doc_id": "sop_process_safety",
+    "text": "5. RECORD KEEPING\n\u2022 Equipment Pressure Relief Register (EQ-PRR-001): maintained by Mechanical Integrity team. \u2022 PSV test certificates: retained for a minimum of the life of the equipment plus 5 years. \u2022 MOC records: retained for a minimum of 10 years. \u2022 Operator training records: retained for a minimum of 3 years.",
+    "metadata": {
+      "doc_id": "sop_process_safety",
+      "doc_type": "sop",
+      "source_file": "data\\raw\\sop_process_safety.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:53:59.236328+00:00"
+    }
+  },
+  {
+    "chunk_id": "bf9067fb84d027cac4c5",
+    "doc_id": "valve_v12_maintenance_manual",
+    "text": "GATE VALVE MAINTENANCE MANUAL \u2014\nVALVE-V12\nEquipment Tag: Valve-V12 | Type: Motor-Operated Gate Valve | Rev. 2 (2021)\nPipeFlow Engineering Corp | Document No: PFE-MNT-GV-012 | CONTROLLED COPY\nSECTION 1 \u2014 EQUIPMENT IDENTIFICATION\nThis document provides maintenance, inspection, and operational guidance for Valve-V12, a DN150\nmotor-operated gate valve installed on the high-pressure process gas supply line in Process Area B. Valve-V12 is a safety-critical isolation device. Deviation from this maintenance schedule must be\napproved by the Plant Safety Engineer in writing.",
+    "metadata": {
+      "doc_id": "valve_v12_maintenance_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "Valve-V12",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:54:20.733828+00:00"
+    }
+  },
+  {
+    "chunk_id": "a45c4c532745c2931d1c",
+    "doc_id": "valve_v12_maintenance_manual",
+    "text": "Deviation from this maintenance schedule must be\napproved by the Plant Safety Engineer in writing. Equipment Tag: Valve-V12 | Type: Motor-Operated Gate Valve | Size: DN150 (6 inch) | Pressure\nRating: ANSI Class 300 (740 psi CWP) | Body Material: Carbon Steel ASTM A216 WCB | Actuation:\nElectric motor actuator, 480V 3-phase | Installed: 2018-06-20 | Serial No: PFE-GV-2018-0512\nSECTION 2 \u2014 TECHNICAL SPECIFICATIONS\nMaximum Allowable Working Pressure (MAWP): 740 psi at 100 \u00b0F\nDesign Temperature Range: \u201320 \u00b0F to +450 \u00b0F\nSeat Leakage Class: ANSI/FCI 70-2 Class IV (0.01% of rated capacity)\nStem Diameter: 50 mm | Stem Material: AISI 316 Stainless Steel\nActuator Torque Output: 900 N\u00b7m | Actuator Duty: S2-15 min\nOpen/Close Travel Time: 45 seconds at rated torque\nPacking Type: Graphite chevron rings (5-ring set), PN-GR-150\nSECTION 3 \u2014 INSPECTION SCHEDULE\n[WARNING] Valve-V12 is a SAFETY-CRITICAL isolation valve on a high-pressure process line. The inspection interval MUST NOT be extended without a formal risk assessment signed by the\nPlant Safety Engineer and the Operations Manager. 3.1 Required Inspection Frequency\nValve-V12 shall be inspected every 3 months (90 days).",
+    "metadata": {
+      "doc_id": "valve_v12_maintenance_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "Valve-V12",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:54:20.733828+00:00"
+    }
+  },
+  {
+    "chunk_id": "7a50b70b3f11760d3c6b",
+    "doc_id": "valve_v12_maintenance_manual",
+    "text": "3.1 Required Inspection Frequency\nValve-V12 shall be inspected every 3 months (90 days). This interval is mandated by the OEM based\non the valve's service conditions (high-pressure cycling, elevated temperature, potential for packing\ndegradation). Failure to comply with this schedule voids the OEM warranty and constitutes a\ndocumented safety deviation that must be reported to the HSE Department. 3.2 Quarterly Inspection Checklist (every 90 days)\n\u2022 Perform open/close cycle test \u2014 verify full travel within 45 \u00b1 5 seconds.",
+    "metadata": {
+      "doc_id": "valve_v12_maintenance_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
+      "page_or_row": "1",
+      "equipment_tags": "Valve-V12",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:54:20.733828+00:00"
+    }
+  },
+  {
+    "chunk_id": "5a5294a421852a8e063b",
+    "doc_id": "valve_v12_maintenance_manual",
+    "text": "\u2022 Inspect stem packing for weeping or visible leakage; replace if any leakage detected. \u2022 Torque packing gland nuts to 35 N\u00b7m \u00b1 5 N\u00b7m (do not over-torque). \u2022 Lubricate stem threads with approved thread compound (Molykote P-37 or equivalent). \u2022 Verify actuator limit switches \u2014 confirm open and closed position indication. \u2022 Check actuator motor insulation resistance (minimum 1 M\u2126 at 500V DC). \u2022 Inspect body for external corrosion, coating damage, and mechanical damage. \u2022 Record all findings in Work Order and Valve Inspection Report Form EQ-VI-012. 3.3 Annual Inspection (in addition to quarterly)\n\u2022 Full disassembly and internal inspection of gate, seat rings, and body cavity. \u2022 Replace packing set and seat rings regardless of apparent condition. \u2022 Actuator gearbox oil change (Shell Omala S2 G 220 or equivalent). \u2022 Hydrostatic shell test at 1,110 psi (1.5 \u00d7 MAWP) for 10 minutes. SECTION 4 \u2014 MAINTENANCE PROCEDURES\n4.1 Packing Replacement Procedure\n1. Isolate valve from process \u2014 confirm upstream and downstream blind flanges are installed. 2. De-energise actuator at local disconnect; lock out and tag out (LOTO Procedure SAFE-LOTO-007). 3. Remove packing gland follower and extract worn packing rings. 4.",
+    "metadata": {
+      "doc_id": "valve_v12_maintenance_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:54:20.733828+00:00"
+    }
+  },
+  {
+    "chunk_id": "c9ca147078798358fbd6",
+    "doc_id": "valve_v12_maintenance_manual",
+    "text": "4. Clean stem and stuffing box bore with lint-free cloth; inspect for scoring. 5. Install new graphite rings (PN-GR-150) \u2014 stagger cuts by 90\u00b0 minimum. 6. Replace gland follower and torque gland nuts to 25 N\u00b7m (initial). 7. Re-pressurise and perform packing leak test; tighten to 35 N\u00b7m if weeping persists. 8. Restore power and perform full open/close cycle test. Document in work order.",
+    "metadata": {
+      "doc_id": "valve_v12_maintenance_manual",
+      "doc_type": "manual",
+      "source_file": "data\\raw\\valve_v12_maintenance_manual.pdf",
+      "page_or_row": "2",
+      "equipment_tags": "",
+      "section_title": "",
+      "doc_date": "",
+      "ingested_at": "2026-07-21T12:54:20.733828+00:00"
     }
   }
 ]
