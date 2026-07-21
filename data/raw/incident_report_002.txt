@@ -1,0 +1,36 @@
+INCIDENT REPORT
+Report No: IR-2025-0018
+Date of Incident: 2025-01-28
+Equipment Tag: Pump-P3
+Incident Type: High Bearing Temperature — Alarm
+Severity: MEDIUM
+Reported By: Sarah Lee
+Location: Plant Area C, Cooling Water Circuit
+
+DESCRIPTION OF INCIDENT:
+At 09:47 on 2025-01-28, the bearing temperature alarm for Pump-P3 (TT-P3-001) activated at the
+DCS. The alarm set-point is 210 °F; the temperature at the time of alarm was 218 °F. The pump
+was not tripped automatically (auto-trip set at 230 °F). The shift operator immediately notified
+the Maintenance department and isolated the non-critical load to reduce the pump duty.
+
+An emergency work order (WO-2025-0002) was raised. Maintenance technician Sarah Lee attended
+within 20 minutes of the alarm.
+
+ROOT CAUSE:
+Inspection of the drive-end bearing found that the grease had degraded and partially escaped
+the bearing housing through a worn lip seal. The bearing was operating in a near-dry condition,
+leading to elevated temperature due to increased friction.
+
+CORRECTIVE ACTIONS TAKEN:
+1. Pump-P3 shut down per normal shutdown procedure (no ESD required).
+2. Drive-end and non-drive-end bearings repacked with fresh Mobil Polyrex EM grease.
+3. Worn lip seals on both bearing housings replaced.
+4. Bearing housing end caps inspected and resealed.
+5. Pump restarted; bearing temperature returned to 158 °F within 30 minutes.
+
+LESSONS LEARNED:
+The bearing regreasing interval for Pump-P3 shall be increased from quarterly to monthly during
+summer months (June–September) when ambient temperatures in Plant Area C exceed 35 °C. The
+bearing lip seal condition must be specifically checked at each quarterly maintenance visit.
+
+STATUS: CLOSED — 2025-02-05

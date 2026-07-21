@@ -1,0 +1,41 @@
+INCIDENT REPORT
+Report No: IR-2025-0071
+Date of Incident: 2025-11-20
+Equipment Tag: Valve-V12
+Incident Type: Minor Packing Leak — Near Miss
+Severity: LOW
+Reported By: Tom Williams
+Location: Process Area B, High-Pressure Gas Supply Line
+
+DESCRIPTION OF INCIDENT:
+On 2025-11-20, during a routine area walk-down, the operator noticed a faint smell of process
+gas near Valve-V12. Visual inspection revealed a slight weep from the stem packing gland —
+approximately 2–3 drops per minute of condensate carrying dissolved gas.
+
+The leak was classified as a minor near-miss (no ignition source nearby; gas concentration
+measured at < 5% LEL using a handheld CGI). The valve was not isolated as the leak was within
+acceptable operational limits.
+
+NOTE ON INSPECTION STATUS:
+At the time of this incident, the last formal quarterly inspection of Valve-V12 was recorded as
+WO-2025-0031 on 2025-11-05 (15 days prior). The packing replacement performed in WO-2025-0031
+was confirmed complete; however, the gland may not have been torqued sufficiently to allow for
+initial packing consolidation.
+
+ROOT CAUSE:
+Packing consolidation weep — normal behaviour within the first 30 days of new packing installation.
+However, given that Valve-V12 is on a high-pressure safety-critical line, any gas weep must be
+reported and assessed.
+
+CORRECTIVE ACTIONS TAKEN:
+1. Packing gland re-torqued by Tom Williams (in-service adjustment, within approved procedure).
+2. Leak test with soapy water solution — no bubbles observed after re-torquing.
+3. CGI reading confirmed 0% LEL after 30 minutes.
+4. Incident logged per HSE near-miss reporting procedure.
+
+LESSONS LEARNED:
+New packing installations on high-pressure gas valves should include a scheduled 7-day follow-up
+check to verify packing consolidation and re-torque if necessary. This follow-up check is not
+currently included in the standard PM checklist — recommend updating Form EQ-VI-012.
+
+STATUS: CLOSED — 2025-11-22

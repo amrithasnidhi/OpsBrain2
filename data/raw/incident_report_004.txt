@@ -1,0 +1,38 @@
+INCIDENT REPORT
+Report No: IR-2025-0063
+Date of Incident: 2025-10-10
+Equipment Tag: Turbine-T1
+Incident Type: High Vibration — Emergency Work Order
+Severity: MEDIUM
+Reported By: Tom Williams
+Location: Power Generation Building, Turbine Hall
+
+DESCRIPTION OF INCIDENT:
+At 11:15 on 2025-10-10, vibration monitoring for Turbine-T1 (VT-T1-001) showed a reading of
+5.8 mm/s RMS — above the investigation threshold of 4.5 mm/s and approaching the trip threshold
+of 7.5 mm/s. The control room operator raised an emergency work order (WO-2025-0015) and notified
+the Mechanical Maintenance supervisor.
+
+The turbine was not tripped immediately as the vibration was trending slowly upward. The shift
+supervisor made the decision to continue operation at reduced load while maintenance attended.
+
+ROOT CAUSE:
+Laser alignment check performed by Tom Williams found the turbine shaft misaligned by 0.008 in
+TIR on the coupling (acceptable limit: 0.003 in TIR). The misalignment had likely developed
+gradually due to thermal growth of the foundation grout, which showed signs of cracking at two
+of the four hold-down bolt locations.
+
+CORRECTIVE ACTIONS TAKEN:
+1. Turbine load reduced to 60% while maintenance was performed (controlled operation under
+   close monitoring — vibration remained below trip threshold during this period).
+2. Shaft realigned using laser alignment tool; final reading 0.001 in TIR.
+3. Balance weights adjusted on the coupling hub.
+4. Vibration reduced to 2.8 mm/s RMS immediately following realignment.
+5. Foundation grout cracking reported to Civil Engineering for scheduled repair (CR-2025-0047).
+
+LESSONS LEARNED:
+Foundation grout condition for Turbine-T1 must be visually inspected during each annual overhaul.
+The 6-monthly baseline vibration trending must be reviewed to catch misalignment development
+earlier. Turbine-T1 vibration data to be included in the monthly plant reliability meeting agenda.
+
+STATUS: CLOSED — 2025-10-18

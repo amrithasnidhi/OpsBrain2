@@ -1,0 +1,35 @@
+INCIDENT REPORT
+Report No: IR-2025-0042
+Date of Incident: 2025-09-05
+Equipment Tag: Compressor-C1
+Incident Type: Pressure / Vibration — ESD Activation
+Severity: HIGH
+Reported By: Mike Johnson
+Location: Process Area B, Bay 3
+
+DESCRIPTION OF INCIDENT:
+At approximately 14:23 on 2025-09-05, the Emergency Shutdown System (ESD-C1) for Compressor-C1
+activated automatically due to high vibration (8.2 mm/s RMS, trip set-point 6.0 mm/s RMS). The
+unit tripped cleanly and coasted to rest within 4 minutes. No process gas release occurred.
+
+The discharge pressure at the time of the trip was 143 psi — within the normal operating range
+of 120–145 psi, and below the Maximum Operating Pressure of 150 psi specified in the OEM manual.
+
+ROOT CAUSE:
+Investigation found that the impeller nut had backed off due to inadequate torque retention. The
+loose nut caused progressive impeller imbalance over several operating cycles, resulting in
+increasing vibration until the trip threshold was reached.
+
+CORRECTIVE ACTIONS TAKEN:
+1. Impeller removed, inspected (no damage found), and reinstalled.
+2. Impeller nut torqued to 280 Nm with Loctite 243 threadlocker applied.
+3. Restart approved by Plant Engineering after alignment verification.
+4. Engineering review of impeller nut torque specifications — findings added to PM checklist EQ-PM-009.
+
+LESSONS LEARNED:
+Impeller nut torque retention must be verified at every semi-annual inspection using a calibrated
+torque wrench. The use of a thread-locking compound (Loctite 243 or approved equivalent) is now
+mandatory during reassembly. Field tightening by feel is insufficient for high-speed rotating
+components on Compressor-C1.
+
+STATUS: CLOSED — 2025-09-12
