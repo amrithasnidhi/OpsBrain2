@@ -10,13 +10,19 @@ The system uses LLM to generate human-readable explanations of conflicts
 suitable for plant operators, including severity assessment.
 
 Supports multiple LLM backends (Claude, Groq, Ollama) with automatic fallback.
+
+Extended features (Round 2):
+- Risk Priority Score: Computes and ranks conflicts by risk
+- Business Impact: LLM-generated consequence statements
+- Temporal Resolution: Resolves conflicts when dates indicate supersession
 """
 
 import os
 import re
 import logging
+import hashlib
 from datetime import date, timedelta
-from typing import List, Optional, Tuple, Dict
+from typing import List, Optional, Tuple, Dict, Any
 from functools import lru_cache
 import time
 
@@ -26,6 +32,160 @@ from .llm import get_llm
 from . import fixtures
 
 logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Risk Priority Score (Feature #2)
+# ---------------------------------------------------------------------------
+
+def compute_risk_score(conflict: Conflict, days_since_inspection: int = 0) -> float:
+    """
+    Compute a risk priority score for a conflict.
+
+    Args:
+        conflict: The Conflict object to score
+        days_since_inspection: Days since last relevant inspection (for decay penalty)
+
+    Returns:
+        Risk score from 0.0 to 2.0 (higher = more urgent)
+    """
+    severity_map = {"low": 0.2, "medium": 0.5, "high": 1.0}
+    decay_penalty = min(days_since_inspection / 365, 1.0)
+    base = severity_map.get(conflict.severity, 0.5)
+
+    if conflict.risk_type == "decay":
+        return round(base * (1 + decay_penalty), 2)
+    return round(base, 2)
+
+
+def _get_days_since_inspection(equipment_tag: str, parameter_name: str) -> int:
+    """
+    Get days since last inspection/maintenance for an equipment/parameter.
+
+    Falls back to fixtures if knowledge graph unavailable.
+    """
+    try:
+        from knowledge_graph.query import get_claims_for_entity
+        claims = get_claims_for_entity(equipment_tag)
+        if not claims:
+            claims = fixtures.get_claims_for_entity(equipment_tag)
+    except Exception:
+        claims = fixtures.get_claims_for_entity(equipment_tag)
+
+    # Look for inspection date claims
+    for claim in claims:
+        if "inspection" in claim.parameter_name.lower() or "date" in claim.parameter_name.lower():
+            if claim.effective_date:
+                return (date.today() - claim.effective_date).days
+
+    # Default fallback
+    return 180  # Assume 6 months if no data
+
+
+# ---------------------------------------------------------------------------
+# Business Impact Generation (Feature #3)
+# ---------------------------------------------------------------------------
+
+# Cache for business impact statements (keyed by conflict hash)
+_business_impact_cache: Dict[str, str] = {}
+
+
+def _compute_conflict_hash(conflict: Conflict) -> str:
+    """Compute a stable hash for a conflict to use as cache key."""
+    key = f"{conflict.entity}:{conflict.parameter}:{conflict.value_a}:{conflict.value_b}"
+    return hashlib.md5(key.encode()).hexdigest()
+
+
+def generate_business_impact(conflict: Conflict) -> str:
+    """
+    Generate a business impact statement for a conflict using Claude.
+
+    Uses a short, plant-manager-appropriate tone.
+    Results are cached to avoid repeated API calls.
+
+    Args:
+        conflict: The Conflict to analyze
+
+    Returns:
+        A single sentence describing the worst-case operational consequence
+    """
+    cache_key = _compute_conflict_hash(conflict)
+
+    # Check cache first
+    if cache_key in _business_impact_cache:
+        return _business_impact_cache[cache_key]
+
+    prompt = f"""You are advising a plant manager about an operational risk.
+
+A conflict was detected in industrial documentation:
+- Equipment: {conflict.entity}
+- Parameter: {conflict.parameter}
+- Value A: {conflict.value_a} (from {conflict.source_a.source_file})
+- Value B: {conflict.value_b} (from {conflict.source_b.source_file})
+- Conflict type: {conflict.risk_type.replace('_', ' ')}
+
+In ONE sentence (max 25 words), state the worst-case operational consequence if this conflict is not resolved.
+Write for a plant manager, not an engineer - focus on business impact (safety incident, production loss, compliance fine, etc).
+Do not include any preamble or explanation - just the single impact sentence."""
+
+    try:
+        # Try Claude API first for high-quality responses
+        import anthropic
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key:
+            client = anthropic.Anthropic(api_key=api_key)
+            response = client.messages.create(
+                model="claude-3-5-sonnet-20241022",
+                max_tokens=60,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            impact = response.content[0].text.strip()
+            _business_impact_cache[cache_key] = impact
+            return impact
+    except Exception as e:
+        logger.debug(f"Claude API failed for business impact: {e}")
+
+    # Fallback to other LLMs
+    try:
+        llm = get_llm()
+        response = llm.generate(prompt, max_tokens=60)
+        if not response.startswith("[Mock"):
+            _business_impact_cache[cache_key] = response.strip()
+            return response.strip()
+    except Exception as e:
+        logger.debug(f"LLM fallback failed: {e}")
+
+    # Generate fallback based on conflict type and severity
+    fallback = _generate_fallback_business_impact(conflict)
+    _business_impact_cache[cache_key] = fallback
+    return fallback
+
+
+def _generate_fallback_business_impact(conflict: Conflict) -> str:
+    """Generate a fallback business impact statement without LLM."""
+    param_lower = conflict.parameter.lower()
+    entity = conflict.entity
+
+    if "pressure" in param_lower:
+        if conflict.severity == "high":
+            return f"Incorrect pressure settings on {entity} could cause equipment failure or safety incident requiring emergency shutdown."
+        return f"Pressure discrepancy on {entity} may lead to reduced equipment life and unplanned maintenance costs."
+
+    elif "inspection" in param_lower or "interval" in param_lower:
+        if conflict.risk_type == "decay":
+            return f"Overdue inspection on {entity} risks regulatory non-compliance and potential fine or shutdown order."
+        return f"Conflicting inspection schedules for {entity} could result in missed maintenance and unexpected failure."
+
+    elif "cleaning" in param_lower or "frequency" in param_lower:
+        return f"Inconsistent cleaning procedures for {entity} may cause efficiency losses and increased operating costs."
+
+    elif "temperature" in param_lower:
+        return f"Temperature setting conflict on {entity} could lead to product quality issues or equipment damage."
+
+    else:
+        if conflict.severity == "high":
+            return f"Unresolved conflict on {entity} poses significant operational risk requiring immediate management attention."
+        return f"Documentation conflict for {entity} may cause operational confusion and potential compliance issues."
 
 
 # ---------------------------------------------------------------------------
@@ -300,6 +460,11 @@ def detect_conflicts_for_claims(
 ) -> List[Conflict]:
     """
     Detect and explain conflicts from a list of claim pairs.
+
+    Extended to include:
+    - Risk score computation
+    - Business impact generation
+    - Temporal conflict resolution
     """
     conflicts = []
 
@@ -315,6 +480,39 @@ def detect_conflicts_for_claims(
             claim_b=claim_b
         )
 
+        # Check for temporal resolution (Feature #4)
+        resolution = None
+        authoritative_source = None
+        superseded_source = None
+
+        if risk_type == "direct_contradiction":
+            try:
+                from knowledge_graph.resolve import resolve_temporal_conflict, claim_to_citation
+                temporal_result = resolve_temporal_conflict(claim_a, claim_b)
+
+                if temporal_result["resolution"] == "temporal_supersession":
+                    resolution = "temporal_supersession"
+                    auth_claim = temporal_result["authoritative_claim"]
+                    supers_claim = temporal_result["superseded_claim"]
+                    authoritative_source = _claim_to_citation(auth_claim)
+                    superseded_source = _claim_to_citation(supers_claim)
+
+                    # Soften the explanation to reflect resolution
+                    explanation = (
+                        f"Historical conflict resolved: {auth_claim.doc_id} ({auth_claim.effective_date}) "
+                        f"supersedes {supers_claim.doc_id} ({supers_claim.effective_date}). "
+                        f"The current authoritative value is {auth_claim.value}. "
+                        f"Ensure all operators are referencing the latest document."
+                    )
+                else:
+                    resolution = "unresolved"
+            except Exception as e:
+                logger.debug(f"Temporal resolution failed: {e}")
+                resolution = "unresolved"
+
+        # Compute risk score (Feature #2)
+        days_since = _get_days_since_inspection(claim_a.equipment_tag, claim_a.parameter_name)
+
         conflict = Conflict(
             entity=claim_a.equipment_tag,
             parameter=claim_a.parameter_name,
@@ -324,8 +522,18 @@ def detect_conflicts_for_claims(
             value_b=claim_b.value,
             explanation=explanation,
             severity=severity,
-            risk_type=risk_type
+            risk_type=risk_type,
+            resolution=resolution,
+            authoritative_source=authoritative_source,
+            superseded_source=superseded_source
         )
+
+        # Set risk_score after construction
+        conflict.risk_score = compute_risk_score(conflict, days_since)
+
+        # Generate business impact (Feature #3)
+        conflict.business_impact = generate_business_impact(conflict)
+
         conflicts.append(conflict)
 
     return conflicts
@@ -403,6 +611,11 @@ def detect_staleness_conflicts(reference_date: Optional[date] = None) -> List[Co
             f"This represents a potential compliance or safety issue that should be addressed."
         )
 
+        # Calculate days overdue
+        days_overdue = 0
+        if claim.effective_date:
+            days_overdue = (reference_date - claim.effective_date).days
+
         conflict = Conflict(
             entity=claim.equipment_tag,
             parameter=claim.parameter_name,
@@ -419,6 +632,13 @@ def detect_staleness_conflicts(reference_date: Optional[date] = None) -> List[Co
             severity="medium",  # Overdue maintenance is at least medium severity
             risk_type="decay"
         )
+
+        # Compute risk score with days overdue
+        conflict.risk_score = compute_risk_score(conflict, days_overdue)
+
+        # Generate business impact
+        conflict.business_impact = generate_business_impact(conflict)
+
         conflicts.append(conflict)
 
     return conflicts
@@ -481,11 +701,14 @@ def get_all_known_conflicts(force_refresh: bool = False) -> List[Conflict]:
             seen.add(key)
             unique_conflicts.append(conflict)
 
+    # Sort by risk_score descending (highest risk first) - THIS IS THE FEATURE
+    unique_conflicts.sort(key=lambda c: c.risk_score or 0, reverse=True)
+
     # Update cache
     _conflict_cache = unique_conflicts
     _cache_timestamp = current_time
 
-    logger.info(f"Found {len(unique_conflicts)} unique conflicts")
+    logger.info(f"Found {len(unique_conflicts)} unique conflicts, sorted by risk_score")
     return unique_conflicts
 
 
