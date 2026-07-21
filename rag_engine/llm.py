@@ -19,6 +19,13 @@ import logging
 from typing import Optional, Tuple
 from abc import ABC, abstractmethod
 
+# Auto-load .env file if present
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not installed, rely on system env vars
+
 logger = logging.getLogger(__name__)
 
 
@@ -141,7 +148,7 @@ class GroqProvider(LLMProvider):
         messages.append({"role": "user", "content": prompt})
 
         response = self._client.chat.completions.create(
-            model="llama-3.1-70b-versatile",  # Free, very capable
+            model="llama-3.3-70b-versatile",  # Free, very capable
             messages=messages,
             max_tokens=max_tokens,
             temperature=0.3
