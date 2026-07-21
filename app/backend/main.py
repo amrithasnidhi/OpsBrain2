@@ -22,9 +22,9 @@ app.add_middleware(
 from app.backend.routers.core import router as core_router
 app.include_router(core_router)
 
-# --- Person A (Risk/Compliance) adds here ---
-# from app.backend.routers.risk import router as risk_router
-# app.include_router(risk_router)
+# --- Person A (Risk/Compliance) ---
+from app.backend.routers.risk_compliance import router as risk_compliance_router
+app.include_router(risk_compliance_router)
 
 # --- Person B (Ingestion/Reasoning) adds here ---
 # from app.backend.routers.reasoning import router as reasoning_router

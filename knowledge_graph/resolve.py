@@ -1,5 +1,13 @@
 import re
 import difflib
+from typing import Dict, Any, Optional
+import sys
+import os
+
+# Add parent to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from shared.schemas import Claim, Citation
 
 # In-memory mapping of normalized keys to canonical names
 CANONICAL_ENTITIES = {}
@@ -38,3 +46,63 @@ def resolve_entity(tag: str) -> str:
         canonical = tag.strip()
         CANONICAL_ENTITIES[norm] = canonical
         return canonical
+
+
+def resolve_temporal_conflict(claim_a: Claim, claim_b: Claim) -> Dict[str, Any]:
+    """
+    Resolve a conflict between two claims based on their effective dates.
+
+    If both claims have effective_date set, the newer one supersedes the older.
+    Otherwise, the conflict remains unresolved and requires manual review.
+
+    Args:
+        claim_a: First claim in the conflict
+        claim_b: Second claim in the conflict
+
+    Returns:
+        dict with resolution info:
+        - resolution: "temporal_supersession" or "unresolved"
+        - authoritative_claim: the newer claim (if resolved)
+        - superseded_claim: the older claim (if resolved)
+        - explanation: human-readable explanation
+        - requires_manual_review: True if unresolved
+    """
+    if claim_a.effective_date and claim_b.effective_date:
+        # Both have dates - newer supersedes older
+        if claim_a.effective_date > claim_b.effective_date:
+            newer, older = claim_a, claim_b
+        else:
+            newer, older = claim_b, claim_a
+
+        return {
+            "resolution": "temporal_supersession",
+            "authoritative_claim": newer,
+            "superseded_claim": older,
+            "explanation": f"{newer.doc_id} ({newer.effective_date}) supersedes {older.doc_id} ({older.effective_date})",
+            "requires_manual_review": False
+        }
+
+    # At least one claim is missing a date
+    missing_dates = []
+    if not claim_a.effective_date:
+        missing_dates.append(claim_a.doc_id)
+    if not claim_b.effective_date:
+        missing_dates.append(claim_b.doc_id)
+
+    return {
+        "resolution": "unresolved",
+        "authoritative_claim": None,
+        "superseded_claim": None,
+        "explanation": f"Cannot resolve temporally - missing dates in: {', '.join(missing_dates)}",
+        "requires_manual_review": True
+    }
+
+
+def claim_to_citation(claim: Claim) -> Citation:
+    """Convert a Claim to a Citation for conflict tracking."""
+    return Citation(
+        doc_id=claim.doc_id,
+        source_file=f"Document {claim.doc_id}",
+        page_or_row=None,
+        excerpt=claim.source_text[:200] if claim.source_text else ""
+    )

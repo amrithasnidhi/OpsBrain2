@@ -4,6 +4,7 @@
  */
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import ChatView from "./routes/ChatView";
+import CompliancePanel from "./routes/CompliancePanel";
 
 interface NavItem {
   path: string;
@@ -12,8 +13,8 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { path: "/", label: "Chat" },
-  // --- Person A (Risk/Compliance) adds here ---
-  // { path: "/risk", label: "Risk Dashboard" },
+  // --- Person A (Risk/Compliance) ---
+  { path: "/compliance", label: "Compliance" },
   // --- Person B (Ingestion/Reasoning) adds here ---
   // { path: "/reasoning", label: "Root Cause" },
   // --- Person C (Dashboards/UX) adds here ---
@@ -49,11 +50,11 @@ export default function App() {
         <div className="flex-1 overflow-hidden">
           <Routes>
             <Route path="/" element={<ChatView />} />
-            {/* --- Person A adds Route here --- */}
-            {/* <Route path="/risk" element={<RiskView />} /> */}
-            {/* --- Person B adds Route here --- */}
+            {/* --- Person A (Risk/Compliance) --- */}
+            <Route path="/compliance" element={<CompliancePanel />} />
+            {/* --- Person B (Ingestion/Reasoning) adds here --- */}
             {/* <Route path="/reasoning" element={<ReasoningView />} /> */}
-            {/* --- Person C adds Route here --- */}
+            {/* --- Person C (Dashboards/UX) adds here --- */}
             {/* <Route path="/staleness" element={<StalenessView />} /> */}
           </Routes>
         </div>
