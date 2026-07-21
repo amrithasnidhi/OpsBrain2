@@ -1,0 +1,45 @@
+# Core dependencies for Industrial Knowledge Brain
+
+# Data validation
+pydantic>=2.0.0
+
+# LLM APIs (in order of preference)
+anthropic>=0.25.0      # Paid - best quality
+groq>=0.4.0            # Free tier - very fast (Llama/Mixtral)
+requests>=2.28.0       # For Ollama HTTP calls
+
+# Vector database (Person 1's dependency, needed for retriever)
+chromadb>=0.4.0
+
+# Embeddings (if using Voyage AI)
+# voyageai>=0.1.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# Development dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# =============================================================================
+# FREE LLM OPTIONS:
+# =============================================================================
+#
+# Option 1: Groq (Free Tier - Recommended)
+#   - Sign up at https://console.groq.com
+#   - Get free API key
+#   - Set: export GROQ_API_KEY=your-key-here
+#   - Very fast inference (Llama 3.1 70B)
+#
+# Option 2: Ollama (Local - Completely Free)
+#   - Install from https://ollama.ai
+#   - Run: ollama pull llama3.1
+#   - Start server: ollama serve
+#   - No API key needed, runs 100% locally
+#   - Set OLLAMA_MODEL=llama3.1 (or mistral, mixtral, etc.)
+#
+# Option 3: Anthropic Claude (Paid - Best Quality)
+#   - Set: export ANTHROPIC_API_KEY=your-key-here
+#
+# The system automatically falls back: Claude -> Groq -> Ollama -> Mock
+# =============================================================================
