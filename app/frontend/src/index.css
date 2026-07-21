@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../index.html";
+@source "./**/*.{js,ts,jsx,tsx}";
 
 body {
   background-color: #0f172a;
