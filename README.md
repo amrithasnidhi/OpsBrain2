@@ -1,4 +1,4 @@
-# OpsBrain - Industrial Knowledge Brain
+# OpsBrain2 - Industrial Knowledge Brain
 
 RAG-powered Q&A system with **conflict detection** and **lessons learned surfacing** for industrial plant operations.
 
@@ -14,8 +14,9 @@ RAG-powered Q&A system with **conflict detection** and **lessons learned surfaci
 # Install dependencies
 pip install -r requirements.txt
 
-# Set API key
-export ANTHROPIC_API_KEY=your-key-here
+# Set API keys (or use .env file)
+export GROQ_API_KEY=your-groq-key      # Free tier LLM
+export VOYAGE_API_KEY=your-voyage-key  # Embeddings
 
 # Run validation tests
 python -m rag_engine.test_engine
@@ -34,7 +35,7 @@ print(f"Confidence: {result.confidence}")
 # Check for conflicts
 if result.conflicts:
     for conflict in result.conflicts:
-        print(f"⚠️ {conflict.explanation}")
+        print(f"CONFLICT: {conflict.explanation}")
 
 # Get all known conflicts (for dashboard)
 all_conflicts = get_all_known_conflicts()
@@ -43,13 +44,13 @@ all_conflicts = get_all_known_conflicts()
 ## Project Structure
 
 ```
-opsbrain/
+OpsBrain2/
 ├── shared/
 │   └── schemas.py          # Frozen contract - data types
 ├── rag_engine/             # Q&A, conflicts, lessons learned (Person 3)
 │   ├── engine.py           # Main entry point
 │   ├── retriever.py        # ChromaDB retrieval
-│   ├── qa.py               # Claude-powered Q&A
+│   ├── qa.py               # LLM-powered Q&A
 │   ├── conflicts.py        # Conflict detection
 │   ├── lessons.py          # Lessons learned surfacing
 │   └── fixtures.py         # Dev fixtures
@@ -80,4 +81,4 @@ Get all detected conflicts for dashboard display.
 
 ---
 
-*Built for hackathon - Industrial Knowledge Brain*
+*Built for ET AI Hackathon 2.0 - Industrial Knowledge Brain*

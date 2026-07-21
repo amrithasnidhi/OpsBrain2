@@ -1,42 +1,38 @@
-{
-  "_comment": "This manifest is created by Person 1's ingestion pipeline. Format shown below for reference.",
-  "_format": {
-    "chunk_id": "string - unique identifier",
-    "doc_id": "string - parent document ID",
-    "doc_type": "manual | sop | maintenance_log | incident_report | inspection_report",
-    "source_file": "string - original filename",
-    "page_or_row": "string | null - page number or row in spreadsheet",
-    "equipment_tags": ["array", "of", "equipment", "tags"],
-    "section_title": "string | null",
-    "doc_date": "YYYY-MM-DD | null",
-    "ingested_at": "ISO8601 timestamp",
-    "content_preview": "first 200 chars of content"
+[
+  {
+    "chunk_id": "chunk_manual_p101",
+    "doc_id": "doc_manual_p101",
+    "doc_type": "manual",
+    "text": "Maximum operating pressure for Pump-P101 is 150 PSI."
   },
-  "chunks": [
-    {
-      "chunk_id": "chunk_001",
-      "doc_id": "DOC-MAN-001",
-      "doc_type": "manual",
-      "source_file": "equipment_manual_psv101.pdf",
-      "page_or_row": "Page 12",
-      "equipment_tags": ["PSV-101"],
-      "section_title": "Pressure Safety Valve Specifications",
-      "doc_date": "2023-01-15",
-      "ingested_at": "2024-01-10T10:00:00Z",
-      "content_preview": "PSV-101 Pressure Safety Valve Specifications: Set pressure: 150 psi..."
-    },
-    {
-      "chunk_id": "chunk_002",
-      "doc_id": "DOC-SOP-001",
-      "doc_type": "sop",
-      "source_file": "sop_psv_testing.pdf",
-      "page_or_row": "Page 3",
-      "equipment_tags": ["PSV-101"],
-      "section_title": "Relief Valve Test Procedure",
-      "doc_date": "2024-06-20",
-      "ingested_at": "2024-01-10T10:05:00Z",
-      "content_preview": "Standard Operating Procedure: PSV-101 Relief Test. IMPORTANT: Verify relief pressure is set to 145 psi..."
-    }
-  ],
-  "_note": "Full content is stored in ChromaDB. This manifest is for quick lookups and debugging."
-}
+  {
+    "chunk_id": "chunk_walkdown_p101",
+    "doc_id": "doc_walkdown_p101",
+    "doc_type": "maintenance_log",
+    "text": "Pump-P101 maximum pressure recorded at 180 PSI during testing. Overpressurization event due to mismatched gauges."
+  },
+  {
+    "chunk_id": "chunk_guideline_v12",
+    "doc_id": "doc_guideline_v12",
+    "doc_type": "sop",
+    "text": "Valve-12 (part of Compressor-C1) requires manual lubrication weekly by Technician-X."
+  },
+  {
+    "chunk_id": "chunk_log_v12",
+    "doc_id": "doc_log_v12",
+    "doc_type": "maintenance_log",
+    "text": "Valve V-12 is self-lubricating, no manual lubrication needed."
+  },
+  {
+    "chunk_id": "chunk_policy_f300",
+    "doc_id": "doc_policy_f300",
+    "doc_type": "sop",
+    "text": "Filter-F300 must be replaced every 6 months."
+  },
+  {
+    "chunk_id": "chunk_log_f300",
+    "doc_id": "doc_log_f300",
+    "doc_type": "maintenance_log",
+    "text": "Last filter replacement for F300 was on 2025-01-15."
+  }
+]

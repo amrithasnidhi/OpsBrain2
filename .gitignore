@@ -1,13 +1,11 @@
 .env
-__pycache__/
-*.pyc
-*.pyo
-.venv/
 venv/
 *.egg-info/
 dist/
 build/
 .pytest_cache/
+*.db
+__pycache__/
 
 # Claude Code local settings
 .claude/

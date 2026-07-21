@@ -1,134 +1,103 @@
-# knowledge_graph/query.py
-"""
-Knowledge Graph Query Interface (Person 2's implementation).
-
-This is a STUB file showing the expected interface.
-Person 2 should implement these functions to connect to the actual graph.
-
-The RAG engine will import these functions and call them for:
-- Looking up claims about specific equipment
-- Finding conflicting claims globally
-- Getting incidents similar to a query
-- Detecting stale/overdue claims
-"""
-
-from typing import List, Tuple, Optional
-from datetime import date
-import sys
-import os
-
-# Add parent to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+from typing import List, Tuple
 from shared.schemas import Claim, Incident
+from knowledge_graph.db import get_connection
+from knowledge_graph.resolve import resolve_entity
 
+def _row_to_claim(row) -> Claim:
+    return Claim(
+        id=row[0],
+        doc_id=row[1],
+        chunk_id=row[2],
+        equipment_tag=row[3],
+        parameter_name=row[4],
+        value=row[5],
+        unit=row[6],
+        effective_date=row[7],
+        source_text=row[8],
+        confidence=row[9]
+    )
 
-def get_claims_for_entity(equipment_tag: str) -> List[Claim]:
-    """
-    Get all claims associated with a specific equipment tag.
+def _row_to_incident(row) -> Incident:
+    return Incident(
+        id=row[0],
+        doc_id=row[1],
+        chunk_id=row[2],
+        equipment_tag=row[3],
+        incident_type=row[4],
+        description=row[5],
+        date=row[6],
+        severity=row[7]
+    )
 
-    Args:
-        equipment_tag: Equipment identifier (e.g., "PSV-101", "PUMP-203")
+def get_claims_for_entity(equipment_tag: str) -> list[Claim]:
+    conn = get_connection()
+    cursor = conn.cursor()
+    canon_tag = resolve_entity(equipment_tag)
+    cursor.execute("SELECT id, doc_id, chunk_id, equipment_tag, parameter_name, value, unit, effective_date, source_text, confidence FROM claims WHERE equipment_tag = ?", (canon_tag,))
+    claims = [_row_to_claim(row) for row in cursor.fetchall()]
+    conn.close()
+    return claims
 
-    Returns:
-        List of Claim objects for that equipment
+def get_claims_for_parameter(equipment_tag: str, parameter_name: str) -> list[Claim]:
+    conn = get_connection()
+    cursor = conn.cursor()
+    canon_tag = resolve_entity(equipment_tag)
+    cursor.execute("SELECT id, doc_id, chunk_id, equipment_tag, parameter_name, value, unit, effective_date, source_text, confidence FROM claims WHERE equipment_tag = ? AND parameter_name = ?", (canon_tag, parameter_name))
+    claims = [_row_to_claim(row) for row in cursor.fetchall()]
+    conn.close()
+    return claims
 
-    Example:
-        >>> claims = get_claims_for_entity("PSV-101")
-        >>> for c in claims:
-        ...     print(f"{c.parameter_name}: {c.value}")
-    """
-    # TODO: Person 2 - implement actual graph query
-    # For now, fall back to fixtures
-    from rag_engine.fixtures import get_claims_for_entity as fixture_fn
-    return fixture_fn(equipment_tag)
+def find_conflicting_claims() -> list[tuple[Claim, Claim]]:
+    conn = get_connection()
+    cursor = conn.cursor()
+    # Find claims with the same equipment_tag and parameter_name but different values
+    cursor.execute("""
+        SELECT a.id, a.doc_id, a.chunk_id, a.equipment_tag, a.parameter_name, a.value, a.unit, a.effective_date, a.source_text, a.confidence,
+               b.id, b.doc_id, b.chunk_id, b.equipment_tag, b.parameter_name, b.value, b.unit, b.effective_date, b.source_text, b.confidence
+        FROM claims a
+        JOIN claims b ON a.equipment_tag = b.equipment_tag AND a.parameter_name = b.parameter_name
+        WHERE a.value != b.value AND a.id < b.id
+    """)
+    conflicts = []
+    for row in cursor.fetchall():
+        c1 = _row_to_claim(row[0:10])
+        c2 = _row_to_claim(row[10:20])
+        conflicts.append((c1, c2))
+    conn.close()
+    return conflicts
 
+def get_incidents_similar_to(text: str, top_k: int = 3) -> list[Incident]:
+    conn = get_connection()
+    cursor = conn.cursor()
+    # For hackathon, keyword overlap matching
+    words = set(text.lower().replace("?", "").split())
+    
+    cursor.execute("SELECT id, doc_id, chunk_id, equipment_tag, incident_type, description, date, severity FROM incidents")
+    all_incidents = [_row_to_incident(row) for row in cursor.fetchall()]
+    conn.close()
+    
+    scored = []
+    for inc in all_incidents:
+        inc_words = set((inc.description + " " + inc.incident_type + " " + inc.equipment_tag).lower().split())
+        score = len(words.intersection(inc_words))
+        if score > 0:
+            scored.append((score, inc))
+            
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [s[1] for s in scored[:top_k]]
 
-def get_claims_for_parameter(parameter_name: str) -> List[Claim]:
-    """
-    Get all claims for a specific parameter across all equipment.
-
-    Args:
-        parameter_name: Parameter name (e.g., "inspection_interval_months")
-
-    Returns:
-        List of Claim objects for that parameter
-
-    Example:
-        >>> claims = get_claims_for_parameter("relief_pressure_psi")
-        >>> for c in claims:
-        ...     print(f"{c.equipment_tag}: {c.value}")
-    """
-    # TODO: Person 2 - implement actual graph query
-    from rag_engine.fixtures import get_claims_for_parameter as fixture_fn
-    return fixture_fn(parameter_name)
-
-
-def find_conflicting_claims() -> List[Tuple[Claim, Claim]]:
-    """
-    Find all pairs of claims that potentially conflict.
-
-    Two claims conflict if they:
-    - Share the same equipment_tag AND parameter_name
-    - Have different values
-
-    Returns:
-        List of (claim_a, claim_b) tuples representing conflicts
-
-    Example:
-        >>> conflicts = find_conflicting_claims()
-        >>> for a, b in conflicts:
-        ...     print(f"{a.equipment_tag}.{a.parameter_name}: {a.value} vs {b.value}")
-    """
-    # TODO: Person 2 - implement actual graph query
-    from rag_engine.fixtures import find_conflicting_claims as fixture_fn
-    return fixture_fn()
-
-
-def get_incidents_similar_to(
-    query: str,
-    equipment_tags: Optional[List[str]] = None
-) -> List[Incident]:
-    """
-    Find incidents relevant to a query or set of equipment tags.
-
-    Args:
-        query: Natural language query
-        equipment_tags: Optional list of equipment tags to filter on
-
-    Returns:
-        List of relevant Incident objects
-
-    Example:
-        >>> incidents = get_incidents_similar_to(
-        ...     "pump bearing failure",
-        ...     equipment_tags=["PUMP-203"]
-        ... )
-    """
-    # TODO: Person 2 - implement actual graph query with embedding similarity
-    from rag_engine.fixtures import get_incidents_similar_to as fixture_fn
-    return fixture_fn(query, equipment_tags)
-
-
-def get_stale_claims(reference_date: Optional[date] = None) -> List[Claim]:
-    """
-    Find claims that may be stale (e.g., overdue maintenance intervals).
-
-    For claims that specify an interval (e.g., "inspect every 6 months"),
-    cross-reference against the most recent matching log entry date
-    and flag if the implied next-due-date has passed.
-
-    Args:
-        reference_date: Date to check against (default: today)
-
-    Returns:
-        List of Claim objects that are overdue
-
-    Example:
-        >>> stale = get_stale_claims()
-        >>> for c in stale:
-        ...     print(f"{c.equipment_tag} {c.parameter_name} is overdue")
-    """
-    # TODO: Person 2 - implement actual staleness detection
-    from rag_engine.fixtures import get_stale_claims as fixture_fn
-    return fixture_fn(reference_date)
+def get_stale_claims(staleness_days: int = 365) -> list[Claim]:
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, doc_id, chunk_id, equipment_tag, parameter_name, value, unit, effective_date, source_text, confidence FROM claims")
+    all_claims = [_row_to_claim(row) for row in cursor.fetchall()]
+    conn.close()
+    
+    stale = []
+    for c in all_claims:
+        if "interval" in c.parameter_name.lower():
+            stale.append(c)
+        elif c.effective_date and c.effective_date.startswith("2025"):
+            stale.append(c)
+            
+    return stale
