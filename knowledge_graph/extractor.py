@@ -81,7 +81,7 @@ Remember: parameter_name must be normalized snake_case.
 
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
-        return _mock_extraction(chunk_id)
+        return _mock_extraction(doc_id)
 
     client = anthropic.Anthropic(api_key=api_key)
     try:
