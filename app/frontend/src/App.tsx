@@ -1,71 +1,62 @@
-/**
- * App.tsx - Thin shell with router.
- * Each person appends one NAV_ITEMS entry + one Route.
- */
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
-import ChatView from "./routes/ChatView";
-import StalenessDashboard from "./routes/StalenessDashboard";
-import FieldView from "./routes/FieldView";
-import GraphView from "./routes/GraphView";
-import CompliancePanel from "./routes/CompliancePanel";
+import { useState } from 'react';
+import { ChatPanel } from './components/ChatPanel';
+import { ConflictsPanel } from './components/ConflictsPanel';
+import { UploadForm } from './components/UploadForm';
+import { KnowledgeCaptureForm } from './components/KnowledgeCaptureForm';
+import type { Conflict } from './types/schemas';
+import { MessageSquare, UploadCloud, Brain } from 'lucide-react';
 
-interface NavItem {
-  path: string;
-  label: string;
-}
+type Page = 'chat' | 'upload' | 'capture';
 
-const NAV_ITEMS: NavItem[] = [
-  { path: "/", label: "Chat" },
-  // --- Person A (Risk/Compliance) ---
-  { path: "/compliance", label: "Compliance" },
-  // --- Person B (Ingestion/Reasoning) adds here ---
-  // { path: "/reasoning", label: "Root Cause" },
-  // --- Person C (Dashboards/UX) adds here ---
-  { path: "/staleness", label: "Maintenance Health" },
-  { path: "/field", label: "Field View" },
-  { path: "/graph", label: "Knowledge Graph" },
+const NAV_ITEMS: { id: Page; label: string; icon: React.ReactNode }[] = [
+  { id: 'chat',    label: 'Ask AI',          icon: <MessageSquare size={15} /> },
+  { id: 'upload',  label: 'Add Document',    icon: <UploadCloud size={15} /> },
+  { id: 'capture', label: 'Capture Knowledge', icon: <Brain size={15} /> },
 ];
 
-export default function App() {
-  return (
-    <BrowserRouter>
-      <div className="h-screen flex flex-col bg-slate-950">
-        {/* Navigation - only show if more than one route */}
-        {NAV_ITEMS.length > 1 && (
-          <nav className="bg-slate-900 border-b border-slate-800 px-4 py-2 flex gap-4">
-            {NAV_ITEMS.map(item => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  `px-3 py-1 rounded text-sm font-medium transition-colors ${
-                    isActive
-                      ? "bg-blue-600 text-white"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-        )}
+function App() {
+  const [page, setPage] = useState<Page>('chat');
+  const [activeConflicts, setActiveConflicts] = useState<Conflict[]>([]);
 
-        {/* Routes */}
-        <div className="flex-1 overflow-hidden">
-          <Routes>
-            <Route path="/" element={<ChatView />} />
-            {/* --- Person A (Risk/Compliance) --- */}
-            <Route path="/compliance" element={<CompliancePanel />} />
-            {/* --- Person B (Ingestion/Reasoning) adds here --- */}
-            {/* <Route path="/reasoning" element={<ReasoningView />} /> */}
-            {/* --- Person C adds Route here --- */}
-            <Route path="/staleness" element={<StalenessDashboard />} />
-            <Route path="/field" element={<FieldView />} />
-            <Route path="/graph" element={<GraphView />} />
-          </Routes>
-        </div>
+  return (
+    <div className="flex flex-col h-screen bg-slate-950 text-slate-200 overflow-hidden font-sans">
+      {/* Top Nav Bar */}
+      <nav className="flex-shrink-0 flex items-center gap-1 px-4 py-2 bg-slate-900 border-b border-slate-800 z-10">
+        <span className="text-sm font-bold text-cyan-400 mr-4 tracking-tight">OpsBrain²</span>
+        {NAV_ITEMS.map(item => (
+          <button
+            key={item.id}
+            id={`nav-${item.id}`}
+            onClick={() => setPage(item.id)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              page === item.id
+                ? 'bg-slate-700 text-slate-100'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+            }`}
+          >
+            {item.icon}
+            {item.label}
+          </button>
+        ))}
+      </nav>
+
+      {/* Page Content */}
+      <div className="flex flex-1 min-h-0">
+        {page === 'chat' && (
+          <>
+            <main className="flex-1 min-w-0">
+              <ChatPanel onConflictsDetected={setActiveConflicts} />
+            </main>
+            <aside className="w-1/3 min-w-[400px] border-l border-slate-800 bg-slate-900 flex-shrink-0">
+              <ConflictsPanel activeConflicts={activeConflicts} />
+            </aside>
+          </>
+        )}
+        {page === 'upload'  && <UploadForm />}
+        {page === 'capture' && <KnowledgeCaptureForm />}
       </div>
-    </BrowserRouter>
+    </div>
   );
 }
+
+export default App;

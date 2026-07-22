@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import type { QueryResult, Conflict } from '../types/schemas';
 import { LessonsLearned } from './LessonsLearned';
 import { ConfidenceBreakdownPanel } from './ConfidenceBreakdownPanel';
+import { RootCausePanel } from './RootCausePanel';
 import { Send, FileText, Bot, User, AlertTriangle } from 'lucide-react';
 
 interface Props {
@@ -135,6 +136,11 @@ export const ChatPanel: React.FC<Props> = ({ onConflictsDetected }) => {
                   )}
 
                   <LessonsLearned incidents={msg.result?.lessons_learned || []} />
+
+                  {/* RootCausePanel — renders only when root_cause_chain is present */}
+                  {msg.result?.root_cause_chain && (
+                    <RootCausePanel chain={msg.result.root_cause_chain} />
+                  )}
                 </div>
               )}
             </div>
