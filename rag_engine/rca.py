@@ -14,7 +14,6 @@ from shared.schemas import Incident, RootCauseChain, Claim, Conflict
 from knowledge_graph.query import (
     get_claims_for_entity,
     get_incidents_similar_to,
-    get_all_known_conflicts_from_kg,
 )
 from rag_engine.llm import get_llm
 

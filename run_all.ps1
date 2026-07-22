@@ -7,6 +7,10 @@ Get-Content "app\frontend\.env" | ForEach-Object {
     }
 }
 
+# Set PYTHONPATH to the repository root so uvicorn can find the 'app' module
+$env:PYTHONPATH = (Get-Item .).FullName
+
+
 # 1. Start Backend
 Write-Host "Setting up backend..."
 Set-Location app\backend

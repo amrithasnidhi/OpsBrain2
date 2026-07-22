@@ -2,6 +2,11 @@
 OpsBrain2 API - Thin shell entry point.
 Each person adds exactly two lines below to register their router.
 """
+import os
+import sys
+# Add root directory to sys.path to allow importing from project root
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
