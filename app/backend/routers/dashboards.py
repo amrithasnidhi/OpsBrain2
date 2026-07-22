@@ -19,8 +19,8 @@ def staleness():
             # Simple heuristic for required_interval and last_inspection_date
             # The dummy data in the knowledge graph doesn't have these exact fields explicitly structured,
             # so we'll infer them from the claim and effective_date.
-            interval_str = c.value
-            
+            interval_str = str(c.value) if c.value else "12 months"
+
             # Extract numbers from interval_str to approximate required interval in days
             # Default to 365 if not found
             import re
