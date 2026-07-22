@@ -2,6 +2,8 @@
 
 An AI-powered knowledge system that doesn't just answer questions—it actively detects contradictions, regulatory gaps, and stale procedures across maintenance documents and tribal knowledge.
 
+**Live Deployed Application:** [https://opsbrain2-frontend.onrender.com](https://opsbrain2-frontend.onrender.com)
+
 ---
 
 ## Table of Contents
