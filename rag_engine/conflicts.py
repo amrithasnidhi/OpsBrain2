@@ -128,24 +128,7 @@ In ONE sentence (max 25 words), state the worst-case operational consequence if 
 Write for a plant manager, not an engineer - focus on business impact (safety incident, production loss, compliance fine, etc).
 Do not include any preamble or explanation - just the single impact sentence."""
 
-    try:
-        # Try Claude API first for high-quality responses
-        import anthropic
-        api_key = os.environ.get("ANTHROPIC_API_KEY")
-        if api_key:
-            client = anthropic.Anthropic(api_key=api_key)
-            response = client.messages.create(
-                model="claude-3-5-sonnet-20241022",
-                max_tokens=60,
-                messages=[{"role": "user", "content": prompt}]
-            )
-            impact = response.content[0].text.strip()
-            _business_impact_cache[cache_key] = impact
-            return impact
-    except Exception as e:
-        logger.debug(f"Claude API failed for business impact: {e}")
-
-    # Fallback to other LLMs
+    # Use LLM manager (supports Groq, Anthropic, Ollama with automatic fallback)
     try:
         llm = get_llm()
         response = llm.generate(prompt, max_tokens=60)
@@ -153,7 +136,7 @@ Do not include any preamble or explanation - just the single impact sentence."""
             _business_impact_cache[cache_key] = response.strip()
             return response.strip()
     except Exception as e:
-        logger.debug(f"LLM fallback failed: {e}")
+        logger.debug(f"LLM call failed for business impact: {e}")
 
     # Generate fallback based on conflict type and severity
     fallback = _generate_fallback_business_impact(conflict)

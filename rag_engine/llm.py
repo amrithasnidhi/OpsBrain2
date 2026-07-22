@@ -130,11 +130,35 @@ class GroqProvider(LLMProvider):
 
         try:
             from groq import Groq
+            # Some versions of groq/httpx have proxy issues - try to work around
             self._client = Groq(api_key=api_key)
             self._available = True
             return True
         except ImportError:
             logger.debug("groq package not installed. Install with: pip install groq")
+            self._available = False
+            return False
+        except TypeError as e:
+            # Handle httpx proxy argument issues
+            if "proxies" in str(e):
+                logger.warning("Groq client proxy issue - trying without http_client")
+                try:
+                    import httpx
+                    # Create client without proxy settings
+                    http_client = httpx.Client()
+                    self._client = Groq(api_key=api_key, http_client=http_client)
+                    self._available = True
+                    return True
+                except Exception as e2:
+                    logger.debug(f"Groq fallback failed: {e2}")
+                    self._available = False
+                    return False
+            else:
+                logger.debug(f"Groq init failed: {e}")
+                self._available = False
+                return False
+        except Exception as e:
+            logger.debug(f"Groq init failed: {e}")
             self._available = False
             return False
 
