@@ -288,3 +288,78 @@ def get_all_equipment_tags_from_chunks(chunks: List[Chunk]) -> List[str]:
     for chunk in chunks:
         tags.update(chunk.metadata.equipment_tags)
     return list(tags)
+
+
+# ---------------------------------------------------------------------------
+# Hybrid Retrieval (Feature 4)
+# ---------------------------------------------------------------------------
+
+def _claims_to_pseudo_chunks(claims: list) -> List[Chunk]:
+    """Convert KG Claim objects into pseudo-Chunks so they can be ranked alongside dense results."""
+    pseudo: List[Chunk] = []
+    for claim in claims:
+        text = (
+            f"[Knowledge Graph] {claim.equipment_tag} — {claim.parameter_name}: "
+            f"{claim.value}{' ' + claim.unit if claim.unit else ''}. "
+            f"Source: {claim.source_text[:200]}"
+        )
+        try:
+            meta = ChunkMetadata(
+                doc_id=claim.doc_id,
+                doc_type="manual",
+                source_file=f"kg:{claim.doc_id}",
+                equipment_tags=[claim.equipment_tag],
+                ingested_at="",
+            )
+        except Exception:
+            continue
+        pseudo.append(Chunk(
+            chunk_id=f"kg_{claim.id}",
+            content=text,
+            metadata=meta,
+            similarity_score=claim.confidence,
+        ))
+    return pseudo
+
+
+def _dedupe(chunks: List[Chunk]) -> List[Chunk]:
+    """Remove duplicate chunks (by chunk_id), preserving order."""
+    seen: set[str] = set()
+    result: List[Chunk] = []
+    for c in chunks:
+        if c.chunk_id not in seen:
+            seen.add(c.chunk_id)
+            result.append(c)
+    return result
+
+
+def hybrid_retrieve(question: str, top_k: int = 6) -> tuple[List[Chunk], str]:
+    """
+    Hybrid retrieval: combines dense vector search with KG structured claims.
+
+    Returns:
+        (chunks, retrieval_mode) where retrieval_mode is "hybrid" or "dense"
+    """
+    dense_results = retrieve(question, top_k=top_k)
+
+    # Extract tags from question to fetch structured KG data
+    tags = extract_equipment_tags(question)
+    structured_results: List[Chunk] = []
+
+    if tags:
+        try:
+            from knowledge_graph.query import get_claims_for_entity
+            for tag in tags[:3]:  # cap at 3 tags to avoid overload
+                claims = get_claims_for_entity(tag)
+                structured_results += _claims_to_pseudo_chunks(claims)
+        except Exception as e:
+            logger.warning(f"KG structured retrieval failed: {e}")
+
+    if structured_results:
+        all_chunks = _dedupe(dense_results + structured_results)
+        # Sort by similarity score, keep top_k
+        all_chunks.sort(key=lambda c: c.similarity_score, reverse=True)
+        return all_chunks[:top_k + 3], "hybrid"  # allow slightly more for hybrid
+    else:
+        return dense_results, "dense"
+

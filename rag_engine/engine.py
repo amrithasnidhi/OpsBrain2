@@ -15,7 +15,7 @@ from typing import List, Optional
 
 from shared.schemas import QueryResult, Conflict
 
-from .retriever import retrieve, Chunk, get_all_equipment_tags_from_chunks
+from .retriever import retrieve, hybrid_retrieve, Chunk, get_all_equipment_tags_from_chunks
 from .qa import generate_answer
 from .conflicts import detect_conflicts_for_query, get_all_known_conflicts as _get_all_conflicts
 from .lessons import surface_lessons_learned
@@ -70,9 +70,9 @@ def answer_query(
     """
     logger.info(f"Processing query: '{question[:100]}...' " if len(question) > 100 else f"Processing query: '{question}'")
 
-    # Step 1: Retrieve relevant chunks
-    chunks = retrieve(question, top_k=top_k)
-    logger.info(f"Retrieved {len(chunks)} chunks")
+    # Step 1: Retrieve relevant chunks (hybrid: dense + knowledge-graph structured)
+    chunks, retrieval_mode = hybrid_retrieve(question, top_k=top_k)
+    logger.info(f"Retrieved {len(chunks)} chunks via {retrieval_mode} mode")
 
     # Step 2: Detect conflicts (if enabled)
     conflicts = []
@@ -134,7 +134,17 @@ def answer_query(
         f"lessons={len(result.lessons_learned)}"
     )
 
-    result.confidence_breakdown = generate_answer.__globals__['build_breakdown'](chunks, len(result.citations), len(result.answer), question)
+    # Append retrieval mode (Person B)
+    result.retrieval_mode = retrieval_mode
+
+    # Append root cause chain only for incident-related queries (Person B)
+    from .rca import is_incident_query, build_root_cause_chain
+    if is_incident_query(question, chunks):
+        try:
+            result.root_cause_chain = build_root_cause_chain(question, chunks)
+        except Exception as rca_err:
+            logger.warning(f"RCA chain failed: {rca_err}")
+
     return result
 
 

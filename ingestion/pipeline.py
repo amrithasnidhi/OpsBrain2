@@ -125,7 +125,7 @@ def run_pipeline(
     input_dir: str,
     collection_name: str,
     chroma_path: str = "./chroma_db",
-) -> list[dict]:
+) -> dict:
     input_path = Path(input_dir)
     if not input_path.exists():
         raise FileNotFoundError(f"Input directory not found: {input_dir}")
@@ -207,6 +207,16 @@ def run_pipeline(
         )
         log.info("  ✓ Upserted %d chunks for doc_id=%s", len(chunks), doc_id)
 
+    # Post-ingestion conflict scan (Feature 1)
+    try:
+        from rag_engine.conflicts import get_all_known_conflicts
+        new_conflicts = get_all_known_conflicts(force_refresh=True)
+        conflict_count = len(new_conflicts)
+        log.info("Post-ingestion conflict scan: %d conflicts found", conflict_count)
+    except Exception as exc:
+        log.warning("Conflict scan skipped: %s", exc)
+        conflict_count = 0
+
     # Dump manifest for Person 2 and Person 3
     manifest_path = Path("data/chunks_manifest.json")
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -217,7 +227,7 @@ def run_pipeline(
         "\nDone. %d total chunks | ChromaDB: %s (%s) | Manifest: %s",
         len(manifest), chroma_path, collection_name, manifest_path,
     )
-    return manifest
+    return {"chunks_ingested": len(manifest), "conflict_count": conflict_count}
 
 
 # ----- CLI entry point --------------------------------------------------------
