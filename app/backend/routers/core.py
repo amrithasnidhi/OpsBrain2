@@ -1,7 +1,9 @@
 """Core API routes - Query, Conflicts, Health, Graph"""
 import os
 import sys
-from fastapi import APIRouter, HTTPException
+import shutil
+from pathlib import Path
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from pydantic import BaseModel
 
 # Add root directory to sys.path
@@ -9,6 +11,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
 
 from rag_engine.engine import answer_query, get_all_known_conflicts
 from knowledge_graph.graph import build_graph
+from ingestion.pipeline import run_pipeline
+from knowledge_graph.extractor import process_manifest
 
 router = APIRouter(prefix="/api", tags=["core"])
 
@@ -48,4 +52,38 @@ def get_graph():
         edges = [{"source": u, "target": v, "label": d.get("type", "")} for u, v, d in G.edges(data=True)]
         return {"nodes": nodes, "edges": edges}
     except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/ingest")
+def ingest_document(file: UploadFile = File(...)):
+    try:
+        # Create a temporary directory for the upload
+        base_dir = Path(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+        temp_dir = base_dir / "data" / "temp_upload"
+        temp_dir.mkdir(parents=True, exist_ok=True)
+        
+        file_path = temp_dir / file.filename
+        
+        # Save the uploaded file
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        # Run the ingestion pipeline on the temporary directory
+        result = run_pipeline(str(temp_dir), "industrial_docs", str(base_dir / "chroma_db"))
+        
+        # Run the knowledge graph extraction on the newly created manifest
+        process_manifest()
+        
+        # Clean up the temporary directory
+        shutil.rmtree(temp_dir)
+        
+        return {
+            "filename": file.filename,
+            "chunks_ingested": result["chunks_ingested"],
+            "conflict_count": result["conflict_count"]
+        }
+    except Exception as e:
+        # Ensure cleanup on error if temp_dir exists
+        if 'temp_dir' in locals() and temp_dir.exists():
+            shutil.rmtree(temp_dir)
         raise HTTPException(status_code=500, detail=str(e))
