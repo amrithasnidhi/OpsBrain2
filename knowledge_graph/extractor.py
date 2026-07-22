@@ -102,27 +102,33 @@ Remember: parameter_name must be normalized snake_case.
         print(f"Extraction error: {e}")
         return {}
 
-def _mock_extraction(chunk_id):
+def _mock_extraction(doc_id):
     """Fallback if API key isn't provided so testing isn't blocked."""
     data = {"claims": [], "incidents": [], "relationships": []}
-    if "p101" in chunk_id:
-        if "manual" in chunk_id:
-            data["claims"].append({"equipment_tag": "Pump-P101", "parameter_name": "max_pressure", "value": "150", "unit": "PSI", "confidence": 1.0})
-        else:
-            data["claims"].append({"equipment_tag": "Pump-P101", "parameter_name": "max_pressure", "value": "180", "unit": "PSI", "confidence": 0.9})
-            data["incidents"].append({"equipment_tag": "Pump-P101", "incident_type": "Overpressurization", "description": "Overpressurization event due to mismatched gauges.", "severity": "high"})
-    elif "v12" in chunk_id:
-        if "guideline" in chunk_id:
-            data["claims"].append({"equipment_tag": "Valve-12", "parameter_name": "lubrication", "value": "weekly manual", "confidence": 1.0})
-            data["relationships"].append({"source_entity": "Valve-12", "target_entity": "Compressor-C1", "relation_type": "PART_OF"})
-        else:
-            # Test tag variant "Valve V-12"
-            data["claims"].append({"equipment_tag": "Valve V-12", "parameter_name": "lubrication", "value": "self-lubricating", "confidence": 1.0})
-    elif "f300" in chunk_id:
-        if "policy" in chunk_id:
-            data["claims"].append({"equipment_tag": "Filter-F300", "parameter_name": "replacement_interval", "value": "6", "unit": "months", "confidence": 1.0})
-        else:
-            data["claims"].append({"equipment_tag": "Filter-F300", "parameter_name": "last_replacement", "value": "2025-01-15", "effective_date": "2025-01-15", "confidence": 1.0})
+    doc_id_lower = doc_id.lower()
+
+    if "compressor" in doc_id_lower or "c1" in doc_id_lower:
+        data["claims"].append({"equipment_tag": "Compressor-C1", "parameter_name": "max_pressure", "value": "150", "unit": "PSI", "confidence": 1.0})
+        data["claims"].append({"equipment_tag": "Compressor-C1", "parameter_name": "inspection_interval", "value": "6", "unit": "months", "confidence": 1.0})
+        data["relationships"].append({"source_entity": "Compressor-C1", "target_entity": "Process-Area-B", "relation_type": "LOCATED_IN"})
+    elif "pump" in doc_id_lower:
+        data["claims"].append({"equipment_tag": "Pump-P3", "parameter_name": "max_flow_rate", "value": "500", "unit": "GPM", "confidence": 1.0})
+        data["claims"].append({"equipment_tag": "Pump-P3", "parameter_name": "maintenance_interval", "value": "3", "unit": "months", "confidence": 0.9})
+        data["relationships"].append({"source_entity": "Pump-P3", "target_entity": "Compressor-C1", "relation_type": "FEEDS_INTO"})
+    elif "valve" in doc_id_lower or "v12" in doc_id_lower:
+        data["claims"].append({"equipment_tag": "Valve-V12", "parameter_name": "lubrication_type", "value": "self-lubricating", "confidence": 1.0})
+        data["claims"].append({"equipment_tag": "Valve-V12", "parameter_name": "max_pressure", "value": "200", "unit": "PSI", "confidence": 1.0})
+        data["relationships"].append({"source_entity": "Valve-V12", "target_entity": "Compressor-C1", "relation_type": "CONTROLS"})
+    elif "incident" in doc_id_lower:
+        data["incidents"].append({"equipment_tag": "Compressor-C1", "incident_type": "Failure", "description": "Unexpected shutdown due to bearing failure.", "severity": "high"})
+        data["relationships"].append({"source_entity": "Compressor-C1", "target_entity": "Incident-Report", "relation_type": "HAS_INCIDENT"})
+    elif "maintenance" in doc_id_lower:
+        data["claims"].append({"equipment_tag": "Compressor-C1", "parameter_name": "last_maintenance", "value": "2025-06-15", "effective_date": "2025-06-15", "confidence": 1.0})
+        data["relationships"].append({"source_entity": "Compressor-C1", "target_entity": "Maintenance-Team", "relation_type": "MAINTAINED_BY"})
+    elif "sop" in doc_id_lower:
+        data["claims"].append({"equipment_tag": "Facility", "parameter_name": "emergency_response_time", "value": "5", "unit": "minutes", "confidence": 1.0})
+        data["relationships"].append({"source_entity": "Facility", "target_entity": "Emergency-Team", "relation_type": "MANAGED_BY"})
+
     return data
     
 def process_manifest():
