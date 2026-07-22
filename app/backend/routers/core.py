@@ -83,10 +83,13 @@ def ingest_document(file: UploadFile = File(...)):
         
         # Run the knowledge graph extraction on the newly created manifest
         process_manifest()
-        
-        # Clean up the temporary directory
-        shutil.rmtree(temp_dir)
-        
+
+        # Clean up the temporary directory (ignore errors on Windows file locks)
+        try:
+            shutil.rmtree(temp_dir)
+        except (PermissionError, OSError):
+            pass  # File may still be locked on Windows, will be cleaned up later
+
         return {
             "filename": file.filename,
             "chunks_ingested": result["chunks_ingested"],
@@ -95,5 +98,8 @@ def ingest_document(file: UploadFile = File(...)):
     except Exception as e:
         # Ensure cleanup on error if temp_dir exists
         if 'temp_dir' in locals() and temp_dir.exists():
-            shutil.rmtree(temp_dir)
+            try:
+                shutil.rmtree(temp_dir)
+            except (PermissionError, OSError):
+                pass
         raise HTTPException(status_code=500, detail=str(e))
