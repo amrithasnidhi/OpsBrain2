@@ -26,9 +26,9 @@ app.include_router(core_router)
 from app.backend.routers.risk_compliance import router as risk_compliance_router
 app.include_router(risk_compliance_router)
 
-# --- Person B (Ingestion/Reasoning) adds here ---
-# from app.backend.routers.reasoning import router as reasoning_router
-# app.include_router(reasoning_router)
+# --- Person B (Ingestion/Reasoning) ---
+from app.backend.routers.ingestion_reasoning import router as ingestion_reasoning_router
+app.include_router(ingestion_reasoning_router)
 
 # --- Person C (Dashboards/UX) adds here ---
 from app.backend.routers.dashboards import router as dashboards_router
