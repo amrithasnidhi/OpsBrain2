@@ -22,7 +22,7 @@ services:
     name: opsbrain2-frontend
     env: static
     rootDir: app/frontend
-    buildCommand: "npm install && npm run build"
+    buildCommand: "rm -f package-lock.json && npm install && npm run build"
     staticPublishPath: "./dist"
     envVars:
       - key: NODE_VERSION
