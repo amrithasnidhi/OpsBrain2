@@ -97,7 +97,9 @@ def get_stale_claims(staleness_days: int = 365) -> list[Claim]:
     for c in all_claims:
         if "interval" in c.parameter_name.lower():
             stale.append(c)
-        elif c.effective_date and c.effective_date.startswith("2025"):
-            stale.append(c)
+        elif c.effective_date:
+            date_str = str(c.effective_date) if not isinstance(c.effective_date, str) else c.effective_date
+            if date_str.startswith("2025"):
+                stale.append(c)
             
     return stale
