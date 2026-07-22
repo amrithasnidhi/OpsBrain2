@@ -1,57 +1,71 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { RootCauseChain } from '../types/schemas';
 import { AlertOctagon, ChevronDown, ChevronUp, ClipboardList, Database, GitBranch } from 'lucide-react';
 
-interface Props {
-  chain: RootCauseChain;
-}
+interface Props { chain: RootCauseChain; }
 
 export function RootCausePanel({ chain }: Props) {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <div
-      id="rca-panel"
-      className="mt-4 rounded-xl border border-amber-700/50 bg-amber-950/20 overflow-hidden"
-    >
-      {/* Header */}
-      <button
-        id="rca-toggle-btn"
-        onClick={() => setExpanded(e => !e)}
-        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-amber-900/20 transition-colors"
-      >
-        <div className="flex items-center gap-2">
-          <AlertOctagon size={16} className="text-amber-400" />
-          <span className="text-sm font-semibold text-amber-300">Root Cause Analysis</span>
+    <div id="rca-panel" style={{
+      borderRadius: 'var(--radius-md)', border: '1px solid rgba(255,165,2,0.2)',
+      background: 'var(--warning-dim)', overflow: 'hidden', marginTop: '4px',
+    }}>
+      {/* Header toggle */}
+      <button id="rca-toggle-btn" onClick={() => setExpanded(e => !e)} style={{
+        width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '12px 14px', background: 'transparent', border: 'none', cursor: 'pointer',
+        transition: 'background 0.15s ease',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <AlertOctagon size={14} color="var(--warning)" />
+          <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--warning)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            Root Cause Analysis
+          </span>
           {chain.incident && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-900/40 text-amber-400 border border-amber-700/50 uppercase font-medium">
+            <span style={{
+              fontSize: '10px', padding: '1px 7px', borderRadius: '999px',
+              background: 'rgba(255,165,2,0.2)', color: 'var(--warning)', border: '1px solid rgba(255,165,2,0.3)',
+              fontWeight: 700, textTransform: 'uppercase',
+            }}>
               {chain.incident.severity}
             </span>
           )}
         </div>
-        {expanded ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
+        {expanded
+          ? <ChevronUp size={13} color="var(--text-muted)" />
+          : <ChevronDown size={13} color="var(--text-muted)" />
+        }
       </button>
 
       {expanded && (
-        <div className="px-4 pb-4 space-y-4 border-t border-amber-800/30">
-          {/* Likely Root Cause */}
-          <div className="pt-3">
-            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-              <GitBranch size={11} /> Likely Root Cause
+        <div style={{ padding: '0 14px 14px', display: 'flex', flexDirection: 'column', gap: '12px', borderTop: '1px solid rgba(255,165,2,0.15)' }}>
+
+          {/* Root cause */}
+          <div style={{ paddingTop: '12px' }}>
+            <p style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)', marginBottom: '6px' }}>
+              <GitBranch size={10} /> Likely Root Cause
             </p>
-            <p className="text-sm text-amber-200 leading-relaxed">{chain.likely_root_cause}</p>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{chain.likely_root_cause}</p>
           </div>
 
-          {/* Recommended Checks */}
+          {/* Recommended checks */}
           {chain.recommended_checks.length > 0 && (
             <div>
-              <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <ClipboardList size={11} /> Recommended Checks
+              <p style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                <ClipboardList size={10} /> Recommended Checks
               </p>
-              <ol className="space-y-1.5">
+              <ol style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingLeft: 0, listStyle: 'none' }}>
                 {chain.recommended_checks.map((check, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm text-slate-200">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-800/50 text-amber-300 text-xs font-bold flex items-center justify-center mt-0.5">
+                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                    <span style={{
+                      flexShrink: 0, width: '18px', height: '18px', borderRadius: '50%',
+                      background: 'rgba(255,165,2,0.2)', color: 'var(--warning)',
+                      fontSize: '10px', fontWeight: 700,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      marginTop: '2px',
+                    }}>
                       {i + 1}
                     </span>
                     {check}
@@ -61,33 +75,33 @@ export function RootCausePanel({ chain }: Props) {
             </div>
           )}
 
-          {/* Evidence Chips */}
-          <div className="flex flex-wrap gap-2">
+          {/* Evidence chips */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
             {chain.related_claims.slice(0, 4).map((c, i) => (
-              <span
-                key={i}
-                title={c.source_text}
-                className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400"
-              >
-                <Database size={9} className="text-cyan-500" />
+              <span key={i} title={c.source_text} style={{
+                display: 'inline-flex', alignItems: 'center', gap: '4px',
+                fontSize: '11px', padding: '3px 8px', borderRadius: '999px',
+                background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', color: 'var(--text-muted)',
+              }}>
+                <Database size={9} color="var(--info)" />
                 {c.equipment_tag}/{c.parameter_name}
               </span>
             ))}
             {chain.related_conflicts.slice(0, 2).map((c, i) => (
-              <span
-                key={i}
-                title={c.explanation}
-                className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-red-900/30 border border-red-800/50 text-red-400"
-              >
+              <span key={i} title={c.explanation} style={{
+                display: 'inline-flex', alignItems: 'center', gap: '4px',
+                fontSize: '11px', padding: '3px 8px', borderRadius: '999px',
+                background: 'var(--danger-dim)', border: '1px solid rgba(255,71,87,0.2)', color: 'var(--danger)',
+              }}>
                 ⚠ {c.entity}/{c.parameter}
               </span>
             ))}
             {chain.similar_incidents.slice(0, 2).map((inc, i) => (
-              <span
-                key={i}
-                title={inc.description}
-                className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-orange-900/30 border border-orange-800/50 text-orange-400"
-              >
+              <span key={i} title={inc.description} style={{
+                display: 'inline-flex', alignItems: 'center', gap: '4px',
+                fontSize: '11px', padding: '3px 8px', borderRadius: '999px',
+                background: 'var(--warning-dim)', border: '1px solid rgba(255,165,2,0.2)', color: 'var(--warning)',
+              }}>
                 📋 {inc.incident_type}
               </span>
             ))}

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Mic, Send, AlertTriangle, Loader2 } from 'lucide-react';
+import { Mic, Send, AlertTriangle, Loader2, Zap } from 'lucide-react';
 import type { QueryResult, Conflict } from '../types/schemas';
 
-// Web Speech API Types
 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
 export default function FieldView() {
@@ -13,137 +12,158 @@ export default function FieldView() {
   const [input, setInput] = useState(tag ? `What is the status of ${tag}?` : '');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<QueryResult | null>(null);
-  
   const [tagConflicts, setTagConflicts] = useState<Conflict[]>([]);
-  
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<any>(null);
-
-  // Feature detection for Speech API
   const supportsSpeech = !!SpeechRecognition;
 
   useEffect(() => {
     if (tag) {
-      // Fetch conflicts to see if this tag has any
       fetch('http://localhost:8000/api/conflicts')
-        .then(res => res.json())
-        .then((data: Conflict[]) => {
-          const matching = data.filter(c => c.entity === tag);
-          setTagConflicts(matching);
-        })
+        .then(r => r.json())
+        .then((d: Conflict[]) => setTagConflicts(d.filter(c => c.entity === tag)))
         .catch(console.error);
     }
-
     if (supportsSpeech) {
-      const recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-
-      recognition.onstart = () => setIsListening(true);
-      recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setInput(prev => prev ? `${prev} ${transcript}` : transcript);
-        setIsListening(false);
-      };
-      recognition.onerror = () => setIsListening(false);
-      recognition.onend = () => setIsListening(false);
-      
-      recognitionRef.current = recognition;
+      const rec = new SpeechRecognition();
+      rec.continuous = false; rec.interimResults = false; rec.lang = 'en-US';
+      rec.onstart = () => setIsListening(true);
+      rec.onresult = (e: any) => { setInput(prev => prev ? `${prev} ${e.results[0][0].transcript}` : e.results[0][0].transcript); setIsListening(false); };
+      rec.onerror = () => setIsListening(false);
+      rec.onend = () => setIsListening(false);
+      recognitionRef.current = rec;
     }
   }, [tag, supportsSpeech]);
-
-  const toggleListen = () => {
-    if (isListening) {
-      recognitionRef.current?.stop();
-    } else {
-      recognitionRef.current?.start();
-    }
-  };
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!input.trim() || loading) return;
-
-    setLoading(true);
-    setResult(null);
-
+    setLoading(true); setResult(null);
     try {
       const res = await fetch('http://localhost:8000/api/query', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: input })
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: input }),
       });
-      
       if (!res.ok) throw new Error('API Error');
-      const data: QueryResult = await res.json();
-      setResult(data);
-    } catch (err: any) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+      setResult(await res.json());
+    } catch (err) { console.error(err); }
+    finally { setLoading(false); }
   };
 
+  const conf = result?.confidence ?? 0;
+  const confColor = conf >= 0.8 ? 'var(--accent)' : conf >= 0.5 ? 'var(--warning)' : 'var(--danger)';
+
   return (
-    <div className="flex flex-col h-full bg-slate-950 text-slate-200 overflow-hidden font-sans sm:max-w-md mx-auto border-x border-slate-900 shadow-2xl">
-      {/* Header Banner */}
-      <div className="bg-slate-900 p-4 border-b border-slate-800 text-center flex-shrink-0">
-        <h1 className="text-xl font-bold text-white">Field View</h1>
-        {tag && <p className="text-blue-400 text-sm font-mono mt-1">{tag}</p>}
+    <div style={{
+      height: '100%', display: 'flex', flexDirection: 'column',
+      background: 'var(--bg-base)', maxWidth: '480px', margin: '0 auto',
+      borderLeft: '1px solid var(--border-subtle)', borderRight: '1px solid var(--border-subtle)',
+    }}>
+      {/* Header */}
+      <div style={{
+        padding: '20px 20px 16px', flexShrink: 0,
+        background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-subtle)',
+      }}>
+        <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '4px' }}>
+          Field Mode
+        </p>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)' }}>
+          {tag ?? 'Ask it.'}
+        </h1>
+        {tag && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '4px' }}>
+            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent)' }} />
+            <span style={{ fontFamily: 'monospace', fontSize: '12px', color: 'var(--accent)' }}>{tag}</span>
+          </div>
+        )}
       </div>
 
-      {/* Warnings Banner */}
+      {/* Conflict banner */}
       {tagConflicts.length > 0 && (
-        <div className="bg-red-500/20 border-b border-red-500/50 p-4 flex items-center gap-3 text-red-400 flex-shrink-0">
-          <AlertTriangle className="shrink-0" size={24} />
-          <span className="font-bold text-lg">⚠️ {tagConflicts.length} known conflicts for this equipment</span>
+        <div style={{
+          padding: '12px 20px', flexShrink: 0,
+          background: 'var(--danger-dim)', borderBottom: '1px solid rgba(255,71,87,0.25)',
+          display: 'flex', alignItems: 'center', gap: '10px',
+        }}>
+          <AlertTriangle size={18} color="var(--danger)" />
+          <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--danger)' }}>
+            {tagConflicts.length} known conflict{tagConflicts.length !== 1 ? 's' : ''} for this equipment
+          </span>
         </div>
       )}
 
-      {/* Scrollable Answer Area */}
-      <div className="flex-1 overflow-y-auto p-4 flex flex-col justify-end space-y-4">
-        {result && (
-          <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-lg mb-4">
-            <p className="text-lg leading-relaxed whitespace-pre-wrap">{result.answer}</p>
+      {/* Answer area */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '12px' }}>
+        {!result && !loading && (
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)', paddingBottom: '20px' }}>
+            <Zap size={28} style={{ margin: '0 auto 10px', opacity: 0.35 }} />
+            <p style={{ fontSize: '13px' }}>Ask a question or use your voice</p>
           </div>
         )}
         {loading && (
-          <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-lg mb-4 flex items-center justify-center text-blue-400">
-            <Loader2 size={32} className="animate-spin" />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'var(--accent)' }}>
+            <Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} />
+            <span style={{ fontSize: '13px' }}>Searching knowledge base…</span>
+          </div>
+        )}
+        {result && (
+          <div className="animate-fade-in-up" style={{
+            padding: '18px', background: 'var(--bg-card)',
+            borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)',
+            boxShadow: 'var(--shadow-card)',
+          }}>
+            <p style={{ fontSize: '15px', lineHeight: 1.65, color: 'var(--text-primary)', whiteSpace: 'pre-wrap', marginBottom: '14px' }}>
+              {result.answer}
+            </p>
+            <div style={{ paddingTop: '10px', borderTop: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{
+                padding: '3px 10px', borderRadius: '999px', fontSize: '11px', fontWeight: 700,
+                background: `${confColor}18`, color: confColor, border: `1px solid ${confColor}40`,
+              }}>
+                {Math.round(conf * 100)}% Confidence
+              </span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{result.citations.length} source{result.citations.length !== 1 ? 's' : ''}</span>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Input Area - Large Touch Targets */}
-      <div className="p-4 bg-slate-900 border-t border-slate-800 flex-shrink-0">
-        <form onSubmit={handleSubmit} className="flex gap-2">
+      {/* Input */}
+      <div style={{ padding: '14px 16px 20px', background: 'var(--bg-surface)', borderTop: '1px solid var(--border-subtle)', flexShrink: 0 }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px' }}>
           {supportsSpeech && (
-            <button 
-              type="button" 
-              onClick={toggleListen}
-              className={`p-4 rounded-xl shrink-0 transition-colors ${isListening ? 'bg-red-600 animate-pulse text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
-              aria-label="Voice Input"
-            >
-              <Mic size={28} />
+            <button type="button" onClick={() => isListening ? recognitionRef.current?.stop() : recognitionRef.current?.start()} style={{
+              width: '48px', height: '48px', borderRadius: 'var(--radius-md)', flexShrink: 0,
+              cursor: 'pointer',
+              background: isListening ? 'var(--danger)' : 'var(--bg-card)',
+              outline: `1px solid ${isListening ? 'var(--danger)' : 'var(--border-default)'}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'all 0.15s ease',
+              animation: isListening ? 'pulse-green 1.5s ease-in-out infinite' : 'none',
+            }}>
+              <Mic size={20} color={isListening ? '#fff' : 'var(--text-muted)'} />
             </button>
           )}
-          
           <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask or speak..."
-            className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 text-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            type="text" value={input} onChange={e => setInput(e.target.value)}
+            placeholder="Ask or speak…"
+            style={{
+              flex: 1, background: 'var(--bg-card)', border: '1px solid var(--border-default)',
+              borderRadius: 'var(--radius-md)', padding: '12px 16px', fontSize: '14px',
+              color: 'var(--text-primary)', outline: 'none', fontFamily: 'var(--font-body)',
+              transition: 'border-color 0.2s',
+            }}
+            onFocus={e => e.target.style.borderColor = 'var(--accent)'}
+            onBlur={e => e.target.style.borderColor = 'var(--border-default)'}
           />
-          
-          <button 
-            type="submit" 
-            disabled={loading || !input.trim()}
-            className="bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 p-4 rounded-xl shrink-0 text-white transition-colors"
-            aria-label="Send"
-          >
-            <Send size={28} />
+          <button type="submit" disabled={loading || !input.trim()} style={{
+            width: '48px', height: '48px', borderRadius: 'var(--radius-md)', flexShrink: 0,
+            cursor: 'pointer',
+            background: input.trim() && !loading ? 'var(--accent)' : 'var(--bg-card)',
+            outline: `1px solid ${input.trim() && !loading ? 'transparent' : 'var(--border-default)'}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s ease',
+          }}>
+            <Send size={18} color={input.trim() && !loading ? '#000' : 'var(--text-muted)'} />
           </button>
         </form>
       </div>

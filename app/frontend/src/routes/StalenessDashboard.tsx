@@ -1,80 +1,132 @@
 import { useEffect, useState } from 'react';
 import type { StalenessRow } from '../types/schemas';
-import { AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { Clock, CheckCircle2, AlertTriangle, RefreshCw } from 'lucide-react';
+
+const STATUS_CFG = {
+  ok:      { color: 'var(--accent)',   bg: 'var(--accent-dim)',   Icon: CheckCircle2,  label: 'HEALTHY' },
+  warning: { color: 'var(--warning)',  bg: 'var(--warning-dim)',  Icon: Clock,         label: 'WARNING' },
+  overdue: { color: 'var(--danger)',   bg: 'var(--danger-dim)',   Icon: AlertTriangle, label: 'OVERDUE' },
+};
 
 export default function StalenessDashboard() {
   const [rows, setRows] = useState<StalenessRow[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const load = () => {
+    setLoading(true);
     fetch('http://localhost:8000/api/staleness')
-      .then(res => res.json())
-      .then(data => {
-        setRows(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'overdue': return <AlertCircle className="text-red-500" size={20} />;
-      case 'warning': return <Clock className="text-amber-500" size={20} />;
-      case 'ok': return <CheckCircle className="text-green-500" size={20} />;
-      default: return null;
-    }
+      .then(r => r.json()).then(d => { setRows(d); setLoading(false); })
+      .catch(() => setLoading(false));
   };
+  useEffect(() => { load(); }, []);
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'overdue': return <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded-full text-xs font-bold border border-red-500/30">Overdue</span>;
-      case 'warning': return <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded-full text-xs font-bold border border-amber-500/30">Warning</span>;
-      case 'ok': return <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-bold border border-green-500/30">On Schedule</span>;
-      default: return null;
-    }
-  };
-
-  if (loading) {
-    return <div className="p-8 text-slate-400">Loading Maintenance Health...</div>;
-  }
+  const overdue = rows.filter(r => r.status === 'overdue').length;
+  const warning = rows.filter(r => r.status === 'warning').length;
+  const ok      = rows.filter(r => r.status === 'ok').length;
 
   return (
-    <div className="h-full bg-slate-950 text-slate-200 p-8 overflow-y-auto">
-      <h1 className="text-2xl font-bold mb-6 text-white">Maintenance Health Dashboard</h1>
-      <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden shadow-xl">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-800 text-slate-400 text-sm border-b border-slate-700">
-              <th className="p-4 font-semibold">Equipment</th>
-              <th className="p-4 font-semibold">Required Interval</th>
-              <th className="p-4 font-semibold">Last Inspection</th>
-              <th className="p-4 font-semibold">Days Overdue</th>
-              <th className="p-4 font-semibold text-right">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-800">
-            {rows.map((row, i) => (
-              <tr key={i} className="hover:bg-slate-800/50 transition-colors">
-                <td className="p-4 font-mono font-medium text-blue-400">{row.equipment_tag}</td>
-                <td className="p-4 text-slate-300">{row.required_interval}</td>
-                <td className="p-4 text-slate-400">{row.last_inspection_date ? row.last_inspection_date.toString() : 'Unknown'}</td>
-                <td className="p-4 font-mono">{row.days_overdue > 0 ? <span className="text-red-400">+{row.days_overdue}</span> : <span className="text-green-400">{row.days_overdue}</span>}</td>
-                <td className="p-4 flex items-center justify-end gap-3">
-                  {getStatusBadge(row.status)}
-                  {getStatusIcon(row.status)}
-                </td>
-              </tr>
-            ))}
-            {rows.length === 0 && (
-              <tr>
-                <td colSpan={5} className="p-8 text-center text-slate-500">No maintenance data found.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+    <div style={{ height: '100%', overflowY: 'auto', background: 'var(--bg-base)' }}>
+      {/* ── Header bar ── */}
+      <div style={{
+        padding: '32px 48px 28px',
+        background: 'linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%)',
+        borderBottom: '1px solid var(--border-subtle)',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
+      }}>
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '8px' }}>
+            Maintenance Intelligence
+          </p>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: '42px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.0, marginBottom: '8px' }}>
+            Maintenance Health.
+          </h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Real-time staleness detection across all tracked equipment</p>
+        </div>
+        <button onClick={load} disabled={loading} style={{
+          display: 'flex', alignItems: 'center', gap: '7px', padding: '10px 20px',
+          borderRadius: 'var(--radius-md)', background: 'var(--bg-card)', border: '1px solid var(--border-default)',
+          color: 'var(--text-secondary)', fontSize: '13px', fontWeight: 500, cursor: 'pointer', fontFamily: 'var(--font-body)',
+        }}>
+          <RefreshCw size={14} style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }} /> Refresh
+        </button>
+      </div>
+
+      <div style={{ padding: '32px 48px' }}>
+        {/* KPI row */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '32px' }}>
+          {[
+            { label: 'Overdue', count: overdue, cfg: STATUS_CFG.overdue },
+            { label: 'Warning', count: warning, cfg: STATUS_CFG.warning },
+            { label: 'Healthy', count: ok,      cfg: STATUS_CFG.ok      },
+          ].map(({ label, count, cfg }) => {
+            const Icon = cfg.Icon;
+            return (
+              <div key={label} style={{ padding: '24px 28px', borderRadius: 'var(--radius-xl)', background: cfg.bg, border: `1px solid ${cfg.color}22` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <Icon size={18} color={cfg.color} />
+                  <span style={{ fontSize: '12px', fontWeight: 700, color: cfg.color, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</span>
+                </div>
+                <p style={{ fontFamily: 'var(--font-display)', fontSize: '52px', fontWeight: 700, color: cfg.color, lineHeight: 1 }}>{count}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Table */}
+        <div style={{ background: 'var(--bg-card)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-subtle)', overflow: 'hidden' }}>
+          <div style={{ padding: '18px 24px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <p style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)' }}>Equipment Registry</p>
+            <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{rows.length} items tracked</span>
+          </div>
+
+          {loading ? (
+            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[1,2,3,4].map(i => <div key={i} className="skeleton" style={{ height: '56px' }} />)}
+            </div>
+          ) : rows.length === 0 ? (
+            <div style={{ padding: '64px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '14px' }}>
+              <Clock size={32} style={{ margin: '0 auto 12px', opacity: 0.3 }} />
+              No maintenance data found. Ingest documents to populate.
+            </div>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border-subtle)', background: 'var(--bg-surface)' }}>
+                  {['Equipment', 'Required Interval', 'Last Inspection', 'Days Overdue', 'Status'].map(h => (
+                    <th key={h} style={{ padding: '12px 24px', textAlign: 'left', fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, idx) => {
+                  const cfg = STATUS_CFG[row.status as keyof typeof STATUS_CFG] || STATUS_CFG.ok;
+                  const Icon = cfg.Icon;
+                  return (
+                    <tr key={idx}
+                      style={{ borderBottom: idx < rows.length - 1 ? '1px solid var(--border-subtle)' : 'none', transition: 'background 0.15s' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-card-hover)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                      <td style={{ padding: '16px 24px' }}>
+                        <span style={{ fontFamily: 'monospace', fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', background: 'var(--bg-surface)', padding: '4px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>{row.equipment_tag}</span>
+                      </td>
+                      <td style={{ padding: '16px 24px', fontSize: '13px', color: 'var(--text-secondary)' }}>{row.required_interval}</td>
+                      <td style={{ padding: '16px 24px', fontSize: '13px', color: 'var(--text-muted)', fontFamily: 'monospace' }}>{String(row.last_inspection_date) || '—'}</td>
+                      <td style={{ padding: '16px 24px', fontSize: '14px', fontWeight: 700, color: row.days_overdue > 0 ? cfg.color : 'var(--text-muted)' }}>
+                        {row.days_overdue > 0 ? `+${row.days_overdue}d` : '—'}
+                      </td>
+                      <td style={{ padding: '16px 24px' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, letterSpacing: '0.06em', color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30`, padding: '4px 10px', borderRadius: '999px' }}>
+                          <Icon size={11} />{cfg.label}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
     </div>
   );

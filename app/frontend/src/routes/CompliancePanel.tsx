@@ -1,164 +1,123 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ComplianceGap } from '../types/schemas';
-import { Shield, AlertTriangle, CheckCircle, HelpCircle, RefreshCw } from 'lucide-react';
+import { Shield, AlertTriangle, CheckCircle2, HelpCircle, RefreshCw } from 'lucide-react';
 
 export default function CompliancePanel() {
   const [gaps, setGaps] = useState<ComplianceGap[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchCompliance = () => {
-    setLoading(true);
-    setError(null);
+  const load = () => {
+    setLoading(true); setError(null);
     fetch('http://localhost:8000/api/compliance')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch compliance data');
-        return res.json();
-      })
-      .then(data => {
-        setGaps(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
+      .then(r => { if (!r.ok) throw new Error('Failed to fetch'); return r.json(); })
+      .then(d => { setGaps(d); setLoading(false); })
+      .catch(e => { setError(e.message); setLoading(false); });
   };
+  useEffect(() => { load(); }, []);
 
-  useEffect(() => {
-    fetchCompliance();
-  }, []);
+  const gapCount  = gaps.filter(g => g.status === 'gap').length;
+  const compliant = gaps.filter(g => g.status === 'compliant').length;
+  const unknown   = gaps.filter(g => g.status === 'unknown').length;
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'compliant':
-        return <CheckCircle className="text-green-400" size={18} />;
-      case 'gap':
-        return <AlertTriangle className="text-red-400" size={18} />;
-      default:
-        return <HelpCircle className="text-slate-400" size={18} />;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'compliant':
-        return 'bg-green-900/30 border-green-700 text-green-300';
-      case 'gap':
-        return 'bg-red-900/30 border-red-700 text-red-300';
-      default:
-        return 'bg-slate-800 border-slate-600 text-slate-400';
-    }
-  };
-
-  // Group by standard
-  const groupedByStandard = gaps.reduce((acc, gap) => {
-    if (!acc[gap.standard]) acc[gap.standard] = [];
-    acc[gap.standard].push(gap);
+  const grouped = gaps.reduce((acc, g) => {
+    if (!acc[g.standard]) acc[g.standard] = [];
+    acc[g.standard].push(g);
     return acc;
   }, {} as Record<string, ComplianceGap[]>);
 
-  // Count summary
-  const gapCount = gaps.filter(g => g.status === 'gap').length;
-  const compliantCount = gaps.filter(g => g.status === 'compliant').length;
-  const unknownCount = gaps.filter(g => g.status === 'unknown').length;
+  const statusCfg = (status: string) => {
+    if (status === 'compliant') return { color: 'var(--accent)',     bg: 'var(--accent-dim)',  Icon: CheckCircle2,  label: 'COMPLIANT' };
+    if (status === 'gap')       return { color: 'var(--danger)',     bg: 'var(--danger-dim)',  Icon: AlertTriangle, label: 'GAP'       };
+    return                             { color: 'var(--text-muted)', bg: 'var(--bg-surface)',  Icon: HelpCircle,    label: 'UNKNOWN'   };
+  };
 
   return (
-    <div className="h-full bg-slate-950 text-slate-200 overflow-auto">
-      <div className="max-w-6xl mx-auto p-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <Shield className="text-blue-500" size={32} />
-            <div>
-              <h1 className="text-2xl font-bold">Compliance Status</h1>
-              <p className="text-slate-400 text-sm">
-                Real-time compliance gap detection against industry standards
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={fetchCompliance}
-            disabled={loading}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors disabled:opacity-50"
-          >
-            <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
-            Refresh
-          </button>
+    <div style={{ height: '100%', overflowY: 'auto', background: 'var(--bg-base)' }}>
+      {/* ── Header ── */}
+      <div style={{
+        padding: '32px 48px 28px',
+        background: 'linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%)',
+        borderBottom: '1px solid var(--border-subtle)',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
+      }}>
+        <div>
+          <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '8px' }}>
+            Regulatory Intelligence
+          </p>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: '42px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.0, marginBottom: '8px' }}>
+            Compliance Status.
+          </h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Real-time gap detection against industry standards</p>
+        </div>
+        <button onClick={load} disabled={loading} style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '10px 20px', borderRadius: 'var(--radius-md)', background: 'var(--bg-card)', border: '1px solid var(--border-default)', color: 'var(--text-secondary)', fontSize: '13px', fontWeight: 500, cursor: 'pointer', fontFamily: 'var(--font-body)' }}>
+          <RefreshCw size={14} style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }} /> Refresh
+        </button>
+      </div>
+
+      <div style={{ padding: '32px 48px' }}>
+        {/* KPI row */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '32px' }}>
+          {[
+            { label: 'Gaps Found', count: gapCount, cfg: statusCfg('gap') },
+            { label: 'Compliant',  count: compliant, cfg: statusCfg('compliant') },
+            { label: 'Unknown',    count: unknown,   cfg: statusCfg('unknown') },
+          ].map(({ label, count, cfg }) => {
+            const Icon = cfg.Icon;
+            return (
+              <div key={label} style={{ padding: '24px 28px', borderRadius: 'var(--radius-xl)', background: cfg.bg, border: `1px solid ${cfg.color}22` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <Icon size={18} color={cfg.color} />
+                  <span style={{ fontSize: '12px', fontWeight: 700, color: cfg.color, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</span>
+                </div>
+                <p style={{ fontFamily: 'var(--font-display)', fontSize: '52px', fontWeight: 700, color: cfg.color, lineHeight: 1 }}>{count}</p>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
-            <div className="flex items-center gap-2 text-red-400 mb-1">
-              <AlertTriangle size={20} />
-              <span className="font-semibold">Gaps Found</span>
-            </div>
-            <p className="text-3xl font-bold text-red-300">{gapCount}</p>
-          </div>
-          <div className="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
-            <div className="flex items-center gap-2 text-green-400 mb-1">
-              <CheckCircle size={20} />
-              <span className="font-semibold">Compliant</span>
-            </div>
-            <p className="text-3xl font-bold text-green-300">{compliantCount}</p>
-          </div>
-          <div className="bg-slate-800 border border-slate-600 rounded-lg p-4">
-            <div className="flex items-center gap-2 text-slate-400 mb-1">
-              <HelpCircle size={20} />
-              <span className="font-semibold">Unknown</span>
-            </div>
-            <p className="text-3xl font-bold text-slate-300">{unknownCount}</p>
-          </div>
-        </div>
-
-        {/* Error State */}
+        {/* Error */}
         {error && (
-          <div className="bg-red-900/30 border border-red-700 rounded-lg p-4 mb-6 text-red-300">
-            <AlertTriangle className="inline mr-2" size={16} />
-            {error}
+          <div style={{ padding: '14px 16px', background: 'var(--danger-dim)', border: '1px solid rgba(255,71,87,0.25)', borderRadius: 'var(--radius-md)', marginBottom: '24px', color: 'var(--danger)', fontSize: '13px', display: 'flex', gap: '8px' }}>
+            <AlertTriangle size={16} style={{ flexShrink: 0 }} /> {error}
           </div>
         )}
 
-        {/* Loading State */}
+        {/* Standards */}
         {loading ? (
-          <div className="space-y-4">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="animate-pulse bg-slate-800 rounded-lg h-32"></div>
-            ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {[1,2,3].map(i => <div key={i} className="skeleton" style={{ height: '140px' }} />)}
           </div>
         ) : (
-          /* Compliance Table by Standard */
-          <div className="space-y-6">
-            {Object.entries(groupedByStandard).map(([standard, items]) => (
-              <div key={standard} className="bg-slate-900 rounded-lg border border-slate-800 overflow-hidden">
-                <div className="bg-slate-800 px-4 py-3 border-b border-slate-700">
-                  <h2 className="font-semibold text-lg">{standard}</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(480px, 1fr))', gap: '16px' }}>
+            {Object.entries(grouped).map(([standard, items]) => (
+              <div key={standard} style={{ background: 'var(--bg-card)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-subtle)', overflow: 'hidden' }}>
+                <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Shield size={15} color="var(--text-muted)" />
+                  <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', flex: 1 }}>{standard}</span>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{items.length} item{items.length !== 1 ? 's' : ''}</span>
                 </div>
-                <div className="divide-y divide-slate-800">
-                  {items.map((gap, idx) => (
-                    <div
-                      key={`${gap.equipment_tag}-${idx}`}
-                      className={`p-4 flex items-start gap-4 ${
-                        gap.status === 'gap' ? 'bg-red-900/10' : ''
-                      }`}
-                    >
-                      <div className="mt-1">{getStatusIcon(gap.status)}</div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-mono text-sm bg-slate-800 px-2 py-0.5 rounded">
-                            {gap.equipment_tag}
-                          </span>
-                          <span className={`text-xs px-2 py-0.5 rounded border ${getStatusColor(gap.status)}`}>
-                            {gap.status.toUpperCase()}
-                          </span>
+                {items.map((gap, idx) => {
+                  const cfg = statusCfg(gap.status);
+                  const Icon = cfg.Icon;
+                  return (
+                    <div key={idx} style={{
+                      padding: '14px 20px', display: 'flex', alignItems: 'flex-start', gap: '12px',
+                      borderBottom: idx < items.length - 1 ? '1px solid var(--border-subtle)' : 'none',
+                      background: gap.status === 'gap' ? 'rgba(255,71,87,0.03)' : 'transparent',
+                    }}>
+                      <Icon size={16} color={cfg.color} style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px', flexWrap: 'wrap' }}>
+                          <span style={{ fontFamily: 'monospace', fontSize: '12px', fontWeight: 700, color: 'var(--text-primary)', background: 'var(--bg-surface)', padding: '2px 8px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>{gap.equipment_tag}</span>
+                          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', color: cfg.color, background: cfg.bg, padding: '2px 8px', borderRadius: '999px', border: `1px solid ${cfg.color}30` }}>{cfg.label}</span>
                         </div>
-                        <p className="text-sm text-slate-300 mb-1">{gap.requirement}</p>
-                        <p className="text-xs text-slate-500">{gap.details}</p>
+                        <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '3px' }}>{gap.requirement}</p>
+                        <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{gap.details}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
             ))}
           </div>

@@ -12,6 +12,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="OpsBrain2 API")
 
+# ── Auto-initialize knowledge graph DB on startup ──────────────────
+@app.on_event("startup")
+def _ensure_db():
+    try:
+        from knowledge_graph.db import init_db
+        init_db()
+    except Exception as e:
+        print(f"[startup] DB init warning: {e}")
+
 # CORS middleware - allow Vite dev server
 app.add_middleware(
     CORSMiddleware,

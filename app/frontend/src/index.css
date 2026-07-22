@@ -1,5 +1,116 @@
-@import "tailwindcss";
+/* ============================================================
+   OpsBrain² — Global Design System
+   Inspired by Travelloop: dark navy, emerald accent, premium feel
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,600;0,700;1,600;1,700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ---- Color Palette ---- */
+  --bg-base:        #080c18;
+  --bg-surface:     #0d1225;
+  --bg-card:        #111827;
+  --bg-card-hover:  #161f33;
+  --bg-glass:       rgba(13, 18, 37, 0.7);
+
+  --border-subtle:  rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.10);
+  --border-strong:  rgba(255,255,255,0.18);
+
+  --accent:         #00e676;
+  --accent-dim:     rgba(0, 230, 118, 0.15);
+  --accent-hover:   #00ff87;
+  --accent-dark:    #00c853;
+
+  --danger:         #ff4757;
+  --danger-dim:     rgba(255, 71, 87, 0.12);
+  --warning:        #ffa502;
+  --warning-dim:    rgba(255, 165, 2, 0.12);
+  --info:           #3d9eff;
+  --info-dim:       rgba(61, 158, 255, 0.12);
+  --resolved:       #00e676;
+
+  --text-primary:   #f0f4ff;
+  --text-secondary: rgba(200, 210, 240, 0.7);
+  --text-muted:     rgba(150, 165, 200, 0.45);
+  --text-accent:    #00e676;
+
+  /* ---- Typography ---- */
+  --font-body:      'Outfit', system-ui, sans-serif;
+  --font-display:   'Fraunces', 'Georgia', serif;
+
+  /* ---- Radius ---- */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  18px;
+  --radius-xl:  24px;
+
+  /* ---- Shadows ---- */
+  --shadow-card: 0 4px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-glow: 0 0 20px rgba(0, 230, 118, 0.2);
+  --shadow-danger: 0 0 20px rgba(255, 71, 87, 0.25);
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
 
 body {
-  @apply bg-slate-900 text-slate-100;
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- Scrollbar Styling ---- */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+
+/* ---- Utility Classes ---- */
+.glass-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.accent-glow { box-shadow: var(--shadow-glow); }
+
+/* ---- Animations ---- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ---- React Router container sizing ---- */
+/* Ensure the Routes wrapper fills all available width/height */
+body > #root > div > div:last-child > div {
+  width: 100%;
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.35s ease both; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
 }

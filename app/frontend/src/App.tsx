@@ -19,78 +19,109 @@ import {
   GitBranch
 } from 'lucide-react';
 
-interface NavItem {
-  path: string;
-  label: string;
-  icon: React.ReactNode;
-}
-
-const NAV_ITEMS: NavItem[] = [
-  { path: '/',           label: 'Ask AI',           icon: <MessageSquare size={15} /> },
-  { path: '/upload',     label: 'Add Document',     icon: <UploadCloud size={15} /> },
-  { path: '/capture',    label: 'Capture Knowledge', icon: <Brain size={15} /> },
-  { path: '/compliance', label: 'Compliance',       icon: <Shield size={15} /> },
-  { path: '/staleness',  label: 'Maintenance Health', icon: <Clock size={15} /> },
-  { path: '/field',      label: 'Field View',       icon: <Smartphone size={15} /> },
-  { path: '/graph',      label: 'Knowledge Graph',  icon: <GitBranch size={15} /> },
+const NAV_ITEMS = [
+  { path: '/',           label: 'Ask AI',            icon: <MessageSquare size={14} /> },
+  { path: '/upload',     label: 'Add Document',      icon: <UploadCloud size={14} /> },
+  { path: '/capture',    label: 'Capture Knowledge', icon: <Brain size={14} /> },
+  { path: '/compliance', label: 'Compliance',        icon: <Shield size={14} /> },
+  { path: '/staleness',  label: 'Maintenance',       icon: <Clock size={14} /> },
+  { path: '/field',      label: 'Field View',        icon: <Smartphone size={14} /> },
+  { path: '/graph',      label: 'Knowledge Graph',   icon: <GitBranch size={14} /> },
 ];
 
-// Chat view with conflicts sidebar
 function ChatView() {
   const [activeConflicts, setActiveConflicts] = useState<Conflict[]>([]);
-
   return (
-    <div className="flex flex-1 min-h-0">
-      <main className="flex-1 min-w-0">
+    <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%', height: '100%' }}>
+      <main style={{ flex: 1, minWidth: 0, height: '100%', display: 'flex', flexDirection: 'column' }}>
         <ChatPanel onConflictsDetected={setActiveConflicts} />
       </main>
-      <aside className="w-1/3 min-w-[400px] border-l border-slate-800 bg-slate-900 flex-shrink-0">
+      <aside style={{ width: '340px', flexShrink: 0, borderLeft: '1px solid var(--border-subtle)', height: '100%', overflowY: 'auto' }}>
         <ConflictsPanel activeConflicts={activeConflicts} />
       </aside>
     </div>
   );
 }
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col h-screen bg-slate-950 text-slate-200 overflow-hidden font-sans">
-        {/* Top Nav Bar */}
-        <nav className="flex-shrink-0 flex items-center gap-1 px-4 py-2 bg-slate-900 border-b border-slate-800 z-10 overflow-x-auto">
-          <span className="text-sm font-bold text-cyan-400 mr-4 tracking-tight whitespace-nowrap">OpsBrain²</span>
-          {NAV_ITEMS.map(item => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
-                  isActive
-                    ? 'bg-slate-700 text-slate-100'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-                }`
-              }
-            >
-              {item.icon}
-              {item.label}
-            </NavLink>
-          ))}
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg-base)', overflow: 'hidden' }}>
+        {/* ── Top Navigation ── */}
+        <nav style={{
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+          padding: '10px 20px',
+          background: 'rgba(8, 12, 24, 0.95)',
+          borderBottom: '1px solid var(--border-subtle)',
+          backdropFilter: 'blur(20px)',
+          zIndex: 50,
+        }}>
+          {/* Logo */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '20px' }}>
+            <div style={{
+              width: '28px', height: '28px',
+              background: 'var(--accent)',
+              borderRadius: '7px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <span style={{ color: '#000', fontWeight: 800, fontSize: '13px', fontFamily: 'var(--font-body)' }}>O²</span>
+            </div>
+            <span style={{
+              fontFamily: 'var(--font-body)',
+              fontWeight: 700,
+              fontSize: '15px',
+              color: 'var(--text-primary)',
+              letterSpacing: '-0.3px',
+            }}>OpsBrain²</span>
+          </div>
+
+          {/* Nav Links */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2px', overflowX: 'auto' }}>
+            {NAV_ITEMS.map(item => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.path === '/'}
+                style={({ isActive }) => ({
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  fontFamily: 'var(--font-body)',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.15s ease',
+                  background: isActive ? 'var(--accent-dim)' : 'transparent',
+                  color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
+                  border: isActive ? '1px solid rgba(0,230,118,0.2)' : '1px solid transparent',
+                })}
+              >
+                {item.icon}
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
         </nav>
 
-        {/* Page Content */}
-        <div className="flex flex-1 min-h-0">
+        {/* ── Page Content ── */}
+        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
           <Routes>
-            <Route path="/" element={<ChatView />} />
-            <Route path="/upload" element={<UploadForm />} />
-            <Route path="/capture" element={<KnowledgeCaptureForm />} />
-            <Route path="/compliance" element={<CompliancePanel />} />
-            <Route path="/staleness" element={<StalenessDashboard />} />
-            <Route path="/field" element={<FieldView />} />
-            <Route path="/graph" element={<GraphView />} />
+            <Route path="/"           element={<div style={{ display: 'flex', width: '100%', height: '100%', minHeight: 0 }}><ChatView /></div>} />
+            <Route path="/upload"     element={<div style={{ width: '100%', height: '100%', overflowY: 'auto' }}><UploadForm /></div>} />
+            <Route path="/capture"    element={<div style={{ width: '100%', height: '100%', overflowY: 'auto' }}><KnowledgeCaptureForm /></div>} />
+            <Route path="/compliance" element={<div style={{ width: '100%', height: '100%', overflowY: 'auto' }}><CompliancePanel /></div>} />
+            <Route path="/staleness"  element={<div style={{ width: '100%', height: '100%', overflowY: 'auto' }}><StalenessDashboard /></div>} />
+            <Route path="/field"      element={<div style={{ width: '100%', height: '100%', overflowY: 'auto' }}><FieldView /></div>} />
+            <Route path="/graph"      element={<div style={{ width: '100%', height: '100%' }}><GraphView /></div>} />
           </Routes>
         </div>
       </div>
     </BrowserRouter>
   );
 }
-
-export default App;

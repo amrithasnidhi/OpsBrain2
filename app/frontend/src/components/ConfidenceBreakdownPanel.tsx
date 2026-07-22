@@ -2,27 +2,30 @@ import React from 'react';
 import type { ConfidenceBreakdown } from '../types/schemas';
 import { CheckCircle2, AlertTriangle } from 'lucide-react';
 
-interface Props {
-  breakdown: ConfidenceBreakdown;
-}
+interface Props { breakdown: ConfidenceBreakdown; }
 
 export const ConfidenceBreakdownPanel: React.FC<Props> = ({ breakdown }) => {
-  if (breakdown.reasons.length === 0 && breakdown.warnings.length === 0) {
-    return null;
-  }
+  if (breakdown.reasons.length === 0 && breakdown.warnings.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-1 mt-2 text-xs text-slate-300 bg-slate-900/50 p-3 rounded border border-slate-800">
-      {breakdown.reasons.map((reason, idx) => (
-        <div key={`reason-${idx}`} className="flex items-start gap-2">
-          <CheckCircle2 size={14} className="text-green-500 shrink-0 mt-0.5" />
-          <span>{reason}</span>
+    <div style={{
+      display: 'flex', flexDirection: 'column', gap: '5px',
+      padding: '10px 12px', borderRadius: 'var(--radius-sm)',
+      background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)',
+    }}>
+      <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '4px' }}>
+        Confidence Breakdown
+      </p>
+      {breakdown.reasons.map((reason, i) => (
+        <div key={`r-${i}`} style={{ display: 'flex', alignItems: 'flex-start', gap: '7px' }}>
+          <CheckCircle2 size={12} color="var(--accent)" style={{ flexShrink: 0, marginTop: '2px' }} />
+          <span style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{reason}</span>
         </div>
       ))}
-      {breakdown.warnings.map((warning, idx) => (
-        <div key={`warning-${idx}`} className="flex items-start gap-2">
-          <AlertTriangle size={14} className="text-amber-500 shrink-0 mt-0.5" />
-          <span>{warning}</span>
+      {breakdown.warnings.map((warning, i) => (
+        <div key={`w-${i}`} style={{ display: 'flex', alignItems: 'flex-start', gap: '7px' }}>
+          <AlertTriangle size={12} color="var(--warning)" style={{ flexShrink: 0, marginTop: '2px' }} />
+          <span style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{warning}</span>
         </div>
       ))}
     </div>
