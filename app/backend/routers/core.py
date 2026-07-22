@@ -48,9 +48,19 @@ def health_check():
 def get_graph():
     try:
         G = build_graph()
-        nodes = [{"id": n, "label": d.get("name", n), "group": d.get("type", "unknown")} for n, d in G.nodes(data=True)]
-        edges = [{"source": u, "target": v, "label": d.get("type", "")} for u, v, d in G.edges(data=True)]
-        return {"nodes": nodes, "edges": edges}
+        nodes = []
+        for n, d in G.nodes(data=True):
+            node_type = d.get("type", "unknown")
+            color = "#3b82f6" if node_type == "equipment" else "#9ca3af"
+            nodes.append({"id": n, "label": d.get("name", n), "group": node_type, "color": color})
+
+        links = []
+        for u, v, d in G.edges(data=True):
+            edge_type = d.get("type", "")
+            color = "#ef4444" if edge_type.lower() == "conflict" else "#9ca3af"
+            links.append({"source": u, "target": v, "label": edge_type, "color": color})
+
+        return {"nodes": nodes, "links": links}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
