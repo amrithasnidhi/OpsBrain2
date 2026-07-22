@@ -1,95 +1,184 @@
-# OpsBrain2: Industrial Knowledge Brain
+# OpsBrain²: Industrial Knowledge Brain
 
-An AI-powered knowledge system that doesn't just answer questions—it actively detects contradictions and stale procedures across maintenance documents.
-
-## Quick Start (New Developer)
-
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- Git
-
-### 1. Clone & Setup
-
-```bash
-git clone https://github.com/amrithasnidhi/OpsBrain2.git
-cd OpsBrain2
-```
-
-### 2. Install Python Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Setup Environment Variables
-
-Create a `.env` file in the root directory (or copy from `.env.example`):
-
-```bash
-# LLM Provider - Groq (Free Tier)
-GROQ_API_KEY=your_groq_api_key_here
-
-# Embeddings - Voyage AI
-VOYAGE_API_KEY=your_voyage_api_key_here
-
-# Optional
-ANTHROPIC_API_KEY=your_anthropic_key_here
-```
-
-Get free API keys:
-- Groq: https://console.groq.com/keys
-- Voyage AI: https://dash.voyageai.com/
-
-### 4. Run Ingestion Pipeline (First time only)
-
-```bash
-python -m ingestion.pipeline --input_dir data/raw --collection industrial_docs
-```
-
-This embeds documents into ChromaDB (~54 chunks).
-
-### 5. Start the Backend
-
-```bash
-cd app/backend
-python -m uvicorn main:app --host 127.0.0.1 --port 8000
-```
-
-### 6. Start the Frontend (New terminal)
-
-```bash
-cd app/frontend
-npm install
-npm run dev
-```
-
-### 7. Open the App
-
-- Frontend: http://127.0.0.1:5173
-- API Docs: http://127.0.0.1:8000/docs
+An AI-powered knowledge system that doesn't just answer questions—it actively detects contradictions, regulatory gaps, and stale procedures across maintenance documents and tribal knowledge.
 
 ---
 
-## Architecture
+## Table of Contents
+1. [Core Features](#core-features)
+2. [Concrete Use Cases & Scenarios](#concrete-use-cases--scenarios)
+3. [Inner Workings & Architecture](#inner-workings--architecture)
+4. [Detailed Setup & Installation](#detailed-setup--installation)
+   - [Backend Setup](#1-backend-setup)
+   - [Frontend Setup](#2-frontend-setup)
+5. [API Documentation](#api-documentation)
+6. [Project Structure](#project-structure)
+7. [System Verification & Demo Scripts](#system-verification--demo-scripts)
+
+---
+
+## Core Features
+
+OpsBrain² integrates seven core functional modules designed to centralize and protect industrial operational intelligence:
+
+1. **Ask AI (Grounded RAG Engine):** Query maintenance manuals, SOPs, and incident reports. Answers are returned with full citations, direct document excerpts, real-time confidence scores, and inline conflict alerts if contrasting source documents exist.
+2. **Document Ingestion (Add Document):** An automated pipeline (`POST /api/ingest`) that accepts PDFs, Excel spreadsheets, Word docs, text files, and images. It processes documents into vector embeddings stored in ChromaDB, runs entity/relationship extraction, updates the knowledge graph, and re-scans the environment for conflicts.
+3. **Capture Knowledge (Tribal Knowledge):** Form-based entry designed to record undocumented procedures, observation logs, and failure patterns directly from senior technicians. This expert data is instantly indexed, made searchable, and cited in AI responses.
+4. **Compliance Status (Regulatory Gap Detection):** Continuously cross-references equipment parameters against safety standards (e.g., **OSHA 29 CFR 1910.119**, **ISO 10816**). Dynamically computes status categories: *Compliant*, *Gap Found*, or *Unknown* (missing documentation).
+5. **Maintenance Health (Staleness Tracking):** Tracks inspection intervals extracted from manuals and compares them against actual maintenance records. Evaluates schedules dynamically to show *Healthy*, *Warning*, or *Overdue* statuses.
+6. **Field View (Operator Portal):** A simplified, mobile-friendly interface designed for on-the-floor operators featuring voice-to-text querying and immediate alerts for safety/maintenance conflicts on specific equipment tags.
+7. **Interactive Knowledge Graph:** A full-width interactive force-directed canvas that visualizes equipment tags, document nodes, and relationship edges. Direct contradictions are animated in red, offering click-to-view conflict cards with detailed source side-by-sides.
+
+---
+
+## Concrete Use Cases & Scenarios
+
+### Use Case 1: Resolving Facility Discrepancies During Turnarounds
+* **Scenario:** An engineering team is planning a maintenance turnaround for a relief system. The design document dictates that the pressure safety valve `PSV-101` should open at 150 PSI. However, a recent walkdown log notes it was adjusted to 180 PSI.
+* **How to use:** 
+  1. Go to **Add Document** and upload the recent walkdown log.
+  2. Ask the chatbot under **Ask AI**: *"What is the relief pressure threshold for PSV-101?"*
+  3. The system highlights the design threshold, but the **Flagged Conflicts** pane highlights a high-risk contradiction, showing the side-by-side values (150 PSI vs 180 PSI) and links to both source files. The engineering team can resolve the mismatch before performing maintenance.
+
+### Use Case 2: Regulatory Audit and Gap Analysis
+* **Scenario:** An auditor asks for compliance statuses against safety regulation **OSHA 29 CFR 1910.119** (Process Safety Management of Highly Hazardous Chemicals).
+* **How to use:**
+  1. Open the **Compliance** tab.
+  2. The dashboard groups requirements by standard and lists each tracked piece of equipment.
+  3. Items marked **GAP** indicate active non-compliance (e.g., policy dictates a fire drill every 6 months but none is logged).
+  4. Items marked **UNKNOWN** highlight missing documentation. This prompts safety officers to upload missing training registers to turn the status to **COMPLIANT**.
+
+### Use Case 3: Capturing Expert Tribal Knowledge
+* **Scenario:** A senior operator who has worked at the facility for 30 years is retiring. They know that `PUMP-203` starts vibrating abnormally during high humidity, a pattern not recorded in any vendor manual.
+* **How to use:**
+  1. Navigate to **Capture Knowledge**.
+  2. Enter the details: Expert Name (e.g., "Dave Miller"), Equipment Tag (`PUMP-203`), select **Tribal Knowledge**, and write the observation.
+  3. Click **Save to Knowledge Base**.
+  4. If a junior operator later asks: *"Why is PUMP-203 vibrating?"*, the AI returns the advice, citing Dave Miller as the source.
+
+---
+
+## Inner Workings & Architecture
 
 ```mermaid
-graph LR
-    A[Raw PDFs/Excel] -->|Person 1| B(Ingestion Engine)
-    B --> C[(ChromaDB Vector Store)]
-    B --> D[Chunks Manifest]
-    D -->|Person 2| E(Extractor & Normalizer)
-    E --> F[(Knowledge Graph / SQLite)]
-    F -->|Neo4j-Ready Export| G[(Neo4j)]
-
-    C -->|Person 3| H[RAG Engine]
-    F --> H
-
-    H -->|Person 4| I[FastAPI Backend]
-    I --> J[React + Vite UI]
+graph TD
+    A[Raw Docs: PDFs, XLS, DOCX] -->|Upload / POST /api/ingest| B(Ingestion Pipeline)
+    B -->|Voyage AI Embeddings| C[(ChromaDB Vector Store)]
+    B -->|KG Extraction| D[(SQLite Knowledge Graph)]
+    
+    E[Expert Tribal Input] -->|POST /api/capture-knowledge| D
+    
+    F[RAG Query Engine] -->|Context Match| C
+    F -->|Entity/Spec Lookup| D
+    F -->|Contradiction Analyzer| G{Conflict Scanner}
+    
+    G -->|Flagged Conflicts| H[Conflicts Panel UI]
+    F -->|Grounded Answer + Citations| I[Ask AI View]
+    
+    D -->|Staleness Logic| J[Maintenance Health View]
+    D -->|Audit Schema| K[Compliance Panel View]
+    D -->|Force Layout Linkage| L[Interactive Graph View]
 ```
 
-*Note: The system is designed to be Neo4j-ready for massive scale, utilizing SQLite for the hackathon MVP.*
+### 1. The Ingestion Engine
+When a document is ingested:
+- Text is extracted, parsed, and split into semantic chunks.
+- Chunks are embedded using **Voyage AI** and saved into a local **ChromaDB** vector store.
+- Structured data (entities like equipment tags, parameters, threshold values) are parsed via LLM entity extraction and written to an **SQLite database** (acting as our relational knowledge graph).
+
+### 2. The Conflict & Decay Engine
+- **Conflict Scanning:** When new information is added, a background routine checks for keys matching existing equipment parameters. If a value mismatch exists between two sources, a record is added to the `conflicts` table.
+- **Decay/Staleness Tracking:** A calculation evaluates the days elapsed since the `last_inspection_date` against the `required_interval` for all registered equipment to output warning flags.
+
+---
+
+## Detailed Setup & Installation
+
+Follow these steps to set up the complete stack locally.
+
+### 1. Backend Setup
+
+#### Prerequisites
+- **Python 3.11+** installed and added to your system path.
+
+#### Setup Steps
+
+1. **Navigate to the project root:**
+   ```bash
+   cd OpsBrain2
+   ```
+
+2. **Create a virtual environment (Recommended):**
+   * **Windows:**
+     ```powershell
+     python -m venv venv
+     .\venv\Scripts\Activate.ps1
+     ```
+   * **macOS / Linux:**
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+
+3. **Install the required packages:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure your Environment (`.env`):**
+   Create a `.env` file in the root folder of the project:
+   ```env
+   GROQ_API_KEY=your-groq-api-key
+   VOYAGE_API_KEY=your-voyage-api-key
+   ```
+   *Note: If you don't have Voyage API keys, the system has fallback mechanisms using direct token/text matching for local development.*
+
+5. **Start the FastAPI backend:**
+   ```bash
+   cd app/backend
+   python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+   ```
+   On startup, the lifecycle event handler in `app/backend/main.py` automatically initializes `knowledge.db` SQLite database if it does not already exist.
+
+---
+
+### 2. Frontend Setup
+
+#### Prerequisites
+- **Node.js (v18 or higher)**
+- **npm (comes packaged with Node.js)**
+
+#### Setup Steps
+
+1. **Open a new terminal window and navigate to the frontend directory:**
+   ```bash
+   cd OpsBrain2/app/frontend
+   ```
+
+2. **Install node dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run the Vite development server:**
+   ```bash
+   npm run dev
+   ```
+   The application will boot up at [http://localhost:5173](http://localhost:5173).
+
+---
+
+## API Documentation
+
+| Method | Endpoint | Payload / Params | Description |
+| :--- | :--- | :--- | :--- |
+| **POST** | `/api/query` | `{ "question": "string" }` | RAG query returning answers, citations, confidence scores, and active conflicts. |
+| **POST** | `/api/ingest` | `file: UploadFile` (Multipart) | Ingests a new document, runs semantic vector indexing, updates SQLite KG, and scans for conflicts. |
+| **POST** | `/api/capture-knowledge` | `{ "expert_name", "equipment_tag", "knowledge_type", "free_text" }` | Inserts unstructured tribal knowledge directly into the knowledge graph. |
+| **GET** | `/api/conflicts` | None | Lists all currently flagged contradictions in parameters. |
+| **GET** | `/api/graph` | None | Returns nodes and edges representing the complete system schema for the graph visualizer. |
+| **GET** | `/api/staleness` | None | Returns maintenance schedule data, tracking decay metrics against policies. |
+| **GET** | `/api/compliance` | None | Checks captured equipment parameters against regulatory standards (OSHA, ISO). |
 
 ---
 
@@ -99,102 +188,47 @@ graph LR
 OpsBrain2/
 ├── app/
 │   ├── backend/
-│   │   ├── main.py              # FastAPI entry point (thin shell)
-│   │   └── routers/             # Each person adds their router here
-│   │       └── core.py          # Core API routes
+│   │   ├── main.py              # FastAPI entry point & DB startup hook
+│   │   └── routers/             # API Router registrations
+│   │       ├── core.py          # Query, Ingestion, Tribal Knowledge endpoints
+│   │       ├── dashboards.py    # Staleness, Graph rendering endpoints
+│   │       └── risk_compliance.py # Compliance alignment endpoints
 │   └── frontend/
 │       ├── src/
-│       │   ├── App.tsx          # Router shell (add routes here)
-│       │   ├── routes/          # Each person adds their view here
-│       │   │   └── ChatView.tsx
-│       │   ├── components/      # Reusable UI components
-│       │   └── types/           # TypeScript schemas
+│       │   ├── App.tsx          # Main navigation shell & layout setup
+│       │   ├── index.css        # Premium dark glassmorphism design variables
+│       │   ├── routes/          # Navigation views (StalenessDashboard, GraphView, etc.)
+│       │   ├── components/      # UI components (UploadForm, ChatPanel, ConflictCard)
+│       │   └── types/           # Shared TypeScript schemas
 │       └── package.json
-├── ingestion/                   # Person 1: Document processing
-├── knowledge_graph/             # Person 2: Entity extraction
-├── rag_engine/                  # Person 3: RAG + Conflict detection
+├── ingestion/                   # Document parsing & Vector Database pipelines
+├── knowledge_graph/             # Graph database extractors & DB initialization
+├── rag_engine/                  # Grounding, Conflict & Decay reasoning models
 ├── shared/
-│   └── schemas.py               # CONTRACT FILE - shared Pydantic models
+│   └── schemas.py               # Shared Pydantic models (contract files)
 ├── data/
-│   └── raw/                     # Source documents (PDFs, Excel, etc.)
-├── .env                         # API keys (not committed)
-└── requirements.txt
+│   └── raw/                     # Mock documents for system verification
+├── .env                         # Environment configurations
+└── requirements.txt             # Python packages
 ```
 
 ---
 
-## API Endpoints
+## System Verification & Demo Scripts
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/query` | RAG query with conflict detection |
-| GET | `/api/conflicts` | All known conflicts for dashboard |
-| GET | `/api/health` | Health check |
-| GET | `/api/graph` | Knowledge graph nodes/edges |
+### 1. Test Ingestion
+1. Open the UI to the **Add Document** tab.
+2. Select a PDF file (e.g. from `data/raw/`) and click **Ingest Document**.
+3. Confirm that it returns a success message detailing chunks ingested.
 
----
+### 2. Verify Conflict Scan
+1. Go to the **Ask AI** tab.
+2. Query: *"What is the relief pressure for PSV-101?"*
+3. Verify that the answer prints with a confidence badge and a warning displays in the right side panel detailing conflicting values.
 
-## Team Development Rules
-
-### Adding a Backend Route
-1. Create `app/backend/routers/yourfile.py` with an `APIRouter`
-2. Add 2 lines to `main.py`:
-   ```python
-   from app.backend.routers.yourfile import router as yourfile_router
-   app.include_router(yourfile_router)
-   ```
-
-### Adding a Frontend Route
-1. Create `app/frontend/src/routes/YourView.tsx`
-2. Add to `App.tsx`:
-   - One entry in `NAV_ITEMS` array
-   - One `<Route>` element
-
-### Schemas
-- All shared types live in `shared/schemas.py`
-- Frontend types mirror them in `app/frontend/src/types/schemas.ts`
-- Don't edit schemas mid-branch - add fields via reviewed PR
-
----
-
-## Live Demo Script
-
-Our main differentiator is the **Conflict & Decay Detection**. Follow this exact script to demo the power of the platform:
-
-### 1. Baseline RAG
-**Ask:** *"What protective gear is needed when inspecting equipment?"*
-- **Expected:** The system returns standard safety protocols with citations and a confidence badge. This proves our baseline document retrieval works.
-
-### 2. The Differentiator: Planted Contradictions
-**Ask:** *"What is the maximum operating pressure for Pump-P101?"*
-- **Expected:** The system will answer the question based on the manual, BUT the **Flagged Conflicts** side panel will instantly light up in red.
-- **Why?** It detected a direct contradiction between the SOP (`doc_manual_p101`) stating 150 PSI and a recent maintenance log (`doc_walkdown_p101`) recording 180 PSI.
-- **Follow up:** Show that the system also flagged a past incident ("Overpressurization event due to mismatched gauges") related to this exact equipment tag.
-
-### 3. Procedural Decay
-**Ask:** *"When should Filter-F300 be replaced?"*
-- **Expected:** The system provides the policy rule (every 6 months), but the Conflicts Panel highlights an orange Decay warning.
-- **Why?** The policy dictates a 6-month interval, but the Knowledge Graph cross-referenced the last logged maintenance date and flagged that the interval is out of date.
-
----
-
-## Troubleshooting
-
-### VOYAGE_API_KEY not found
-Make sure `.env` file exists in root directory and contains your key.
-
-### Frontend shows blank page
+### 3. Build & Production Check
+Verify that the frontend builds without TypeScript compiler errors:
 ```bash
 cd app/frontend
-rm -rf node_modules/.vite
-npm run dev
+npm run build
 ```
-
-### Backend import errors
-```bash
-pip install -r requirements.txt
-```
-
----
-
-Built for the Hackathon by a 4-person parallel development team.
