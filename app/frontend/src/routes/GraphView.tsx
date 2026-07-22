@@ -12,13 +12,13 @@ export default function GraphView() {
 
   useEffect(() => {
     // Fetch graph data
-    fetch('http://localhost:8000/api/graph')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/graph')
       .then(res => res.json())
       .then(data => setGraphData(data))
       .catch(console.error);
 
     // Fetch all conflicts to match when an edge is clicked
-    fetch('http://localhost:8000/api/conflicts')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/conflicts')
       .then(res => res.json())
       .then(data => setConflicts(data))
       .catch(console.error);

@@ -12,7 +12,7 @@ export const ConflictsPanel: React.FC<Props> = ({ activeConflicts }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/conflicts')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/conflicts')
       .then(res => res.json())
       .then(data => {
         // Data comes pre-sorted by risk_score from backend

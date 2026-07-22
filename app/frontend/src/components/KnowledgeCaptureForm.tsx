@@ -31,7 +31,7 @@ export function KnowledgeCaptureForm() {
     setResultDocId('');
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/capture-knowledge', {
+      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/capture-knowledge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

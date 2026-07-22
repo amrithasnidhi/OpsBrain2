@@ -25,7 +25,7 @@ export default function FieldView() {
   useEffect(() => {
     if (tag) {
       // Fetch conflicts to see if this tag has any
-      fetch('http://localhost:8000/api/conflicts')
+      fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/conflicts')
         .then(res => res.json())
         .then((data: Conflict[]) => {
           const matching = data.filter(c => c.entity === tag);
@@ -69,7 +69,7 @@ export default function FieldView() {
     setResult(null);
 
     try {
-      const res = await fetch('http://localhost:8000/api/query', {
+      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: input })

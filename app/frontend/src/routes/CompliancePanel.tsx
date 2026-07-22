@@ -10,7 +10,7 @@ export default function CompliancePanel() {
   const fetchCompliance = () => {
     setLoading(true);
     setError(null);
-    fetch('http://localhost:8000/api/compliance')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/compliance')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch compliance data');
         return res.json();

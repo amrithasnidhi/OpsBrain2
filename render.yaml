@@ -1,0 +1,29 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: opsbrain2-backend
+    env: python
+    rootDir: .
+    buildCommand: "pip install -r requirements.txt && pip install -r app/backend/requirements.txt"
+    startCommand: "cd app/backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: VOYAGE_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+
+  # Frontend Static Site
+  - type: web
+    name: opsbrain2-frontend
+    env: static
+    rootDir: app/frontend
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "./dist"
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: opsbrain2-backend
+          property: url

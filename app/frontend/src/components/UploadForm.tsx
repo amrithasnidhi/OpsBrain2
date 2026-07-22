@@ -49,7 +49,7 @@ export function UploadForm() {
     form.append('file', file);
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/ingest', {
+      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/ingest', {
         method: 'POST',
         body: form,
       });
